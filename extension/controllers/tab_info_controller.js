@@ -47,18 +47,53 @@ export default class extends Controller {
                 try {
                     // Check if we can inject scripts on this tab (avoid chrome:// pages, etc.)
                     if (this.canInjectScript(tab.url)) {
-                        // Inject content script to get meta information
-                        await browser.scripting.executeScript({
-                            target: { tabId: tab.id },
-                            files: ['lib/polyfill.js', 'content.js']
-                        })
+                        try {
+                            // Detect if we're running in Firefox
+                            const isFirefox = this.isFirefox()
+                            
+                            if (isFirefox) {
+                                // Use Firefox-compatible approach
+                                await browser.scripting.executeScript({
+                                    target: { tabId: tab.id },
+                                    files: ['content-firefox.js']
+                                })
+                            } else {
+                                // Use standard approach for Chrome/Edge
+                                await browser.scripting.executeScript({
+                                    target: { tabId: tab.id },
+                                    files: ['lib/polyfill.js']
+                                })
 
-                        // Send message to content script to get meta info
-                        metaInfo = await browser.tabs.sendMessage(tab.id, { action: 'getMetaInfo' })
+                                await browser.scripting.executeScript({
+                                    target: { tabId: tab.id },
+                                    files: ['content.js']
+                                })
+                            }
+
+                            // Add a small delay to ensure script is fully loaded
+                            await new Promise(resolve => setTimeout(resolve, 200))
+
+                            // Send message to content script to get meta info with timeout
+                            metaInfo = await this.sendMessageWithTimeout(tab.id, { action: 'getMetaInfo' }, 3000)
+                        } catch (injectionError) {
+                            console.log('Script injection failed:', injectionError)
+                            // Try direct function injection as fallback
+                            try {
+                                await browser.scripting.executeScript({
+                                    target: { tabId: tab.id },
+                                    func: this.getMetaInfoDirectly
+                                })
+                                metaInfo = await this.sendMessageWithTimeout(tab.id, { action: 'getMetaInfo' }, 2000)
+                            } catch (fallbackError) {
+                                console.log('Fallback injection also failed:', fallbackError)
+                                metaInfo = null
+                            }
+                        }
                     }
                 } catch (scriptError) {
                     console.log('Could not inject content script:', scriptError)
                     // This is expected for restricted pages or when permissions are insufficient
+                    // In Firefox, this might also happen due to structured cloning issues
                 }
 
                 this.displayTabInfo(tab, metaInfo)
@@ -186,6 +221,90 @@ export default class extends Controller {
             toast.classList.remove('show')
             setTimeout(() => toast.remove(), 300)
         }, 2000)
+    }
+
+    // Detect if running in Firefox
+    isFirefox() {
+        return typeof InstallTrigger !== 'undefined' || 
+               navigator.userAgent.toLowerCase().includes('firefox') ||
+               (typeof browser !== 'undefined' && browser.runtime && browser.runtime.getBrowserInfo)
+    }
+
+    // Direct meta info extraction function for Firefox fallback
+    getMetaInfoDirectly() {
+        'use strict';
+        
+        function getOgDescription() {
+            const ogDescriptionTag = document.querySelector('meta[property="og:description"]');
+            if (ogDescriptionTag && ogDescriptionTag.content) {
+                return ogDescriptionTag.content.trim();
+            }
+
+            const descriptionTag = document.querySelector('meta[name="description"]');
+            if (descriptionTag && descriptionTag.content) {
+                return descriptionTag.content.trim();
+            }
+
+            const twitterDescriptionTag = document.querySelector('meta[name="twitter:description"]');
+            if (twitterDescriptionTag && twitterDescriptionTag.content) {
+                return twitterDescriptionTag.content.trim();
+            }
+
+            return null;
+        }
+
+        function getMetaInfo() {
+            const ogTitleElement = document.querySelector('meta[property="og:title"]');
+            const ogImageElement = document.querySelector('meta[property="og:image"]');
+            const ogSiteNameElement = document.querySelector('meta[property="og:site_name"]');
+            
+            return {
+                ogDescription: getOgDescription(),
+                ogTitle: ogTitleElement ? (ogTitleElement.content ? ogTitleElement.content.trim() : null) : null,
+                ogImage: ogImageElement ? (ogImageElement.content ? ogImageElement.content.trim() : null) : null,
+                ogSiteName: ogSiteNameElement ? (ogSiteNameElement.content ? ogSiteNameElement.content.trim() : null) : null
+            };
+        }
+
+        // Set up message listener for this fallback approach
+        if (typeof browser !== 'undefined' && browser.runtime && browser.runtime.onMessage) {
+            browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                if (request && request.action === 'getMetaInfo') {
+                    try {
+                        const metaInfo = getMetaInfo();
+                        sendResponse(metaInfo);
+                    } catch (error) {
+                        console.error('Error getting meta info:', error);
+                        sendResponse({
+                            ogDescription: null,
+                            ogTitle: null,
+                            ogImage: null,
+                            ogSiteName: null
+                        });
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+    // Helper method to send messages with timeout (Firefox compatibility)
+    async sendMessageWithTimeout(tabId, message, timeoutMs = 5000) {
+        return new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                reject(new Error('Message timeout'))
+            }, timeoutMs)
+
+            browser.tabs.sendMessage(tabId, message)
+                .then(response => {
+                    clearTimeout(timeout)
+                    resolve(response)
+                })
+                .catch(error => {
+                    clearTimeout(timeout)
+                    reject(error)
+                })
+        })
     }
 
     // Fallback copy method for browsers without clipboard API

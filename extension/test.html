@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page for Firefox Extension</title>
+    
+    <!-- Standard meta tags -->
+    <meta name="description" content="This is a test page description for the Firefox extension">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Test Page Title">
+    <meta property="og:description" content="This is the OpenGraph description for testing the Firefox extension">
+    <meta property="og:image" content="https://example.com/test-image.jpg">
+    <meta property="og:site_name" content="Test Site">
+    
+    <!-- Twitter meta tags -->
+    <meta name="twitter:description" content="This is the Twitter description fallback">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .meta-info {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .test-button {
+            background: #007cba;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .test-button:hover {
+            background: #005a87;
+        }
+        .result {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firefox Extension Test Page</h1>
+    
+    <p>This page contains various meta tags to test the Firefox compatibility of the Tab Info Display extension.</p>
+    
+    <div class="meta-info">
+        <h2>Meta Tags Present on This Page:</h2>
+        <ul>
+            <li><strong>og:title:</strong> "Test Page Title"</li>
+            <li><strong>og:description:</strong> "This is the OpenGraph description for testing the Firefox extension"</li>
+            <li><strong>og:image:</strong> "https://example.com/test-image.jpg"</li>
+            <li><strong>og:site_name:</strong> "Test Site"</li>
+            <li><strong>description:</strong> "This is a test page description for the Firefox extension"</li>
+            <li><strong>twitter:description:</strong> "This is the Twitter description fallback"</li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>Test Instructions:</h2>
+        <ol>
+            <li>Load this extension in Firefox</li>
+            <li>Navigate to this test page</li>
+            <li>Click the extension icon in the toolbar</li>
+            <li>Verify that the popup displays the correct information</li>
+            <li>Check the browser console for any errors</li>
+        </ol>
+    </div>
+    
+    <button class="test-button" onclick="testMetaExtraction()">Test Meta Extraction (Console)</button>
+    
+    <div id="test-result"></div>
+    
+    <script>
+        function testMetaExtraction() {
+            const result = document.getElementById('test-result');
+            
+            // Simulate what the content script does
+            const ogDescription = document.querySelector('meta[property="og:description"]')?.content?.trim() || null;
+            const ogTitle = document.querySelector('meta[property="og:title"]')?.content?.trim() || null;
+            const ogImage = document.querySelector('meta[property="og:image"]')?.content?.trim() || null;
+            const ogSiteName = document.querySelector('meta[property="og:site_name"]')?.content?.trim() || null;
+            
+            const metaInfo = {
+                ogDescription,
+                ogTitle,
+                ogImage,
+                ogSiteName
+            };
+            
+            console.log('Extracted meta info:', metaInfo);
+            
+            result.innerHTML = `
+                <div class="result">
+                    <h3>Extracted Meta Information:</h3>
+                    <pre>${JSON.stringify(metaInfo, null, 2)}</pre>
+                </div>
+            `;
+        }
+        
+        // Auto-run test on page load
+        window.addEventListener('load', () => {
+            console.log('Test page loaded');
+            testMetaExtraction();
+        });
+    </script>
+</body>
+</html>

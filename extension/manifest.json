@@ -1,15 +1,19 @@
 {
   "manifest_version": 3,
-  "name": "Tab Info Display",
+  "name": "Feedbin Subscribe & Save",
   "version": "1.0",
-  "description": "Automatically displays the current tab's title, favicon, and og:description",
+  "description": "Subscribe to websites and save pages to read in Feedbin",
+  "icons": {
+    "32": "icons/dark-32.png",
+    "64": "icons/dark-64.png"
+  },
   "permissions": [
     "activeTab",
     "scripting"
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Tab Info Display"
+    "default_title": "Subscribe & Save"
   },
   "browser_specific_settings": {
     "gecko": {

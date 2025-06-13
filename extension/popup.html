@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tab Title Getter</title>
+    <title>Tab Info Display</title>
     <link rel="stylesheet" href="popup.css">
-    <link rel="stylesheet" href="popup.css">
-    <script type="module" src="scripts/stimulus.js"></script>
-    <script type="module" src="popup.js"></script>
+    <script type="module" src="application.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" data-controller="tab-info">
         <h1>Current Tab Info</h1>
-        <div id="result" class="result-container">
+        <div class="button-group">
+            <button data-action="click->tab-info#refresh" class="refresh-btn">
+                Refresh
+            </button>
+            <button data-action="click->tab-info#copyToClipboard" class="copy-btn">
+                Copy Title
+            </button>
+        </div>
+        <div data-tab-info-target="result" class="result-container">
             <p class="loading">Loading tab information...</p>
         </div>
     </div>

@@ -18,6 +18,35 @@ h1 {
     text-align: center;
 }
 
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.refresh-btn {
+    flex: 1;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.refresh-btn:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.refresh-btn:active {
+    background-color: #dee2e6;
+    transform: translateY(1px);
+}
+
 .result-container {
     background-color: white;
     border: 1px solid #ddd;
@@ -58,11 +87,37 @@ h1 {
     min-width: 0;
 }
 
+.title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
 .tab-title {
     color: #333 !important;
     font-weight: 500;
-    margin: 0 0 8px 0 !important;
+    margin: 0 !important;
     word-break: break-word;
+    flex: 1;
+}
+
+.inline-copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.inline-copy-btn:hover {
+    opacity: 1;
+    background-color: #f0f0f0;
+    transform: scale(1.1);
 }
 
 .tab-url {
@@ -86,11 +141,114 @@ h1 {
     word-break: break-word;
 }
 
+.no-description {
+    color: #999 !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.error-container {
+    text-align: center;
+}
+
 .error {
     color: #d93025 !important;
+    margin-bottom: 12px !important;
+}
+
+.retry-btn {
+    background-color: #d93025;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.retry-btn:hover {
+    background-color: #b52d20;
 }
 
 .loading {
     color: #4285f4 !important;
     font-style: italic;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #4285f4;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* StimulusJS state classes */
+.stimulus-connected {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.loading .result-container {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.has-error .result-container {
+    border-color: #d93025;
+    background-color: #fff5f5;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Copy button styling */
+.button-group .copy-btn {
+    flex: 0 0 auto;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-family: inherit;
+}
+
+.button-group .copy-btn:hover {
+    background-color: #3367d6;
 }

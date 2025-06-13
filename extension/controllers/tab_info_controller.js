@@ -33,7 +33,7 @@ export default class extends Controller {
 
         try {
             // Query for the active tab in the current window
-            const [tab] = await chrome.tabs.query({
+            const [tab] = await browser.tabs.query({
                 active: true,
                 currentWindow: true
             })
@@ -48,13 +48,13 @@ export default class extends Controller {
                     // Check if we can inject scripts on this tab (avoid chrome:// pages, etc.)
                     if (this.canInjectScript(tab.url)) {
                         // Inject content script to get meta information
-                        await chrome.scripting.executeScript({
+                        await browser.scripting.executeScript({
                             target: { tabId: tab.id },
-                            files: ['content.js']
+                            files: ['lib/polyfill.js', 'content.js']
                         })
 
                         // Send message to content script to get meta info
-                        metaInfo = await chrome.tabs.sendMessage(tab.id, { action: 'getMetaInfo' })
+                        metaInfo = await browser.tabs.sendMessage(tab.id, { action: 'getMetaInfo' })
                     }
                 } catch (scriptError) {
                     console.log('Could not inject content script:', scriptError)

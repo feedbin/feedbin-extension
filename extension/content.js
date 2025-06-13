@@ -1,5 +1,4 @@
 // Content script to extract og:description and other meta information from the page
-
 // Function to get og:description from the page
 function getOgDescription() {
     // Try to find og:description meta tag
@@ -7,19 +6,19 @@ function getOgDescription() {
     if (ogDescriptionTag && ogDescriptionTag.content) {
         return ogDescriptionTag.content.trim();
     }
-    
+
     // Fallback to regular description meta tag
     const descriptionTag = document.querySelector('meta[name="description"]');
     if (descriptionTag && descriptionTag.content) {
         return descriptionTag.content.trim();
     }
-    
+
     // Fallback to twitter:description
     const twitterDescriptionTag = document.querySelector('meta[name="twitter:description"]');
     if (twitterDescriptionTag && twitterDescriptionTag.content) {
         return twitterDescriptionTag.content.trim();
     }
-    
+
     return null;
 }
 
@@ -34,7 +33,7 @@ function getMetaInfo() {
 }
 
 // Listen for messages from the popup
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'getMetaInfo') {
         const metaInfo = getMetaInfo();
         sendResponse(metaInfo);

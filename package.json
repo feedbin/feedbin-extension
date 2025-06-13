@@ -8,5 +8,11 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4.1.8"
+  },
+  "devDependencies": {
+    "web-ext": "^8.7.1"
+  },
+  "scripts": {
+    "start:firefox": "web-ext run --source-dir ./extension/"
   }
 }

@@ -13,7 +13,7 @@
     "web-ext": "^8.7.1"
   },
   "scripts": {
-    "start:firefox": "web-ext run --source-dir ./extension/",
-    "lint": "web-ext lint --source-dir ./extension/"
+    "start:firefox": "web-ext run --source-dir ./_site/extension/",
+    "lint": "web-ext lint --source-dir ./_site/extension/"
   }
 }

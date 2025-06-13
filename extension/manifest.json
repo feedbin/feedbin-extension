@@ -7,10 +7,6 @@
     "activeTab",
     "scripting"
   ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Tab Info Display"

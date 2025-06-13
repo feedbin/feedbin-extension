@@ -1,5 +1,5 @@
 import { Application } from "./lib/stimulus.js"
-import TabInfoController from "../controllers/tab_info_controller.js"
+import TabInfoController from "./controllers/tab_info_controller.js"
 
 // Start the Stimulus application
 const application = Application.start()
@@ -13,5 +13,3 @@ application.register("tab-info", TabInfoController)
 
 // Make the application globally available
 window.Stimulus = application
-
-export default application

@@ -44,5 +44,6 @@
   --color-red-600:   light-dark(#BA0730, #D30D36);
   --color-green-600: light-dark(#05AB48, #04C451);
   --border-color:    light-dark(var(--light-color-200), #000);
+
 }
 

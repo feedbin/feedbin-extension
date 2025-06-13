@@ -1,0 +1,11 @@
+_site
+.sass-cache
+.asset-cache
+.bundle
+vendor
+log/
+.jekyll-metadata
+.jekyll-cache
+.env
+node_modules
+_staging

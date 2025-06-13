@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.8",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.7",
+    "postcss": "^8.5.4",
+    "postcss-cli": "^11.0.1",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "tailwindcss": "^4.1.8"
+  }
+}

@@ -8,7 +8,7 @@ class PopupTest < SystemTest
     visit "/popup.html"
     click_button("Sign In")
     puts "--------------"
-    puts page.find(:css, "[data-sign-in-target='results']").text
+    puts page.find(:css, "[data-sign-in-target=results]").text
     puts "--------------"
     assert_equal "Feedbin Subscribe & Save", page.title
   end

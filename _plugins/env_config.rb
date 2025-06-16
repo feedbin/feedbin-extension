@@ -3,7 +3,7 @@ module Jekyll
     def generate(site)
       site.config["api_host"] = case Jekyll.env
       when "test"
-        "http://example.com"
+        "https://example.com"
       when "production"
         "https://feedbin.com"
       else

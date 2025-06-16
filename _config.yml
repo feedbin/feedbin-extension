@@ -5,12 +5,15 @@ postcss:
 exclude:
   - .sass-cache/
   - .jekyll-cache/
+  - test
+  - extension/views
   - package.json
   - package-lock.json
   - postcss.config.js
   - gemfiles/
   - Gemfile
   - Gemfile.lock
+  - Rakefile
   - node_modules/
   - vendor/bundle/
   - vendor/cache/

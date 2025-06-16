@@ -1,16 +1,39 @@
+<div data-controller="sign-in">
+
 {% capture content %}
 <script type="module">
     import { Controller } from "./javascript/lib/stimulus.js"
     Stimulus.register("sign-in", class extends Controller {
-        static targets = [ "name" ]
+        static targets = [ "results" ]
 
         connect() {
             console.log("sign in");
         }
+
+        async load() {
+            console.log("called");
+
+            const url = "{{site.api_host}}/sign-in";
+            try {
+              const response = await fetch(url);
+              if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+              }
+
+              const json = await response.json();
+              this.resultsTarget.textContent = json.amount
+              console.log(json);
+            } catch (error) {
+              console.error(error.message);
+            }
+
+        }
     })
     </script>
-    <div data-controller="sign-in">
+    <div class="sign-in">
         Sign In
+        <span data-sign-in-target="results"></span>
     </div>
 {% endcapture %}
-{% include_relative views/includes/tab.html content=content button="Sign In" %}
+{% include_relative views/includes/tab.html content=content button="Sign In" button_action="click->sign-in#load" %}
+</div>

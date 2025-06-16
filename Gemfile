@@ -7,6 +7,7 @@ group :test do
   gem "minitest"
   gem "capybara"
   gem "cuprite"
-  gem "rack"
-  gem "rack-contrib"
+  gem "capybara_mock"
+  gem "webrick"
+  gem "puma"
 end

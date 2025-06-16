@@ -9,5 +9,4 @@ group :test do
   gem "cuprite"
   gem "rack"
   gem "rack-contrib"
-  gem "webmock"
 end

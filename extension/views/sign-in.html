@@ -1,0 +1,16 @@
+{% capture content %}
+<script type="module">
+    import { Controller } from "./javascript/lib/stimulus.js"
+    Stimulus.register("sign-in", class extends Controller {
+        static targets = [ "name" ]
+
+        connect() {
+            console.log("sign in");
+        }
+    })
+    </script>
+    <div data-controller="sign-in">
+        Sign In
+    </div>
+{% endcapture %}
+{% include_relative views/includes/tab.html content=content button="Sign In" %}

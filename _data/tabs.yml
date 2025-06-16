@@ -1,5 +1,5 @@
-- title: Login
-  id: tab-login
+- title: Sign In
+  id: tab-sign-in
   icon: icon-download
 
 - title: Add Feed

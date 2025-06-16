@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,30 @@
     <script src="javascript/lib/polyfill.js"></script>
     <script src="javascript/application.js" type="module"></script>
 </head>
-<body class="bg-base">
+<body class="bg-base w-[300px] p-2">
+    <div data-controller="tabs" data-tabs-selected-value="save" class="group">
+        <ul class="flex">
+            {% assign tabs = "Add Feed,Send to Pages" | split: ',' %}
+            {% for tab in tabs -%}
+                <li class="grow flex basis-0">
+                    <label class="cursor-pointer py-4 grow block text-center border-b-4 border-transparent has-checked:border-blue-600">
+                        <input value="{{ tab | slugify: 'raw' }}" name="tab" type="radio" class="hidden" {% if forloop.first %}checked{% endif -%}>
+                        {{ tab }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% include_relative views/login.html %}
+
+        <div class="hidden group-has-[[value='add-feed']:checked]:block">
+            {% include_relative views/subscribe.html %}
+        </div>
+        <div class="hidden group-has-[[value='send-to-pages']:checked]:block">
+            {% include_relative views/save.html %}
+        </div>
+    </div>
+
     <div class="container" data-controller="tab-info">
         <h1>Current Tab Info</h1>
         <div class="button-group">

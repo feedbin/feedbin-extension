@@ -1,6 +1,6 @@
 {% capture content %}
     <script type="module">
-    import { Controller } from "./javascript/lib/stimulus.js"
+    import { Controller } from "./assets/javascript/lib/stimulus.js"
     Stimulus.register("save", class extends Controller {
         static targets = [ "name" ]
 
@@ -13,4 +13,4 @@
         save
     </div>
 {% endcapture %}
-{% include_relative views/includes/tab.html content=content button="Save" %}
+{% include shared/tab.html content=content button="Save" %}

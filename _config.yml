@@ -6,7 +6,6 @@ exclude:
   - .sass-cache/
   - .jekyll-cache/
   - test
-  - extension/views
   - package.json
   - package-lock.json
   - postcss.config.js

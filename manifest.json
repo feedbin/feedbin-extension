@@ -4,15 +4,15 @@
   "version": "1.0",
   "description": "Subscribe to websites and save pages to read in Feedbin",
   "icons": {
-    "32": "images/icon-32.png",
-    "64": "images/icon-64.png"
+    "32": "assets/images/icon-32.png",
+    "64": "assets/images/icon-64.png"
   },
   "permissions": [
     "activeTab",
     "scripting"
   ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "index.html",
     "default_title": "Subscribe & Save"
   },
   "browser_specific_settings": {

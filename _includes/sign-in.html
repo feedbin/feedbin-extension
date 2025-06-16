@@ -2,7 +2,7 @@
 
 {% capture content %}
 <script type="module">
-    import { Controller } from "./javascript/lib/stimulus.js"
+    import { Controller } from "./assets/javascript/lib/stimulus.js"
     Stimulus.register("sign-in", class extends Controller {
         static targets = [ "results" ]
 
@@ -35,5 +35,5 @@
         <span data-sign-in-target="results"></span>
     </div>
 {% endcapture %}
-{% include_relative views/includes/tab.html content=content button="Sign In" button_action="click->sign-in#load" %}
+{% include shared/tab.html content=content button="Sign In" button_action="click->sign-in#load" %}
 </div>

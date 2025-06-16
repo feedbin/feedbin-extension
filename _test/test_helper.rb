@@ -16,7 +16,7 @@ Capybara.configure do |config|
   config.disable_animation = true
   config.server = :puma
   config.app = Rack::Builder.new do
-    run Rack::Directory.new(File.expand_path("_site/extension"))
+    run Rack::Directory.new(File.expand_path("_site/"))
   end
 end
 

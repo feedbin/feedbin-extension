@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedbin Subscribe & Save</title>
-    <link rel="stylesheet" href="css/main.css">
-    <script src="javascript/lib/polyfill.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="assets/javascript/lib/polyfill.js"></script>
     <script type="module">
-        import { Application } from "./javascript/lib/stimulus.js"
-        import TabInfoController from "./javascript/controllers/tab_info_controller.js"
+        import { Application } from "./assets/javascript/lib/stimulus.js"
+        import TabInfoController from "./assets/javascript/controllers/tab_info_controller.js"
 
         const application = Application.start()
         application.debug = {% if jekyll.environment == "production" %} false {% else %} true {% endif %}
@@ -36,17 +36,17 @@
             {% endfor %}
         </ul>
         <div class="hidden group-has-[[value='tab-sign-in']:checked]:block">
-            {% include_relative views/sign-in.html %}
+            {% include sign-in.html %}
         </div>
         <div class="hidden group-has-[[value='tab-add']:checked]:block">
-            {% include_relative views/add.html %}
+            {% include add.html %}
         </div>
         <div class="hidden group-has-[[value='tab-save']:checked]:block">
-            {% include_relative views/save.html %}
+            {% include save.html %}
         </div>
     </div>
 
-    {% include_relative views/includes/icons.html %}
+    {% include shared/icons.html %}
 </body>
 </html>
 

@@ -50,7 +50,7 @@ export default class extends Controller {
                         try {
                             await browser.scripting.executeScript({
                                 target: { tabId: tab.id },
-                                files: ['lib/polyfill.js', 'javascript/content.js']
+                                files: ['lib/polyfill.js', 'assets/javascript/content.js']
                             })
 
                             metaInfo = await this.sendMessageWithTimeout(tab.id, { action: 'getMetaInfo' }, 3000)

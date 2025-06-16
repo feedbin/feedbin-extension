@@ -1,6 +1,6 @@
 {% capture content %}
     <script type="module">
-    import { Controller } from "./javascript/lib/stimulus.js"
+    import { Controller } from "./assets/javascript/lib/stimulus.js"
     Stimulus.register("add", class extends Controller {
         static targets = [ "name" ]
 
@@ -13,4 +13,4 @@
         add
     </div>
 {% endcapture %}
-{% include_relative views/includes/tab.html content=content button="Find Feeds" %}
+{% include shared/tab.html content=content button="Find Feeds" %}

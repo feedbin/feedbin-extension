@@ -10,12 +10,12 @@
     <script src="javascript/lib/polyfill.js"></script>
     <script src="javascript/application.js" type="module"></script>
 </head>
-<body class="bg-base p-2 w-[400px]">
+<body class="bg-base w-[400px]">
     <div data-controller="tabs" class="group">
-        <ul class="flex gap-2">
+        <ul class="flex gap-2 py-4 px-6">
             {% for tab in site.data.tabs -%}
                 <li class="flex">
-                    <label class="flex gap-2 items-center text-500 fill-500 rounded-lg cursor-pointer p-4 grow block has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
+                    <label class="flex gap-2 items-center text-500 text-xs fill-500 rounded-lg cursor-pointer p-4 grow block has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
                         <svg class="max-w-[16px] max-h-[16px]">
                             <use href="#{{ tab.icon }}" />
                         </svg>
@@ -28,16 +28,34 @@
             {% endfor %}
         </ul>
 
-        {% include_relative views/login.html %}
 
-        <div class="hidden group-has-[[value='tab-add']:checked]:block">
-            {% include_relative views/subscribe.html %}
-        </div>
-        <div class="hidden group-has-[[value='tab-save']:checked]:block">
-            {% include_relative views/save.html %}
+
+        <div>
+          <div class="max-h-[600px] overflow-scroll">
+            <div class="py-4 px-6 overflow-hidden">
+                <div class="hidden group-has-[[value='tab-login']:checked]:block">
+                    {% include_relative views/login.html %}
+                </div>
+                <div class="hidden group-has-[[value='tab-add']:checked]:block">
+                    {% include_relative views/subscribe.html %}
+                </div>
+                <div class="hidden group-has-[[value='tab-save']:checked]:block">
+                    {% include_relative views/save.html %}
+                </div>
+
+            </div>
+          </div>
+          <div class="w-full px-6 py-4 border-t">
+            <button class="w-full py-4 bg-blue-600 text-white rounded-lg font-medium cursor-pointer">Subscribe</button>
+          </div>
         </div>
     </div>
 
+    {% include_relative views/icons.html %}
+</body>
+</html>
+
+<!--
     <div class="container" data-controller="tab-info">
         <h1>Current Tab Info</h1>
         <div class="button-group">
@@ -52,7 +70,4 @@
             <p class="loading">Loading tab information...</p>
         </div>
     </div>
-
-    {% include_relative views/icons.html %}
-</body>
-</html>
+-->

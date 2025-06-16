@@ -15,16 +15,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-
-    - name: install ruby dependencies
-      run: |
-        bundle config path vendor/bundle
-        bundle install --jobs 4
 
     - name: build site
       run: |

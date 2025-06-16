@@ -1,0 +1,7 @@
+- title: Add Feed
+  id: tab-add
+  icon: icon-add
+
+- title: Send to Pages
+  id: tab-save
+  icon: icon-save

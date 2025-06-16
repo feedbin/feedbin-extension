@@ -4,8 +4,8 @@
   "version": "1.0",
   "description": "Subscribe to websites and save pages to read in Feedbin",
   "icons": {
-    "32": "icons/dark-32.png",
-    "64": "icons/dark-64.png"
+    "32": "images/icon-32.png",
+    "64": "images/icon-64.png"
   },
   "permissions": [
     "activeTab",

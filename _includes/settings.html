@@ -23,6 +23,7 @@
                 authorization = window.btoa(unescape(encodeURIComponent(authorization)))
 
                 const url = "{{ site.urls.authentication | build_url }}";
+                let data = {}
                 try {
                     const response = await fetch(url, {
                         method: "POST",
@@ -38,14 +39,14 @@
                         throw error;
                     }
 
-                    const data = await response.json();
-
-                    this.resultsTarget.textContent = data.page_token
+                    data = await response.json();
                 } catch (error) {
-                    if ("response" in error && error.response.status == 401) {
-                        this.errorTarget.textContent = "Invalid email or password."
-                    } else {
-                        this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
+                    if ("response" in error) {
+                        if (error.response.status == 401) {
+                            this.errorTarget.textContent = "Invalid email or password."
+                        } else {
+                            this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
+                        }
                     }
                     console.error("Request failed:", error);
                 }
@@ -53,6 +54,12 @@
                 this.submitButtonTarget.disabled = false
                 this.loadingValue = false
 
+                if ("page_token" in data) {
+                    await browser.storage.sync.set({ page_token: data.page_token });
+                    let result = await browser.storage.sync.get("page_token");
+                    console.log("result", result);
+                    this.resultsTarget.textContent = result
+                }
             }
         })
         </script>

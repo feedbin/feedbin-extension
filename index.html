@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedbin Subscribe & Save</title>
     <link rel="stylesheet" href="assets/css/main.css">
+    {% if jekyll.environment != "production" %}
+    <script src="assets/javascript/lib/storage.js"></script>
+    {% endif %}
     <script src="assets/javascript/lib/polyfill.js"></script>
     <script type="module">
         import { Application } from "./assets/javascript/lib/stimulus.js"

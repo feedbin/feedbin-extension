@@ -34,6 +34,11 @@ class SystemTest < Minitest::Test
   include Capybara::Minitest::Assertions
 
   def teardown
+    if failure
+      path = File.join("tmp", "screenshots", "#{name}.png")
+      page.save_screenshot(path)
+      puts "failed screenshot: #{path}"
+    end
     Capybara.reset_sessions!
     Capybara.use_default_driver
   end

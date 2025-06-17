@@ -1,9 +1,18 @@
+require "jekyll"
 require "capybara"
 require "capybara/dsl"
 require "capybara/minitest"
 require "capybara/cuprite"
 require "capybara_mock"
 require "minitest/autorun"
+
+ENV["JEKYLL_ENV"] = "test"
+
+$site = Jekyll::Site.new(Jekyll.configuration({
+  source:  Dir.pwd,
+  destination: File.join(Dir.pwd, "tmp", "_site"),
+}))
+$site.process
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(app)
@@ -16,10 +25,9 @@ Capybara.configure do |config|
   config.disable_animation = true
   config.server = :puma
   config.app = Rack::Builder.new do
-    run Rack::Directory.new(File.expand_path("_site/"))
+    run Rack::Directory.new($site.dest)
   end
 end
-
 
 class SystemTest < Minitest::Test
   include Capybara::DSL
@@ -29,4 +37,8 @@ class SystemTest < Minitest::Test
     Capybara.reset_sessions!
     Capybara.use_default_driver
   end
+end
+
+def build_url(path)
+  URI.join($site.config["api_host"], $site.config["urls"][path]).to_s
 end

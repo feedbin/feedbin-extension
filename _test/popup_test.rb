@@ -1,15 +1,20 @@
 require_relative "test_helper"
 
 class PopupTest < SystemTest
-  def test_popup_loads
-    CapybaraMock.stub_request(:get, "https://example.com/extension/authentication.json")
-      .to_return(body: {page_token: "token"}.to_json)
+  def test_invalid_login
+    url = build_url("authentication")
+
+    CapybaraMock.stub_request(:post, url)
+      .to_return(status: 401, body: {page_token: "token"}.to_json)
 
     visit "/index.html"
     click_button("Sign In")
-    puts "--------------"
-    puts page.find(:css, "[data-settings-target=results]").text
-    puts "--------------"
-    assert_equal "Feedbin Subscribe & Save", page.title
+    assert_equal "Invalid email or password.", page.find(:css, "[data-settings-target=error]").text
+  end
+
+  def test_valid_login
+  end
+
+  def test_server_error
   end
 end

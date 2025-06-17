@@ -9,3 +9,4 @@ log/
 .env
 node_modules
 _staging
+tmp/

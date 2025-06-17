@@ -1,7 +1,3 @@
-- title: Sign In
-  id: tab-sign-in
-  icon: icon-download
-
 - title: Add Feed
   id: tab-add
   icon: icon-add
@@ -9,3 +5,7 @@
 - title: Send to Pages
   id: tab-save
   icon: icon-save
+
+- title: Settings
+  id: tab-settings
+  icon: icon-settings

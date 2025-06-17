@@ -1,8 +1,8 @@
-<form class="group" data-controller="sign-in" data-action="submit->sign-in#submit" data-sign-in-loading-value="false" novalidate>
+<form class="group" data-controller="settings" data-action="submit->settings#submit" data-settings-loading-value="false" novalidate>
     {% capture content %}
     <script type="module">
         import { Controller } from "./assets/javascript/lib/stimulus.js"
-        Stimulus.register("sign-in", class extends Controller {
+        Stimulus.register("settings", class extends Controller {
             static targets = [ "results", "form", "email", "password", "submitButton", "error" ]
             static values = {
                 loading: Boolean
@@ -26,7 +26,7 @@
 
                 // console.log(this.emailValue);
                 // console.log(this.passwordValue);
-                // const url = "{{site.api_host}}/sign-in";
+                // const url = "{{site.api_host}}/settings";
                 // try {
                 //   const response = await fetch(url);
                 //   if (!response.ok) {
@@ -42,14 +42,14 @@
             }
         })
         </script>
-        <div class="sign-in">
+        <div class="settings">
             <div class="flex flex-col gap-4 items-stretch">
-                <div data-sign-in-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>
+                <div data-settings-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>
                 <input
                     class="text-input"
                     type="text"
                     name="email"
-                    data-sign-in-target="email"
+                    data-settings-target="email"
                     placeholder="Email Address"
                     autocorrect="off"
                     autocapitalize="off"
@@ -60,20 +60,20 @@
                     class="text-input"
                     type="password"
                     name="password"
-                    data-sign-in-target="password"
+                    data-settings-target="password"
                     placeholder="Password"
                 />
             </div>
 
-            <span data-sign-in-target="results"></span>
+            <span data-settings-target="results"></span>
         </div>
     {% endcapture %}
     {% capture button %}
-        <button data-sign-in-target="submitButton" type="submit" class="primary-button">
-            <span class="hidden group-data-[sign-in-loading-value=false]:block">
+        <button data-settings-target="submitButton" type="submit" class="primary-button">
+            <span class="hidden group-data-[settings-loading-value=false]:block">
                 Sign In
             </span>
-            <span class="hidden group-data-[sign-in-loading-value=true]:block">
+            <span class="hidden group-data-[settings-loading-value=true]:block">
                 Loading…
             </span>
         </button>

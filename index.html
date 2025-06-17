@@ -13,29 +13,17 @@
     {% endif %}
 
     <script src="assets/javascript/lib/polyfill.js"></script>
-    <script type="module" src="assets/javascript/application.js"></script>
+    <script src="assets/javascript/application.js" type="module"></script>
 </head>
-<body class="bg-0 text-[100%]! w-[400px] h-full">
+<body class="bg-0 h-full antialiased w-[400px] [text-size-adjust:none] text-[100%]!">
     <div
         data-controller="tabs"
         class="group h-full flex flex-col"
         data-tabs-authorized-value="false"
         data-action="settings:authorize@window->tabs#authorize"
     >
-        <ul class="gap-2 py-4 px-6 hidden shrink-none group-data-[tabs-authorized-value=true]:flex">
-            {% for tab in site.data.tabs -%}
-            <li class="flex">
-                <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
-                    <svg class="max-w-[16px] max-h-[16px]">
-                        <use href="#{{ tab.icon }}" />
-                    </svg>
-
-                    {{ tab.title }}
-
-                    <input name="tab" type="radio" class="hidden" value="{{ tab.id }}" {% if forloop.last %}checked{% endif -%}>
-                </label>
-            </li>
-            {% endfor %}
+        <ul class="gap-2 py-4 px-6 shrink-none hidden group-data-[tabs-authorized-value=true]:flex">
+            {% include shared/nav.html %}
         </ul>
 
         <div class="hidden grow group-has-[[value=tab-settings]:checked]:block">

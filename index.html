@@ -11,22 +11,14 @@
     <script src="assets/javascript/lib/storage.js"></script>
     {% endif %}
     <script src="assets/javascript/lib/polyfill.js"></script>
-    <script type="module">
-        import { Application } from "./assets/javascript/lib/stimulus.js"
-        import TabInfoController from "./assets/javascript/controllers/tab_info_controller.js"
-
-        const application = Application.start()
-        application.debug = {% if jekyll.environment == "production" %} false {% else %} true {% endif %}
-        application.register("tab-info", TabInfoController)
-        window.Stimulus = application
-    </script>
+    <script type="module" src="assets/javascript/application.js"></script>
 </head>
-<body class="bg-base w-[400px]">
+<body class="bg-0 text-[100%]! w-[400px]">
     <div data-controller="tabs" class="group">
         <ul class="flex gap-2 py-4 px-6">
             {% for tab in site.data.tabs -%}
             <li class="flex">
-                <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-base has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
+                <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
                     <svg class="max-w-[16px] max-h-[16px]">
                         <use href="#{{ tab.icon }}" />
                     </svg>

@@ -1,68 +1,13 @@
-<form class="group" data-controller="settings" data-action="submit->settings#submit" data-settings-loading-value="false" novalidate>
+<form
+    action="{{ site.urls.authentication | build_url }}"
+    method="POST"
+    class="group"
+    data-controller="settings"
+    data-action="submit->settings#submit:prevent"
+    data-settings-loading-value="false"
+    novalidate
+>
     {% capture content %}
-    <script type="module">
-        import { Controller } from "./assets/javascript/lib/stimulus.js"
-        Stimulus.register("settings", class extends Controller {
-            static targets = [ "results", "email", "password", "submitButton", "error" ]
-            static values = {
-                loading: Boolean
-            }
-
-            connect() {
-                console.log("sign in");
-            }
-
-            async submit(event) {
-                event.preventDefault()
-                this.submitButtonTarget.disabled = true
-                this.loadingValue = true
-                this.errorTarget.textContent = ""
-                console.log(this.submitButtonTarget);
-
-                let authorization = `${this.emailTarget.value}:${this.passwordTarget.value}`
-                authorization = window.btoa(unescape(encodeURIComponent(authorization)))
-
-                const url = "{{ site.urls.authentication | build_url }}";
-                let data = {}
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Basic ${authorization}`,
-                            "Content-Type": "application/json"
-                        }
-                    });
-
-                    if (!response.ok) {
-                        const error = new Error(`Invalid response`)
-                        error.response = response
-                        throw error;
-                    }
-
-                    data = await response.json();
-                } catch (error) {
-                    if ("response" in error) {
-                        if (error.response.status == 401) {
-                            this.errorTarget.textContent = "Invalid email or password."
-                        } else {
-                            this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
-                        }
-                    }
-                    console.error("Request failed:", error);
-                }
-
-                this.submitButtonTarget.disabled = false
-                this.loadingValue = false
-
-                if ("page_token" in data) {
-                    await browser.storage.sync.set({ page_token: data.page_token });
-                    let result = await browser.storage.sync.get("page_token");
-                    console.log("result", result);
-                    this.resultsTarget.textContent = result
-                }
-            }
-        })
-        </script>
         <div class="settings">
             <div class="flex flex-col gap-4 items-stretch">
                 <div data-settings-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>

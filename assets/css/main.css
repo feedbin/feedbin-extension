@@ -7,7 +7,7 @@
 }
 
 @theme {
-  --light-color-base: white;
+  --light-color-0: white;
   --light-color-100: #f5f5f7;
   --light-color-200: #e9e9eb;
   --light-color-300: #bdbfc3;
@@ -16,7 +16,7 @@
   --light-color-600: #39404b;
   --light-color-700: #0d1623;
 
-  --dark-color-base: #262626;
+  --dark-color-0: #262626;
   --dark-color-100:  #2d2d2d;
   --dark-color-200:  #353535;
   --dark-color-300:  #4d4d4d;
@@ -31,7 +31,7 @@
   --color-red-200:    #F8E8EB;
   --color-orange-600: #E86B0D;
 
-  --color-base: light-dark(var(--light-color-base), var(--dark-color-base));
+  --color-0: light-dark(var(--light-color-0), var(--dark-color-0));
   --color-100:  light-dark(var(--light-color-100),  var(--dark-color-100));
   --color-200:  light-dark(var(--light-color-200),  var(--dark-color-200));
   --color-300:  light-dark(var(--light-color-300),  var(--dark-color-300));

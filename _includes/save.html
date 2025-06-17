@@ -1,47 +1,5 @@
 <form class="group" data-controller="save" data-action="submit->save#submit" data-save-loading-value="false" novalidate>
     {% capture content %}
-    <script type="module">
-        import { Controller } from "./assets/javascript/lib/stimulus.js"
-        Stimulus.register("save", class extends Controller {
-            static targets = [ "results", "form", "email", "password", "submitButton", "error" ]
-            static values = {
-                loading: Boolean
-            }
-
-            connect() {
-                console.log("sign in");
-            }
-
-            async submit(event) {
-                event.preventDefault()
-                this.submitButtonTarget.disabled = true
-                this.loadingValue = true
-                this.errorTarget.textContent = ""
-                console.log(this.submitButtonTarget);
-
-                const formData = new FormData(this.formTarget);
-                let data = new URLSearchParams(formData).toString()
-                console.log(data)
-
-
-                // console.log(this.emailValue);
-                // console.log(this.passwordValue);
-                // const url = "{{site.api_host}}/save";
-                // try {
-                //   const response = await fetch(url);
-                //   if (!response.ok) {
-                //     throw new Error(`Response status: ${response.status}`);
-                //   }
-                //
-                //   const json = await response.json();
-                //   this.resultsTarget.textContent = json.amount
-                //   console.log(json);
-                // } catch (error) {
-                //   console.error(error.message);
-                // }
-            }
-        })
-        </script>
         <div class="save">
             Save
         </div>

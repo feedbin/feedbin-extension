@@ -1,22 +1,5 @@
 <form class="group" data-controller="add" data-action="submit->add#submit" data-add-loading-value="false" novalidate>
     {% capture content %}
-    <script type="module">
-        import { Controller } from "./assets/javascript/lib/stimulus.js"
-        Stimulus.register("add", class extends Controller {
-            static targets = ["submitButton", "error" ]
-            static values = {
-                loading: Boolean
-            }
-
-            connect() {
-
-            }
-
-            async submit(event) {
-
-            }
-        })
-        </script>
         <div class="add">
             Add
         </div>

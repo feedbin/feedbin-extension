@@ -1,16 +1,35 @@
-{% capture content %}
+<form class="group" data-controller="add" data-action="submit->add#submit" data-add-loading-value="false" novalidate>
+    {% capture content %}
     <script type="module">
-    import { Controller } from "./assets/javascript/lib/stimulus.js"
-    Stimulus.register("add", class extends Controller {
-        static targets = [ "name" ]
+        import { Controller } from "./assets/javascript/lib/stimulus.js"
+        Stimulus.register("add", class extends Controller {
+            static targets = ["submitButton", "error" ]
+            static values = {
+                loading: Boolean
+            }
 
-        connect() {
-            console.log("add controller");
-        }
-    })
-    </script>
-    <div data-controller="add">
-        add
-    </div>
-{% endcapture %}
-{% include shared/tab.html content=content button="Find Feeds" %}
+            connect() {
+
+            }
+
+            async submit(event) {
+
+            }
+        })
+        </script>
+        <div class="add">
+            Add
+        </div>
+    {% endcapture %}
+    {% capture button %}
+        <button data-add-target="submitButton" type="submit" class="primary-button">
+            <span class="hidden group-data-[add-loading-value=false]:block">
+                Find Feeds
+            </span>
+            <span class="hidden group-data-[add-loading-value=true]:block">
+                Finding Feeds…
+            </span>
+        </button>
+    {% endcapture %}
+    {% include shared/tab.html content=content button=button %}
+</form>

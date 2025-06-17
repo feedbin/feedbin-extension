@@ -56,3 +56,15 @@
     border-color: var(--border-color, currentColor);
   }
 }
+
+@layer components {
+  .text-input {
+    @apply border outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700
+           focus:border-blue-600 focus:outline-2 focus:outline-blue-600
+           placeholder:text-400;
+  }
+  .primary-button {
+    @apply w-full py-2 bg-blue-600 text-white text-sm rounded-lg font-medium cursor-pointer transition
+           disabled:cursor-default disabled:bg-300;
+  }
+}

@@ -23,7 +23,7 @@
         <ul class="flex gap-2 py-4 px-6">
             {% for tab in site.data.tabs -%}
             <li class="flex">
-                <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-4 grow block has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
+                <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-4 grow block transition bg-base has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
                     <svg class="max-w-[16px] max-h-[16px]">
                         <use href="#{{ tab.icon }}" />
                     </svg>
@@ -35,13 +35,13 @@
             </li>
             {% endfor %}
         </ul>
-        <div class="hidden group-has-[[value='tab-sign-in']:checked]:block">
+        <div class="hidden group-has-[[value=tab-sign-in]:checked]:block">
             {% include sign-in.html %}
         </div>
-        <div class="hidden group-has-[[value='tab-add']:checked]:block">
+        <div class="hidden group-has-[[value=tab-add]:checked]:block">
             {% include add.html %}
         </div>
-        <div class="hidden group-has-[[value='tab-save']:checked]:block">
+        <div class="hidden group-has-[[value=tab-save]:checked]:block">
             {% include save.html %}
         </div>
     </div>

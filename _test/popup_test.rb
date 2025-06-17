@@ -2,8 +2,8 @@ require_relative "test_helper"
 
 class PopupTest < SystemTest
   def test_popup_loads
-    CapybaraMock.stub_request(:get, "https://example.com/settings")
-      .to_return(body: {amount: "Hello"}.to_json)
+    CapybaraMock.stub_request(:get, "https://example.com/extension/authentication.json")
+      .to_return(body: {page_token: "token"}.to_json)
 
     visit "/index.html"
     click_button("Sign In")

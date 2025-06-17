@@ -30,7 +30,7 @@
 
                     {{ tab.title }}
 
-                    <input name="tab" type="radio" class="hidden" value="{{ tab.id }}" {% if forloop.first %}checked{% endif -%}>
+                    <input name="tab" type="radio" class="hidden" value="{{ tab.id }}" {% if forloop.last %}checked{% endif -%}>
                 </label>
             </li>
             {% endfor %}

@@ -41,6 +41,7 @@ class SystemTest < Minitest::Test
     end
     Capybara.reset_sessions!
     Capybara.use_default_driver
+    CapybaraMock.reset!
   end
 end
 

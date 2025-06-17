@@ -1,11 +1,6 @@
 require_relative "test_helper"
 
 class SettingsTest < SystemTest
-  def setup
-    CapybaraMock.reset!
-    # page.driver.refresh
-  end
-
   def test_valid_login
     url = build_url("authentication")
     CapybaraMock.stub_request(:post, url)
@@ -23,7 +18,7 @@ class SettingsTest < SystemTest
     visit "/index.html"
     click_button("Sign In")
     text = page.find(:css, "[data-settings-target=error]").text
-    assert_equal "Invalid email or password", text
+    assert_equal "Invalid email or password.", text
   end
 
   def test_server_error

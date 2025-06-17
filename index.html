@@ -1,21 +1,28 @@
 ---
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedbin Subscribe & Save</title>
     <link rel="stylesheet" href="assets/css/main.css">
+
     {% if jekyll.environment != "production" %}
     <script src="assets/javascript/lib/storage.js"></script>
     {% endif %}
+
     <script src="assets/javascript/lib/polyfill.js"></script>
     <script type="module" src="assets/javascript/application.js"></script>
 </head>
-<body class="bg-0 text-[100%]! w-[400px]">
-    <div data-controller="tabs" class="group">
-        <ul class="flex gap-2 py-4 px-6">
+<body class="bg-0 text-[100%]! w-[400px] h-full">
+    <div
+        data-controller="tabs"
+        class="group h-full flex flex-col"
+        data-tabs-authorized-value="false"
+        data-action="settings:authorize@window->tabs#authorize"
+    >
+        <ul class="gap-2 py-4 px-6 hidden shrink-none group-data-[tabs-authorized-value=true]:flex">
             {% for tab in site.data.tabs -%}
             <li class="flex">
                 <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
@@ -30,13 +37,14 @@
             </li>
             {% endfor %}
         </ul>
-        <div class="hidden group-has-[[value=tab-settings]:checked]:block">
+
+        <div class="hidden grow group-has-[[value=tab-settings]:checked]:block">
             {% include settings.html %}
         </div>
-        <div class="hidden group-has-[[value=tab-add]:checked]:block">
+        <div class="hidden grow group-has-[[value=tab-add]:checked]:block">
             {% include add.html %}
         </div>
-        <div class="hidden group-has-[[value=tab-save]:checked]:block">
+        <div class="hidden grow group-has-[[value=tab-save]:checked]:block">
             {% include save.html %}
         </div>
     </div>

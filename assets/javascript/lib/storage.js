@@ -62,4 +62,22 @@
       return Promise.reject(err);
     }
   };
+
+  root.storage.sync.remove = function (keys, callback) {
+      const toRemove = normalizeKeys(keys);
+      try {
+        if (toRemove === null) {                                     // spec: remove(null) → no-op
+          if (callback) callback();
+          return Promise.resolve();
+        }
+        for (const k of toRemove) {
+          localStorage.removeItem(k);
+        }
+        if (callback) callback();
+        return Promise.resolve();
+      } catch (err) {
+        if (callback) callback(err);
+        return Promise.reject(err);
+      }
+    };
 })();

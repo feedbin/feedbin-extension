@@ -1,13 +1,13 @@
 import { Controller } from "../lib/stimulus.js"
 export default class extends Controller {
-  static targets = [ "results", "email", "password", "submitButton", "error" ]
+  static targets = [ "results", "email", "password", "submitButton", "error", "signedInAs" ]
   static values = {
     loading: Boolean,
     url: String
   }
 
   connect() {
-    console.log("sign in");
+    this.userData()
   }
 
   async submit(event) {
@@ -47,10 +47,25 @@ export default class extends Controller {
     this.loadingValue = false
 
     if ("page_token" in data) {
-      await browser.storage.sync.set({ page_token: data.page_token });
-      let result = await browser.storage.sync.get("page_token");
-      console.log("result", result);
-      this.resultsTarget.textContent = result
+      let user = {
+        page_token: data.page_token,
+        email: this.emailTarget.value
+      }
+      await browser.storage.sync.set({user});
+      await this.userData();
+      this.dispatch("authorize")
     }
+  }
+
+  async userData() {
+    let result = await browser.storage.sync.get();
+    if ("user" in result && "email" in result.user) {
+      this.signedInAsTarget.textContent = result.user.email
+    }
+  }
+
+  async signOut() {
+    let result = await browser.storage.sync.remove("user");
+    this.dispatch("authorize")
   }
 }

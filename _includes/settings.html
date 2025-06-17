@@ -1,47 +1,51 @@
 <form
     action="{{ site.urls.authentication | build_url }}"
     method="POST"
-    class="group"
+    class="group h-full flex flex-col"
     data-controller="settings"
     data-action="submit->settings#submit:prevent"
     data-settings-loading-value="false"
     novalidate
 >
     {% capture content %}
-        <div class="settings">
-            <div class="flex flex-col gap-4 items-stretch">
-                <div data-settings-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>
-                <input
-                    class="text-input"
-                    type="text"
-                    name="email"
-                    data-settings-target="email"
-                    placeholder="Email Address"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                    required
-                />
-                <input
-                    class="text-input"
-                    type="password"
-                    name="password"
-                    data-settings-target="password"
-                    placeholder="Password"
-                />
-            </div>
+        <div class="rounded bg-100 border p-3 truncate hidden group-data-[tabs-authorized-value=true]:block">
+            Signed in as <strong data-settings-target="signedInAs"></strong>
+        </div>
 
-            <span data-settings-target="results"></span>
+        <div class="flex flex-col gap-4 items-stretch hidden group-data-[tabs-authorized-value=false]:flex">
+            <div data-settings-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>
+            <input
+                class="text-input"
+                type="text"
+                name="email"
+                data-settings-target="email"
+                placeholder="Email"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                required
+            />
+            <input
+                class="text-input"
+                type="password"
+                name="password"
+                data-settings-target="password"
+                placeholder="Password"
+            />
         </div>
     {% endcapture %}
     {% capture button %}
-        <button data-settings-target="submitButton" type="submit" class="primary-button">
+        <button data-settings-target="submitButton" type="submit" class="primary-button hidden group-data-[tabs-authorized-value=false]:block">
             <span class="hidden group-data-[settings-loading-value=false]:block">
                 Sign In
             </span>
             <span class="hidden group-data-[settings-loading-value=true]:block">
                 Loading…
             </span>
+        </button>
+
+        <button data-action="click->settings#signOut:prevent" data-settings-target="signOutButton" class="primary-button hidden group-data-[tabs-authorized-value=true]:block">
+            Sign Out
         </button>
     {% endcapture %}
     {% include shared/tab.html content=content button=button %}

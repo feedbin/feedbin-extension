@@ -1,0 +1,4 @@
+{% assign icon = site.data.icons[include.icon] %}
+<svg style="width: {{ icon.width }}px; height: {{ icon.height }}px;" class="{{include.class}}">
+    <use href="#{{ include.icon }}" />
+</svg>

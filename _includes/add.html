@@ -5,7 +5,7 @@
         <div class="mb-4">
             <div class="flex mb-4">
                 <label class="h-[40px] flex items-center pr-2">
-                    <input type="checkbox">
+                    {% include shared/checkbox.html %}
                 </label>
                 <div class="grow min-w-0">
                     <input type="text" class="text-input" placeholder="Daring Fireball" value="Daring Fireball">
@@ -22,19 +22,18 @@
         </div>
 
         <h1 class="mb-2 text-700 font-bold line-clamp-2">Tags</h1>
-        <div class="flex flex-col gap-4">
-            <input type="text" class="text-input text-center focus:text-left" placeholder="+ New Tag">
+        <div class="flex flex-col gap-2">
+            <input type="text" class="text-input text-center border-400 shadow mb-2 cursor-pointer focus-visible:border-blue-600 focus-visible:cursor-text focus-visible:text-left placeholder:font-bold placeholder:text-600 focus-visible:placeholder:font-normal focus-visible:placeholder:text-500 " placeholder="+ New Tag">
             {% include shared/checkbutton.html label="🏠 Neighborhood Updates" value="1" %}
             {% include shared/checkbutton.html label="Two" value="1" %}
             {% include shared/checkbutton.html label="Three" value="1" %}
         </div>
 
+
     </div>
     <div class="flex gap-4">
         <div class="rounded flex items-center justify-center shrink-none mt-0.5 w-[20px] h-[20px]">
-            <svg class="max-w-[16px] max-h-[16px] fill-600">
-                <use href="#icon-feed" />
-            </svg>
+            {% include shared/icon.html icon="icon-feed" class="fill-600" %}
         </div>
         <div class="grow min-w-0">
             <h1 class="mb-1 text-700 font-bold line-clamp-2">

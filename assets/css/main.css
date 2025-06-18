@@ -55,16 +55,20 @@
   ::file-selector-button {
     border-color: var(--border-color, currentColor);
   }
+  input[type=checkbox]::before {
+    clip-path: path("M5.25 5.5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0 M7.712.228a.75.75 0 0 1 1.171.924l-.044.063-3.75 4.75a.75.75 0 0 1-1.178-.93l3.75-4.75z M.9 2.8a.75.75 0 0 1 .987-.193l.063.043 3 2.25.059.05a.75.75 0 0 1-.895 1.193L4.05 6.1l-3-2.25-.059-.05a.75.75 0 0 1-.09-1z");
+  }
 }
 
 @layer components {
   .text-input {
-    @apply border outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700 w-full
-           focus:border-blue-600 focus:outline-2 focus:outline-blue-600
+    @apply border border-400 outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700 w-full
+           focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600
            placeholder:text-400;
   }
   .primary-button {
-    @apply w-full py-2 bg-blue-600 text-white text-sm rounded-lg font-medium cursor-pointer transition
+    @apply w-full py-2 bg-blue-600 text-white text-sm rounded-lg font-medium cursor-pointer transition outline-2 outline-offset-2 outline-transparent
+           focus-visible:outline-blue-400
            disabled:cursor-default disabled:bg-300;
   }
 }

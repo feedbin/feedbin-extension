@@ -1,9 +1,7 @@
 {% for tab in site.data.tabs -%}
 <li class="flex">
     <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700">
-        <svg class="max-w-[16px] max-h-[16px]">
-            <use href="#{{ tab.icon }}" />
-        </svg>
+        {% include shared/icon.html icon=tab.icon %}
 
         {{ tab.title }}
 

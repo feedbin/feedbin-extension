@@ -1,9 +1,7 @@
-<label class="flex items-center gap-2 min-w-0 border rounded p-3 group/checkbutton has-checked:border-600 has-checked:outline-2 has-checked:outline-600">
-    <input type="checkbox">
+<label class="group/checkbutton flex items-center gap-3 min-w-0 border rounded p-3 cursor-pointer has-checked:border-600 has-checked:outline-2 has-checked:outline-600">
+    {% include shared/checkbox.html %}
     <div class="grow truncate">
         {{ include.label }}
     </div>
-    <svg class="max-w-[18px] max-h-[18px] shrink-none fill-500 group-has-checked/checkbutton:fill-700">
-        <use href="#icon-tag" />
-    </svg>
+    {% include shared/icon.html icon="icon-tag" class="shrink-none fill-400 group-has-checked/checkbutton:fill-700" %}
 </label>

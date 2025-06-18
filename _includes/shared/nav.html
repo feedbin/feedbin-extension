@@ -5,7 +5,7 @@
 
         {{ tab.title }}
 
-        <input name="tab" type="radio" class="hidden" value="{{ tab.id }}" {% if forloop.first %}checked{% endif -%}>
+        <input name="tab" type="radio" class="sr-only" data-tabs-target="tab" value="{{ tab.id }}">
     </label>
 </li>
 {% endfor %}

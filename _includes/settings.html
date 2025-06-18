@@ -12,26 +12,29 @@
             Signed in as <strong class="text-700" data-settings-target="signedInAs"></strong>
         </div>
 
-        <div class="flex flex-col gap-4 items-stretch hidden group-data-[tabs-authorized-value=false]:flex">
+        <div class="flex flex-col items-stretch hidden group-data-[tabs-authorized-value=false]:flex">
+            <h1 class="mb-4 text-700 font-bold line-clamp-2">Sign in to Feedbin</h1>
             <div data-settings-target="error" class="bg-red-200 p-2 rounded text-red-600 mb-2 text-sm empty:hidden"></div>
-            <input
-                class="text-input"
-                type="text"
-                name="email"
-                data-settings-target="email"
-                placeholder="Email"
-                autocorrect="off"
-                autocapitalize="off"
-                spellcheck="false"
-                required
-            />
-            <input
-                class="text-input"
-                type="password"
-                name="password"
-                data-settings-target="password"
-                placeholder="Password"
-            />
+            <div class="flex flex-col gap-3">
+                <input
+                    class="text-input"
+                    type="text"
+                    name="email"
+                    data-settings-target="email"
+                    placeholder="Email"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    required
+                />
+                <input
+                    class="text-input"
+                    type="password"
+                    name="password"
+                    data-settings-target="password"
+                    placeholder="Password"
+                />
+            </div>
         </div>
     {% endcapture %}
     {% capture button %}

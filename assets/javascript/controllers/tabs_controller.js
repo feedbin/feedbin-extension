@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 export default class extends Controller {
-  static targets = []
+  static targets = ["tab"]
   static values = {
     authorized: Boolean
   }
@@ -10,11 +10,19 @@ export default class extends Controller {
   }
 
   async authorize() {
-    let result = await browser.storage.sync.get();
+    let selectedTab = "tab-settings"
+    this.authorizedValue = false
+
+    const result = await browser.storage.sync.get();
     if ("user" in result && "email" in result.user) {
       this.authorizedValue = true
-    } else {
-      this.authorizedValue = false
+      selectedTab = "tab-add"
     }
+
+    this.tabTargets.forEach((element, index) => {
+      if (element.value === selectedTab) {
+        element.checked = true
+      }
+    })
   }
 }

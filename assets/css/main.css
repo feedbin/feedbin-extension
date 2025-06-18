@@ -7,23 +7,23 @@
 }
 
 @theme {
-  --light-color-0: white;
-  --light-color-100: #f5f5f7;
-  --light-color-200: #e9e9eb;
-  --light-color-300: #bdbfc3;
-  --light-color-400: #91959b;
-  --light-color-500: #707680;
-  --light-color-600: #39404b;
-  --light-color-700: #0d1623;
+  --light-color-0:    #ffffff;
+  --light-color-100:  #f5f5f7;
+  --light-color-200:  #e9e9eb;
+  --light-color-300:  #bdbfc3;
+  --light-color-400:  #91959b;
+  --light-color-500:  #707680;
+  --light-color-600:  #39404b;
+  --light-color-700:  #0d1623;
 
-  --dark-color-0: #262626;
-  --dark-color-100:  #2d2d2d;
-  --dark-color-200:  #353535;
-  --dark-color-300:  #4d4d4d;
-  --dark-color-400:  #707070;
-  --dark-color-500:  #8c8c8c;
-  --dark-color-600:  #d4d4d4;
-  --dark-color-700:  #f6f6f6;
+  --dark-color-0:     #262626;
+  --dark-color-100:   #2d2d2d;
+  --dark-color-200:   #353535;
+  --dark-color-300:   #4d4d4d;
+  --dark-color-400:   #707070;
+  --dark-color-500:   #8c8c8c;
+  --dark-color-600:   #d4d4d4;
+  --dark-color-700:   #f6f6f6;
 
   --color-blue-400:   #619EEB;
   --color-blue-700:   #0554BA;
@@ -31,14 +31,14 @@
   --color-red-200:    #F8E8EB;
   --color-orange-600: #E86B0D;
 
-  --color-0: light-dark(var(--light-color-0), var(--dark-color-0));
-  --color-100:  light-dark(var(--light-color-100),  var(--dark-color-100));
-  --color-200:  light-dark(var(--light-color-200),  var(--dark-color-200));
-  --color-300:  light-dark(var(--light-color-300),  var(--dark-color-300));
-  --color-400:  light-dark(var(--light-color-400),  var(--dark-color-400));
-  --color-500:  light-dark(var(--light-color-500),  var(--dark-color-500));
-  --color-600:  light-dark(var(--light-color-600),  var(--dark-color-600));
-  --color-700:  light-dark(var(--light-color-700),  var(--dark-color-700));
+  --color-0:    light-dark(var(--light-color-0),   var(--dark-color-0));
+  --color-100:  light-dark(var(--light-color-100), var(--dark-color-100));
+  --color-200:  light-dark(var(--light-color-200), var(--dark-color-200));
+  --color-300:  light-dark(var(--light-color-300), var(--dark-color-300));
+  --color-400:  light-dark(var(--light-color-400), var(--dark-color-400));
+  --color-500:  light-dark(var(--light-color-500), var(--dark-color-500));
+  --color-600:  light-dark(var(--light-color-600), var(--dark-color-600));
+  --color-700:  light-dark(var(--light-color-700), var(--dark-color-700));
 
   --color-blue-600:  light-dark(#065FE3, #0773FF);
   --color-red-600:   light-dark(#BA0730, #D30D36);
@@ -62,7 +62,7 @@
 
 @layer components {
   .text-input {
-    @apply border border-400 outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700 w-full
+    @apply border border-400 outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700 w-full shadow-sm
            focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600
            placeholder:text-400;
   }

@@ -59,7 +59,7 @@
 
 @layer components {
   .text-input {
-    @apply border outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700
+    @apply border outline-offset-0 transition rounded-md py-2 px-3 max-w-full text-700 w-full
            focus:border-blue-600 focus:outline-2 focus:outline-blue-600
            placeholder:text-400;
   }

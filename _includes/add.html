@@ -1,6 +1,19 @@
-<form class="group h-full flex flex-col" data-controller="add" data-action="submit->add#submit" data-add-loading-value="false" novalidate>
+<form
+    novalidate
+    class="group h-full flex flex-col"
+    data-controller="add"
+    data-add-loading-value="false"
+    data-add-has-error-value="false"
+    data-add-has-data-value="false"
+    data-add-has-favicon-value="false"
+    data-action="
+        submit->add#submit:prevent
+        tabs:pageInfoLoaded@window->add#pageInfoLoaded
+        tabs:pageInfoError@window->add#pageInfoError
+    "
+>
     {% capture content %}
-    <div>
+    <div class="hidden">
         <h1 class="mb-2 text-700 font-bold line-clamp-2">Feeds</h1>
         <div class="mb-4">
             <div class="flex mb-4">
@@ -28,25 +41,10 @@
             {% include shared/checkbutton.html label="Two" value="1" %}
             {% include shared/checkbutton.html label="Three" value="1" %}
         </div>
-
-
     </div>
-    <div class="flex gap-4">
-        <div class="rounded flex items-center justify-center shrink-none mt-0.5 w-[20px] h-[20px]">
-            {% include shared/icon.html icon="icon-feed" class="fill-600" %}
-        </div>
-        <div class="grow min-w-0">
-            <h1 class="mb-1 text-700 font-bold line-clamp-2">
-                Javier Bardem Doesn’t Drive. But He Knows How to Swerve.
-            </h1>
-            <p class="mb-1 line-clamp-3 text-sm">
-                The Oscar-winning actor may be starring alongside Brad Pitt in the summer blockbuster “F1: The Movie,” but his career has been harder to categorize.
-            </p>
-            <p class="mb-1 text-500 truncate text-sm">
-                https://www.nytimes.com/2025/06/15/style/javier-bardem-brad-pitt-f1.html
-            </p>
-        </div>
-    </div>
+
+    {% include page-info.html %}
+
     {% endcapture %}
     {% capture button %}
         <button data-add-target="submitButton" type="submit" class="primary-button">

@@ -17,6 +17,7 @@ export default class extends Controller {
     if ("user" in result && "email" in result.user) {
       this.authorizedValue = true
       selectedTab = "tab-add"
+      this.dispatch("authorized")
     }
 
     this.tabTargets.forEach((element, index) => {

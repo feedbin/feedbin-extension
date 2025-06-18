@@ -22,7 +22,7 @@
         data-tabs-authorized-value="false"
         data-action="settings:authorize@window->tabs#authorize"
     >
-        <ul class="gap-2 py-4 px-6 shrink-none hidden group-data-[tabs-authorized-value=true]:flex">
+        <ul class="gap-2 py-4 px-6 shrink-0 hidden group-data-[tabs-authorized-value=true]:flex">
             {% include shared/nav.html %}
         </ul>
 
@@ -46,20 +46,3 @@
     </svg>
 </body>
 </html>
-
-<!--
-<div class="container" data-controller="tab-info">
-<h1>Current Tab Info</h1>
-<div class="button-group">
-<button data-action="click->tab-info#refresh" class="refresh-btn">
-Refresh
-</button>
-<button data-action="click->tab-info#copyToClipboard" class="copy-btn">
-Copy Title
-</button>
-</div>
-<div data-tab-info-target="result" class="result-container">
-<p class="loading">Loading tab information...</p>
-</div>
-</div>
--->

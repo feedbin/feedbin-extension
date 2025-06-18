@@ -1,0 +1,25 @@
+<div
+    class="group"
+    data-controller="page-info"
+    data-page-info-has-error-value="false"
+    data-page-info-has-data-value="false"
+    data-page-info-has-favicon-value="false"
+    data-action="tabs:authorized@window->page-info#load"
+>
+
+    <div class="hidden group-data-[page-info-has-error-value=true]:block">
+        {% include shared/error.html content="Error loading extension" %}
+    </div>
+
+    <div class="flex gap-3 hidden group-data-[page-info-has-data-value=true]:flex">
+        <div class="rounded-xs flex items-center justify-center shrink-0 dark:bg-white w-[20px] h-[20px] shrink-0">
+            {% include shared/icon.html icon="icon-feed" class="fill-600 hidden group-data-[page-info-has-favicon-value=false]:block" %}
+            <img data-page-info-target="favicon" class="hidden max-w-[16px] max-h-[16px] group-data-[page-info-has-favicon-value=true]:block">
+        </div>
+        <div class="grow min-w-0">
+            <h1 data-page-info-target="title"       class="mb-1 text-700 font-bold line-clamp-2 empty:hidden" ></h1>
+            <p  data-page-info-target="description" class="mb-1 line-clamp-3 text-sm empty:hidden"></p>
+            <p  data-page-info-target="url"         class="mb-1 text-500 truncate text-sm empty:hidden"></p>
+        </div>
+    </div>
+</div>

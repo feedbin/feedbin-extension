@@ -8,9 +8,9 @@ class SaveTest < SystemTest
 
     click_tab(:save)
 
-    assert_equal "Title", page.find(:css, "[data-page-info-target=title]").text
-    assert_equal "Description", page.find(:css, "[data-page-info-target=description]").text
-    assert_equal "http://example.com", page.find(:css, "[data-page-info-target=url]").text
+    assert_equal "Title", page.find("[data-page-info-target=title]").text
+    assert_equal "Description", page.find("[data-page-info-target=description]").text
+    assert_equal "http://example.com", page.find("[data-page-info-target=url]").text
   end
 
   def test_site_info_error

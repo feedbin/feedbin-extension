@@ -7,7 +7,7 @@ class SettingsTest < SystemTest
 
     click_tab(:settings)
 
-    text = page.find(:css, "[data-settings-target=signedInAs]").text
+    text = page.find("[data-settings-target=signedInAs]").text
     assert_equal "example@example.com", text
   end
 
@@ -19,7 +19,7 @@ class SettingsTest < SystemTest
 
     visit "/index.html"
     click_button("Sign In")
-    text = page.find(:css, "[data-settings-target=error]").text
+    text = page.find("[data-settings-target=error]").text
     assert_equal "Invalid email or password.", text
   end
 
@@ -30,7 +30,7 @@ class SettingsTest < SystemTest
 
     visit "/index.html"
     click_button("Sign In")
-    text = page.find(:css, "[data-settings-target=error]").text
+    text = page.find("[data-settings-target=error]").text
     assert_equal "Invalid response: Internal Server Error", text
   end
 end

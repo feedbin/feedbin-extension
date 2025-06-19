@@ -5,33 +5,15 @@
     class="group h-full flex flex-col"
     data-controller="add"
     data-add-loading-value="false"
-    data-add-has-error-value="false"
-    data-add-has-data-value="false"
-    data-add-has-favicon-value="false"
+    data-add-has-results-value="false"
     data-action="submit->add#submit:prevent"
 >
     {% capture content %}
-    {% include shared/error.html content="" props="data-add-target='error'" %}
+    {% include shared/error.html content="" attributes="data-add-target='error'" %}
 
-    <div class="hidden">
+    <div class="hidden group-data-[add-has-results-value=true]:block">
         <h1 class="mb-2 text-700 font-bold line-clamp-2">Feeds</h1>
-        <div class="mb-4">
-            <div class="flex mb-4">
-                <label class="h-[40px] flex items-center pr-2">
-                    {% include shared/checkbox.html %}
-                </label>
-                <div class="grow min-w-0">
-                    <input type="text" class="text-input" placeholder="Daring Fireball" value="Daring Fireball">
-                    <div class="flex min-w-0 gap-4 text-sm mt-1 text-500">
-                        <div class="grow truncate">
-                            www.nytimes.com › feeds › videos.xml
-                        </div>
-                        <div class="shrink-0">
-                            360 posts / month
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div data-add-target="feedResults">
         </div>
 
         <h1 class="mb-2 text-700 font-bold line-clamp-2">Tags</h1>
@@ -43,7 +25,25 @@
         </div>
     </div>
 
-    {% include page-info.html format="add" %}
+    <div class="group-data-[add-has-results-value=true]:hidden">
+        {% include page-info.html format="add" %}
+    </div>
+
+    <template data-add-target="feedTemplate">
+        <div class="flex mb-4">
+            <input type="hidden" data-template="url">
+            <label class="h-[40px] flex items-center pr-2">
+                {% include shared/checkbox.html attributes="data-template='checkbox'" %}
+            </label>
+            <div class="grow min-w-0">
+                <input type="text" class="text-input" data-template="feed_input">
+                <div class="flex min-w-0 gap-4 text-sm mt-1 text-500">
+                    <div class="grow truncate" data-template="display_url"></div>
+                    <div class="shrink-0" data-template="volume"></div>
+                </div>
+            </div>
+        </div>
+    </template>
 
     {% endcapture %}
     {% capture button %}

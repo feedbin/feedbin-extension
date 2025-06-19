@@ -1,8 +1,6 @@
 <form class="group h-full flex flex-col" data-controller="save" data-action="submit->save#submit" data-save-loading-value="false" novalidate>
     {% capture content %}
-        <div class="save">
-            Save
-        </div>
+        {% include page-info.html %}
     {% endcapture %}
     {% capture button %}
         <button data-save-target="submitButton" type="submit" class="primary-button">

@@ -1,32 +1,48 @@
 import { Controller } from "../lib/stimulus.js"
+import { sanitize, hostname } from "../helpers.js"
 export default class extends Controller {
   static targets = ["error", "favicon", "title", "description", "url"]
   static values = {
     hasError: Boolean,
     hasData: Boolean,
     hasFavicon: Boolean,
+    format: String,
   }
 
   pageInfoError(event) {
-    console.log("pageInfoError", event);
     this.hasDataValue = false
     this.hasErrorValue = true
   }
 
   pageInfoLoaded(event) {
-    console.log("pageInfoLoaded", event);
     this.hasErrorValue = false
     this.hasDataValue = true
 
-    if (event.detail?.tab?.favIconUrl) {
+    const title       = event.detail?.title || event.detail?.tab?.title || event.detail?.tab?.url
+    const siteName    = event.detail?.siteName
+    const description = event.detail?.description || ""
+    const url         = event.detail?.tab?.url
+    const favicon     = event.detail?.tab?.favIconUrl
+    const host        = hostname(url)
+
+    if (favicon) {
       this.hasFaviconValue = true
-      this.faviconTarget.setAttribute("src", event.detail.tab.favIconUrl)
+      this.faviconTarget.setAttribute("src", favicon)
     }
 
-    this.titleTarget.textContent = event.detail?.title || event.detail?.tab?.title || event.detail?.tab?.url
-    this.descriptionTarget.textContent = event.detail?.description || ""
-    if (this.titleTarget.textContent !== event.detail?.tab?.url) {
-      this.urlTarget.textContent = event.detail?.tab?.url
+    if (this.formatValue === "add") {
+      this.titleTarget.textContent = sanitize(siteName)
+      if (siteName !== host) {
+        this.urlTarget.textContent = host
+      }
+    }
+
+    if (this.formatValue === "save") {
+      this.titleTarget.textContent = sanitize(title)
+      this.descriptionTarget.textContent = sanitize(description)
+      if (title !== url) {
+        this.urlTarget.textContent = sanitize(url)
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
-import { sanitize, hostname } from "../helpers.js"
+import { sanitize, getHostname } from "../helpers.js"
+
 export default class extends Controller {
   static targets = ["error", "favicon", "title", "description", "url"]
   static values = {
@@ -23,7 +24,7 @@ export default class extends Controller {
     const description = event.detail?.description || ""
     const url         = event.detail?.tab?.url
     const favicon     = event.detail?.tab?.favIconUrl
-    const host        = hostname(url)
+    const hostname    = getHostname(url)
 
     if (favicon) {
       this.hasFaviconValue = true
@@ -31,9 +32,10 @@ export default class extends Controller {
     }
 
     if (this.formatValue === "add") {
-      this.titleTarget.textContent = sanitize(siteName)
-      if (siteName !== host) {
-        this.urlTarget.textContent = host
+      const addSiteName = siteName || hostname
+      this.titleTarget.textContent = sanitize(addSiteName)
+      if (addSiteName !== hostname) {
+        this.urlTarget.textContent = hostname
       }
     }
 
@@ -57,7 +59,7 @@ export default class extends Controller {
       if (tab) {
         await browser.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ['assets/javascript/lib/polyfill.js', 'assets/javascript/content.js']
+          files: ["assets/javascript/lib/polyfill.js", "assets/javascript/content.js"]
         })
         const faviconUrl = tab.favIconUrl
 
@@ -76,7 +78,7 @@ export default class extends Controller {
       } else {
         this.pageInfoError()
       }
-      console.error('Error getting tab information:', error)
+      console.error("Error getting tab information:", error)
     } finally {
 
     }

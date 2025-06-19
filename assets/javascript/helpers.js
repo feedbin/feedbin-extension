@@ -4,7 +4,7 @@ export function sanitize(text) {
     return decoded.value
 }
 
-export function hostname(url) {
+export function getHostname(url) {
   try {
     return new URL(url).hostname;
   } catch (e) {

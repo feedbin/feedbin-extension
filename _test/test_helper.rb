@@ -21,7 +21,7 @@ end
 Capybara.configure do |config|
   config.javascript_driver = :cuprite
   config.default_driver = :cuprite
-  config.default_max_wait_time = 5
+  config.default_max_wait_time = 1
   config.disable_animation = true
   config.server = :puma
   config.app = Rack::Builder.new do
@@ -52,8 +52,6 @@ end
 def sign_in
   CapybaraMock.stub_request(:post, build_url("authentication"))
     .to_return(body: {page_token: "token"}.to_json)
-
-  visit "/index.html"
 
   fill_in "Email", with: "example@example.com"
   fill_in "Password", with: "password"

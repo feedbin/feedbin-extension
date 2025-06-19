@@ -112,6 +112,10 @@
 
   // Mock browser.tabs.query
   root.tabs.query = function (queryInfo) {
+    // Check if we should simulate no tabs found
+    if (window.mockNoTabsFound) {
+      return Promise.resolve([]);
+    }
 
     // Return a mock tab object
     const mockTab = {
@@ -129,6 +133,10 @@
 
   // Mock browser.tabs.sendMessage
   root.tabs.sendMessage = function (tabId, message) {
+    // Check if we should simulate a sendMessage failure
+    if (window.mockSendMessageShouldFail) {
+      return Promise.reject(new Error("Failed to send message"));
+    }
 
     // Simulate sending message to content script
     if (
@@ -152,7 +160,6 @@
 
   // Helper function to simulate content script injection
   root.mockContentScriptInjection = function () {
-
     // Simulate the content script's getMetaContent function
     function getMetaContent(selector) {
       try {
@@ -186,6 +193,9 @@
       }
     };
 
+    // Reset error flags
+    window.mockNoTabsFound = false;
+    window.mockSendMessageShouldFail = false;
   };
 
   // Auto-setup if we're in a browser environment (not extension context)

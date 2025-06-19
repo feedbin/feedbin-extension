@@ -10,7 +10,7 @@ class SaveTest < SystemTest
 
     assert_equal "Title", page.find("[data-page-info-target=title]").text
     assert_equal "Description", page.find("[data-page-info-target=description]").text
-    assert_equal "http://example.com", page.find("[data-page-info-target=url]").text
+    assert_equal "http://daringfireball.net", page.find("[data-page-info-target=url]").text
   end
 
   def test_site_info_error

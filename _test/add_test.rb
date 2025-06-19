@@ -9,7 +9,7 @@ class AddTest < SystemTest
     click_tab(:add)
 
     assert_equal "Site Name", page.find("[data-page-info-target=title]").text
-    assert_equal "example.com", page.find("[data-page-info-target=url]").text
+    assert_equal "daringfireball.net", page.find("[data-page-info-target=url]").text
   end
 
   def test_site_info_error

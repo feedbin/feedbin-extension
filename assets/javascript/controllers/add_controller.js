@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { pageToken } from "../helpers.js"
+import { sharedStore } from "../store.js"
 
 export default class extends Controller {
   static targets = ["submitButton", "error"]
@@ -15,11 +15,12 @@ export default class extends Controller {
     this.loadingValue = true
     this.errorTarget.textContent = ""
 
-    const formData = new FormData(this.element);
+    const user = sharedStore.getUser()
+    const pageInfo = sharedStore.getPageInfo()
 
-    let token = await pageToken()
-    console.log("token", token);
-    formData.append("page_token", token);
+    const formData = new FormData(this.element);
+    formData.append("page_token", user.page_token);
+    formData.append("url", pageInfo.url);
 
     let data = {}
     try {
@@ -38,15 +39,10 @@ export default class extends Controller {
       console.log(data);
     } catch (error) {
       if ("response" in error) {
-        if (error.response.status == 401) {
-          this.errorTarget.textContent = "Invalid email or password."
-        } else {
-          this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
-        }
+        this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
       } else {
         this.errorTarget.textContent = `Unknown error.`
       }
-      console.error("Request failed:", error);
     }
 
     this.submitButtonTarget.disabled = false

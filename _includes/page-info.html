@@ -5,7 +5,10 @@
     data-page-info-has-data-value="false"
     data-page-info-has-favicon-value="false"
     data-page-info-format-value="{{ include.format }}"
-    data-action="tabs:authorized@window->page-info#load"
+    data-action="
+        app:pageInfoLoaded@window->page-info#pageInfoLoaded
+        app:pageInfoError@window->page-info#pageInfoError
+    "
 >
     <input name="url" type="hidden" data-page-info-target="formUrl" value="">
 

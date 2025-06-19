@@ -19,73 +19,27 @@ export default class extends Controller {
     this.hasErrorValue = false
     this.hasDataValue = true
 
-    const title       = event.detail?.title || event.detail?.tab?.title || event.detail?.tab?.url
-    const siteName    = event.detail?.siteName
-    const description = event.detail?.description || ""
-    const url         = event.detail?.tab?.url
-    const hostname    = getHostname(url)
-
-    // use native favIconUrl except if not available (like Safari)
-    const favicon     = event.detail?.tab?.favIconUrl || event.detail?.favicon
-
-    this.formUrlTarget.value = url
-
-    if (favicon) {
+    if (event.detail?.favicon) {
       this.hasFaviconValue = true
-      this.faviconTarget.setAttribute("src", favicon)
+      this.faviconTarget.setAttribute("src", event.detail?.favicon)
     }
 
     if (this.formatValue === "add") {
-      const addSiteName = siteName || hostname
+      const addSiteName = event.detail?.siteName || event.detail?.hostname
       this.titleTarget.textContent = sanitize(addSiteName)
-      if (addSiteName !== hostname) {
-        this.urlTarget.textContent = hostname
+      if (addSiteName !== event.detail?.hostname) {
+        this.urlTarget.textContent = event.detail?.hostname
       }
     }
 
     if (this.formatValue === "save") {
-      this.titleTarget.textContent = sanitize(title)
-      this.descriptionTarget.textContent = sanitize(description)
-      if (title !== url) {
-        this.urlTarget.textContent = sanitize(url)
+      this.titleTarget.textContent = sanitize(event.detail?.title)
+
+      if (event.detail?.description) {
+        this.descriptionTarget.textContent = sanitize(event.detail?.description)
       }
+
+      this.urlTarget.textContent = sanitize(event.detail?.url)
     }
   }
-
-  async load() {
-    console.log("load");
-    try {
-      const [tab] = await browser.tabs.query({
-        active: true,
-        currentWindow: true
-      })
-
-      if (tab) {
-        await browser.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content.js"]
-        })
-        const faviconUrl = tab.favIconUrl
-
-        let info = await browser.tabs.sendMessage(tab.id, {action: "loadPageInfo"}) || {}
-        info["tab"] = tab
-
-        console.log("info", info);
-        this.pageInfoLoaded({ detail: info })
-      } else {
-        console.log("could not get tab info");
-        this.pageInfoError()
-      }
-    } catch (error) {
-      if (typeof tab !== "undefined") {
-        this.pageInfoLoaded({ detail: { tab } })
-      } else {
-        this.pageInfoError()
-      }
-      console.error("Error getting tab information:", error)
-    } finally {
-
-    }
-  }
-
 }

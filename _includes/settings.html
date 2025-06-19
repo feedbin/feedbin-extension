@@ -8,11 +8,11 @@
     novalidate
 >
     {% capture content %}
-        <div class="rounded bg-100 border p-3 truncate hidden group-data-[tabs-authorized-value=true]:block">
+        <div class="rounded bg-100 border p-3 truncate hidden group-data-[app-authorized-value=true]:block">
             Signed in as <strong class="text-700" data-settings-target="signedInAs"></strong>
         </div>
 
-        <div class="flex flex-col items-stretch hidden group-data-[tabs-authorized-value=false]:flex">
+        <div class="flex flex-col items-stretch hidden group-data-[app-authorized-value=false]:flex">
             <h1 class="mb-4 text-700 font-bold line-clamp-2">Sign in to Feedbin</h1>
 
             {% include shared/error.html content="" props="data-settings-target='error'" %}
@@ -40,7 +40,7 @@
         </div>
     {% endcapture %}
     {% capture button %}
-        <button data-settings-target="submitButton" type="submit" class="primary-button hidden group-data-[tabs-authorized-value=false]:block">
+        <button data-settings-target="submitButton" type="submit" class="primary-button hidden group-data-[app-authorized-value=false]:block">
             <span class="hidden group-data-[settings-loading-value=false]:block">
                 Sign In
             </span>
@@ -49,7 +49,7 @@
             </span>
         </button>
 
-        <button data-action="click->settings#signOut:prevent" data-settings-target="signOutButton" class="primary-button hidden group-data-[tabs-authorized-value=true]:block">
+        <button data-action="click->settings#signOut:prevent" data-settings-target="signOutButton" class="primary-button hidden group-data-[app-authorized-value=true]:block">
             Sign Out
         </button>
     {% endcapture %}

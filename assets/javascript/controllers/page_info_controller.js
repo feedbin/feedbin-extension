@@ -63,7 +63,7 @@ export default class extends Controller {
         })
         const faviconUrl = tab.favIconUrl
 
-        let info = await browser.tabs.sendMessage(tab.id, {action: "loadPageInfo"})
+        let info = await browser.tabs.sendMessage(tab.id, {action: "loadPageInfo"}) || {}
         info["tab"] = tab
 
         console.log("info", info);

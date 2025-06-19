@@ -1,5 +1,7 @@
 <form
     novalidate
+    action="{{ site.urls.find | build_url }}"
+    method="POST"
     class="group h-full flex flex-col"
     data-controller="add"
     data-add-loading-value="false"
@@ -9,6 +11,8 @@
     data-action="submit->add#submit:prevent"
 >
     {% capture content %}
+    {% include shared/error.html content="" props="data-add-target='error'" %}
+
     <div class="hidden">
         <h1 class="mb-2 text-700 font-bold line-clamp-2">Feeds</h1>
         <div class="mb-4">

@@ -11,3 +11,8 @@ export function getHostname(url) {
     return url;
   }
 }
+
+export async function pageToken() {
+  let result = await browser.storage.sync.get();
+  return result.user?.page_token || null
+}

@@ -12,10 +12,11 @@
 
   function loadPageInfo() {
     return {
-      description: getMetaContent('meta[property="og:description"]') || getMetaContent('meta[name="description"]') || getMetaContent('meta[name="twitter:description"]'),
-      title:       getMetaContent('meta[property="og:title"]'),
-      image:       getMetaContent('meta[property="og:image"]'),
-      siteName:    getMetaContent('meta[property="og:site_name"]')
+      description: getMetaContent('meta[property="og:description" i]') || getMetaContent('meta[name="description" i]') || getMetaContent('meta[name="twitter:description" i]'),
+      title:       getMetaContent('meta[property="og:title" i]'),
+      image:       getMetaContent('meta[property="og:image" i]'),
+      siteName:    getMetaContent('meta[property="og:site_name" i]'),
+      favicon:     document.querySelector('link[rel="shortcut icon" i]')?.href || document.querySelector('link[rel="icon" i]')?.href,
     };
   }
 

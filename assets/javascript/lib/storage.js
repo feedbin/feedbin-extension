@@ -120,7 +120,7 @@
     // Return a mock tab object
     const mockTab = {
       id: 1,
-      url: "http://example.com",
+      url: "http://daringfireball.net",
       title: "Page Title",
       favIconUrl:
         'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="%23007acc"/></svg>',

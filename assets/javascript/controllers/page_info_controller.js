@@ -2,7 +2,7 @@ import { Controller } from "../lib/stimulus.js"
 import { sanitize, getHostname } from "../helpers.js"
 
 export default class extends Controller {
-  static targets = ["error", "favicon", "title", "description", "url"]
+  static targets = ["error", "favicon", "title", "description", "url", "formUrl"]
   static values = {
     hasError: Boolean,
     hasData: Boolean,
@@ -23,8 +23,12 @@ export default class extends Controller {
     const siteName    = event.detail?.siteName
     const description = event.detail?.description || ""
     const url         = event.detail?.tab?.url
-    const favicon     = event.detail?.tab?.favIconUrl
     const hostname    = getHostname(url)
+
+    // use native favIconUrl except if not available (like Safari)
+    const favicon     = event.detail?.tab?.favIconUrl || event.detail?.favicon
+
+    this.formUrlTarget.value = url
 
     if (favicon) {
       this.hasFaviconValue = true

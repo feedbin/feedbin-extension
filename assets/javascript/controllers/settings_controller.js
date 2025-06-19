@@ -39,6 +39,8 @@ export default class extends Controller {
         } else {
           this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
         }
+      } else {
+        this.errorTarget.textContent = `Unknown error.`
       }
       console.error("Request failed:", error);
     }

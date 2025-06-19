@@ -7,6 +7,7 @@
     data-page-info-format-value="{{ include.format }}"
     data-action="tabs:authorized@window->page-info#load"
 >
+    <input name="url" type="hidden" data-page-info-target="formUrl" value="">
 
     <div class="hidden group-data-[page-info-has-error-value=true]:block">
         {% include shared/error.html content="Error loading extension" %}

@@ -67,7 +67,9 @@
            placeholder:text-400;
   }
   .primary-button {
-    @apply w-full py-2 bg-blue-600 text-white text-sm rounded-lg font-medium cursor-pointer transition outline-2 outline-offset-1 outline-transparent
+    @apply w-full py-2 border border-400 shadow-sm text-700 text-sm rounded-lg font-medium cursor-pointer
+           transition outline-2 outline-offset-1 outline-transparent
+           active:shadow-none
            focus-visible:outline-blue-400
            disabled:cursor-default disabled:bg-300;
   }

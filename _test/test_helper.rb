@@ -48,3 +48,15 @@ end
 def build_url(path)
   URI.join($site.config["api_host"], $site.config["urls"][path]).to_s
 end
+
+def sign_in
+  CapybaraMock.stub_request(:post, build_url("authentication"))
+    .to_return(body: {page_token: "token"}.to_json)
+
+  visit "/index.html"
+
+  fill_in "Email", with: "example@example.com"
+  fill_in "Password", with: "password"
+
+  click_button("Sign In")
+end

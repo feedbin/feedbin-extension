@@ -71,6 +71,6 @@
            transition outline-2 outline-offset-1 outline-transparent
            active:shadow-none
            focus-visible:outline-blue-400
-           disabled:cursor-default disabled:bg-200 disabled:text-500 disabled:shadow-none;
+           disabled:cursor-default disabled:bg-200 disabled:text-500 disabled:shadow-none disabled:border-300;
   }
 }

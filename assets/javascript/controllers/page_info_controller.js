@@ -63,7 +63,7 @@ export default class extends Controller {
       if (tab) {
         await browser.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ["assets/javascript/lib/polyfill.js", "assets/javascript/content.js"]
+          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content.js"]
         })
         const faviconUrl = tab.favIconUrl
 

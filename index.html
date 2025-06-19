@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="assets/css/main.css">
 
     {% if jekyll.environment == "browser" or jekyll.environment == "test" %}
-    <script src="assets/javascript/lib/storage.js"></script>
+    <script src="assets/javascript/lib/browser-polyfill.js"></script>
     {% endif %}
 
-    <script src="assets/javascript/lib/polyfill.js"></script>
+    <script src="assets/javascript/lib/extension-polyfill.js"></script>
     <script src="assets/javascript/application.js" type="module"></script>
 </head>
 <body class="bg-0 h-full antialiased text-600 text-sm! select-none cursor-default leading-[1.4] w-[400px] [text-size-adjust:none]">

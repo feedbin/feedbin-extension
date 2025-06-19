@@ -8,7 +8,7 @@
     <title>Feedbin Subscribe & Save</title>
     <link rel="stylesheet" href="assets/css/main.css">
 
-    {% if jekyll.environment != "production" %}
+    {% if jekyll.environment == "browser" or jekyll.environment == "test" %}
     <script src="assets/javascript/lib/storage.js"></script>
     {% endif %}
 

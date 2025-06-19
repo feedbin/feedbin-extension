@@ -4,8 +4,13 @@
   "version": "1.0",
   "description": "Subscribe to websites and save pages to read in Feedbin",
   "icons": {
-    "32": "assets/images/icon-32.png",
-    "64": "assets/images/icon-64.png"
+    "32":  "assets/images/icon-32.png",
+    "48":  "assets/images/icon-48.png",
+    "64":  "assets/images/icon-64.png",
+    "96":  "assets/images/icon-96.png",
+    "128": "assets/images/icon-128.png",
+    "256": "assets/images/icon-256.png",
+    "512": "assets/images/icon-512.png"
   },
   "permissions": [
     "activeTab",
@@ -14,7 +19,8 @@
   ],
   "action": {
     "default_popup": "index.html",
-    "default_title": "Subscribe & Save"
+    "default_title": "Subscribe & Save",
+    "default_icon": "assets/images/toolbar-icon.svg"
   },
   "browser_specific_settings": {
     "gecko": {

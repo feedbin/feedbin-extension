@@ -5,8 +5,7 @@ class SettingsTest < SystemTest
     visit "/index.html"
     sign_in
 
-    # Navigate back to settings
-    page.find(:css, "[value=tab-settings]").trigger("click")
+    click_tab(:settings)
 
     text = page.find(:css, "[data-settings-target=signedInAs]").text
     assert_equal "example@example.com", text

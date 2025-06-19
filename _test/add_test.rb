@@ -6,19 +6,11 @@ class AddTest < SystemTest
 
     sign_in
 
-    # Navigate to add tab
-    page.find(:css, "[value=tab-add]").trigger("click")
+    click_tab(:add)
 
-    assert page.has_css?("[data-page-info-has-data-value=true]")
-    assert page.has_css?("[data-page-info-target=title]")
-    assert page.has_css?("[data-page-info-target=description]")
-    assert page.has_css?("[data-page-info-target=url]")
-
-    title = page.find(:css, "[data-page-info-target=title]").text
-    assert_equal "Title", title
-
-    description = page.find(:css, "[data-page-info-target=description]").text
-    assert_equal "Description", description
+    assert_equal "Title", page.find(:css, "[data-page-info-target=title]").text
+    assert_equal "Description", page.find(:css, "[data-page-info-target=description]").text
+    assert_equal "http://example.com", page.find(:css, "[data-page-info-target=url]").text
   end
 
   def test_site_info_error
@@ -28,7 +20,7 @@ class AddTest < SystemTest
 
     sign_in
 
-    page.find(:css, "[value=tab-add]").trigger("click")
+    click_tab(:add)
 
     assert page.has_css?("[data-page-info-has-error-value=true]")
     assert page.has_text?("Error loading extension")

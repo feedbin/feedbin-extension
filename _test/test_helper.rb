@@ -58,3 +58,7 @@ def sign_in
 
   click_button("Sign In")
 end
+
+def click_tab(tab)
+  page.find(:css, "[value=tab-#{tab}]").trigger("click")
+end

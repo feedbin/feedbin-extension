@@ -1,5 +1,5 @@
 {% for tab in site.data.tabs -%}
-<li class="flex">
+<li class="flex {% if forloop.last %}ml-auto{% endif %}">
     <label
         class="text-500 fill-500 bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700 flex grow cursor-pointer items-center gap-2 rounded-lg p-3 text-xs whitespace-nowrap outline-2 outline-offset-1 outline-transparent transition has-focus-visible:outline-blue-400"
     >

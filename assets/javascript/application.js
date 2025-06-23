@@ -2,6 +2,7 @@
 ---
 import { Application } from "./lib/stimulus.js"
 import AppController from "./controllers/app_controller.js"
+import AuthenticationController from "./controllers/authentication_controller.js"
 import SettingsController from "./controllers/settings_controller.js"
 import TabsController from "./controllers/tabs_controller.js"
 import AddController from "./controllers/add_controller.js"
@@ -13,6 +14,7 @@ const application = Application.start()
 application.debug = {% if jekyll.environment == "production" %} false {% else %} true {% endif %}
 
 application.register("app", AppController)
+application.register("authentication", AuthenticationController)
 application.register("settings", SettingsController)
 application.register("tabs", TabsController)
 application.register("add", AddController)

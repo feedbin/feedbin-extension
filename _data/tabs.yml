@@ -6,6 +6,6 @@
   id: tab-save
   icon: icon-save
 
-- title: Settings
+- title:
   id: tab-settings
   icon: icon-settings

@@ -1,11 +1,17 @@
 {% for tab in site.data.tabs -%}
 <li class="flex">
-    <label class="flex gap-2 items-center text-500 text-xs whitespace-nowrap fill-500 rounded-lg cursor-pointer p-3 grow block transition bg-0 outline-2 outline-transparent outline-offset-1 has-checked:bg-100 has-checked:text-700 has-checked:fill-700 has-focus-visible:outline-blue-400">
-        {% include shared/icon.html icon=tab.icon %}
+    <label
+        class="text-500 fill-500 bg-0 has-checked:bg-100 has-checked:text-700 has-checked:fill-700 flex grow cursor-pointer items-center gap-2 rounded-lg p-3 text-xs whitespace-nowrap outline-2 outline-offset-1 outline-transparent transition has-focus-visible:outline-blue-400"
+    >
+        {% include shared/icon.html icon=tab.icon %} {{ tab.title }}
 
-        {{ tab.title }}
-
-        <input name="tab" type="radio" class="sr-only" data-tabs-target="tab" value="{{ tab.id }}">
+        <input
+            name="tab"
+            type="radio"
+            class="sr-only"
+            data-tabs-target="tab"
+            value="{{ tab.id }}"
+        />
     </label>
 </li>
 {% endfor %}

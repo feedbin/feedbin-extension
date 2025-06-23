@@ -1,52 +1,64 @@
 ---
 ---
-<!DOCTYPE html>
-<html lang="en" class="h-full">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedbin Subscribe & Save</title>
-    <link rel="stylesheet" href="assets/css/main.css">
 
-    {% if jekyll.environment == "browser" or jekyll.environment == "test" %}
-    <script src="assets/javascript/lib/browser-polyfill.js"></script>
-    {% endif %}
-
-    <script src="assets/javascript/lib/extension-polyfill.js"></script>
-    <script src="assets/javascript/application.js" type="module"></script>
-</head>
-<body
-    data-controller="app"
-    data-app-authorized-value="false"
-    data-action="settings:authorize@window->app#authorize"
-    class="group bg-0 h-full antialiased text-600 text-sm! select-none cursor-default leading-[1.4] w-[400px] [text-size-adjust:none]"
+<!doctype html>
+<html
+    lang="en"
+    class="h-full"
 >
-    <div
-        data-controller="tabs"
-        class="group h-full flex flex-col"
-        data-action="app:authorized@window->tabs#selectTab"
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Feedbin Subscribe & Save</title>
+        <link
+            rel="stylesheet"
+            href="assets/css/wrapper.css"
+        />
+
+        {% if jekyll.environment == "browser" or jekyll.environment == "test" %}
+        <script src="assets/javascript/lib/browser-polyfill.js"></script>
+        {% endif %}
+
+        <script src="assets/javascript/lib/extension-polyfill.js"></script>
+        <script
+            src="assets/javascript/application.js"
+            type="module"
+        ></script>
+    </head>
+
+    <body
+        data-controller="app"
+        data-app-authorized-value="false"
+        data-action="settings:authorize@window->app#authorize"
+        class="group bg-0 text-600 h-full w-[400px] cursor-default text-sm! leading-[1.4] antialiased select-none [text-size-adjust:none]"
     >
-        <ul class="gap-2 py-4 px-6 shrink-0 hidden group-data-[app-authorized-value=true]:flex">
-            {% include shared/nav.html %}
-        </ul>
+        <div
+            data-controller="tabs"
+            class="group flex h-full flex-col"
+            data-action="app:authorized@window->tabs#selectTab"
+        >
+            <ul class="hidden shrink-0 gap-2 px-6 py-4 group-data-[app-authorized-value=true]:flex">
+                {% include shared/nav.html %}
+            </ul>
 
-        <div class="hidden grow group-has-[[value=tab-settings]:checked]:block">
-            {% include settings.html %}
+            <div class="hidden grow group-has-[[value=tab-settings]:checked]:block"> {% include settings.html %} </div>
+            <div class="hidden grow group-has-[[value=tab-add]:checked]:block"> {% include add.html %} </div>
+            <div class="hidden grow group-has-[[value=tab-save]:checked]:block"> {% include save.html %} </div>
         </div>
-        <div class="hidden grow group-has-[[value=tab-add]:checked]:block">
-            {% include add.html %}
-        </div>
-        <div class="hidden grow group-has-[[value=tab-save]:checked]:block">
-            {% include save.html %}
-        </div>
-    </div>
 
-    <svg class="hidden">
-        {% for icon in site.data.icons %}
-            <symbol id="{{ icon[0] }}" viewBox="0 0 {{ icon[1].width }} {{ icon[1].height }}" preserveAspectRatio="xMidYMin meet">
+        <svg class="hidden">
+            {% for icon in site.data.icons %}
+            <symbol
+                id="{{ icon[0] }}"
+                viewBox="0 0 {{ icon[1].width }} {{ icon[1].height }}"
+                preserveAspectRatio="xMidYMin meet"
+            >
                 {{ icon[1].markup }}
             </symbol>
-        {% endfor %}
-    </svg>
-</body>
+            {% endfor %}
+        </svg>
+    </body>
 </html>

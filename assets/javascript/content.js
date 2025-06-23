@@ -1,30 +1,33 @@
-(function() {
-  'use strict';
+;(function () {
+  "use strict"
 
   function getMetaContent(selector) {
     try {
-      const element = document.querySelector(selector);
-      return element && element.content ? element.content.trim() : null;
+      const element = document.querySelector(selector)
+      return element && element.content ? element.content.trim() : null
     } catch (e) {
-      return null;
+      return null
     }
   }
 
   function loadPageInfo() {
     return {
-      description: getMetaContent('meta[property="og:description" i]') || getMetaContent('meta[name="description" i]') || getMetaContent('meta[name="twitter:description" i]'),
-      title:       getMetaContent('meta[property="og:title" i]'),
-      image:       getMetaContent('meta[property="og:image" i]'),
-      siteName:    getMetaContent('meta[property="og:site_name" i]'),
-      favicon:     document.querySelector('link[rel="shortcut icon" i]')?.href || document.querySelector('link[rel="icon" i]')?.href,
-    };
+      description:
+        getMetaContent('meta[property="og:description" i]') ||
+        getMetaContent('meta[name="description" i]') ||
+        getMetaContent('meta[name="twitter:description" i]'),
+      title: getMetaContent('meta[property="og:title" i]'),
+      image: getMetaContent('meta[property="og:image" i]'),
+      siteName: getMetaContent('meta[property="og:site_name" i]'),
+      favicon: document.querySelector('link[rel="shortcut icon" i]')?.href || document.querySelector('link[rel="icon" i]')?.href,
+    }
   }
 
   browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request && request.action === "loadPageInfo") {
       sendResponse(loadPageInfo())
     } else {
-      console.log("unkown request", request);
+      console.log("unkown request", request)
     }
-  });
-})();
+  })
+})()

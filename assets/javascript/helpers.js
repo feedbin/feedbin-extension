@@ -1,13 +1,13 @@
 export function sanitize(text) {
-    let decoded = document.createElement('textarea')
-    decoded.innerHTML = text
-    return decoded.value
+  let decoded = document.createElement("textarea")
+  decoded.innerHTML = text
+  return decoded.value
 }
 
 export function getHostname(url) {
   try {
-    return new URL(url).hostname;
+    return new URL(url).hostname
   } catch (e) {
-    return url;
+    return url
   }
 }

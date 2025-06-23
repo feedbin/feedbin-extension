@@ -9,7 +9,7 @@ export default class extends Controller {
   async selectTab() {
     let selectedTab = "tab-settings"
 
-    const result = await browser.storage.sync.get();
+    const result = await browser.storage.sync.get()
     if ("user" in result && "email" in result.user) {
       selectedTab = "tab-add"
     }

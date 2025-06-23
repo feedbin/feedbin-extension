@@ -1,10 +1,10 @@
-import { Controller } from  "../lib/stimulus.js"
+import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
 import { getHostname } from "../helpers.js"
 
 export default class extends Controller {
   static values = {
-    authorized: Boolean
+    authorized: Boolean,
   }
 
   connect() {
@@ -14,7 +14,7 @@ export default class extends Controller {
   async authorize() {
     this.authorizedValue = false
 
-    const result = await browser.storage.sync.get();
+    const result = await browser.storage.sync.get()
     if (!result.user?.email) {
       return
     }
@@ -27,20 +27,20 @@ export default class extends Controller {
   }
 
   async loadPageData() {
-    console.log("load");
+    console.log("load")
     try {
       const [tab] = await browser.tabs.query({
         active: true,
-        currentWindow: true
+        currentWindow: true,
       })
 
       if (tab) {
         await browser.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content.js"]
+          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content.js"],
         })
 
-        let data = await browser.tabs.sendMessage(tab.id, {action: "loadPageInfo"}) || {}
+        let data = (await browser.tabs.sendMessage(tab.id, { action: "loadPageInfo" })) || {}
         this.pageDataLoaded(tab, data)
       } else {
         this.dispatch("pageInfoError")
@@ -57,16 +57,15 @@ export default class extends Controller {
 
   pageDataLoaded(tab, data) {
     const result = {
-      title:        data.title || tab?.title || "Untitled",
-      siteName:     data.siteName,
-      description:  data.description,
-      url:          tab.url,
-      hostname:     getHostname(tab.url),
-      favicon:      tab.favIconUrl || data.favicon
+      title: data.title || tab?.title || "Untitled",
+      siteName: data.siteName,
+      description: data.description,
+      url: tab.url,
+      hostname: getHostname(tab.url),
+      favicon: tab.favIconUrl || data.favicon,
     }
     sharedStore.setPageInfo(result)
-    console.log("sharedStore", sharedStore.getPageInfo());
-    this.dispatch("pageInfoLoaded", {detail: result})
+    console.log("sharedStore", sharedStore.getPageInfo())
+    this.dispatch("pageInfoLoaded", { detail: result })
   }
-
 }

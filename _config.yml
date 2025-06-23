@@ -1,25 +1,25 @@
 plugins:
-  - jekyll-postcss-v2
+    - jekyll-postcss-v2
 postcss:
-  cache: false
+    cache: false
 urls:
-  authentication: /extension/authentication.json
-  save: /extension/pages.json
-  find: /extension/subscriptions/new.json
-  subscribe: /extension/subscriptions/create.json
+    authentication: /extension/authentication.json
+    save: /extension/pages.json
+    find: /extension/subscriptions/new.json
+    subscribe: /extension/subscriptions/create.json
 exclude:
-  - .sass-cache/
-  - .jekyll-cache/
-  - package.json
-  - package-lock.json
-  - postcss.config.js
-  - gemfiles/
-  - tmp/
-  - Gemfile
-  - Gemfile.lock
-  - Rakefile
-  - node_modules/
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
+    - .sass-cache/
+    - .jekyll-cache/
+    - package.json
+    - package-lock.json
+    - postcss.config.js
+    - gemfiles/
+    - tmp/
+    - Gemfile
+    - Gemfile.lock
+    - Rakefile
+    - node_modules/
+    - vendor/bundle/
+    - vendor/cache/
+    - vendor/gems/
+    - vendor/ruby/

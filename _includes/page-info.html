@@ -10,21 +10,40 @@
         app:pageInfoError@window->page-info#pageInfoError
     "
 >
-    <input name="url" type="hidden" data-page-info-target="formUrl" value="">
+    <input
+        name="url"
+        type="hidden"
+        data-page-info-target="formUrl"
+        value=""
+    />
 
     <div class="hidden group-data-[page-info-has-error-value=true]:block">
         {% include shared/error.html content="Error loading extension" %}
     </div>
 
-    <div class="flex gap-2 hidden group-data-[page-info-has-data-value=true]:flex">
-        <div class="rounded-xs flex items-center justify-center shrink-0 dark:group-data-[page-info-has-data-value=true]:bg-white w-[20px] h-[20px]">
+    <div class="hidden gap-2 group-data-[page-info-has-data-value=true]:flex">
+        <div
+            class="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-xs dark:group-data-[page-info-has-data-value=true]:bg-white"
+        >
             {% include shared/icon.html icon="icon-feed" class="fill-600 hidden group-data-[page-info-has-favicon-value=false]:block" %}
-            <img data-page-info-target="favicon" class="hidden max-w-[16px] max-h-[16px] group-data-[page-info-has-favicon-value=true]:block">
+            <img
+                data-page-info-target="favicon"
+                class="hidden max-h-[16px] max-w-[16px] group-data-[page-info-has-favicon-value=true]:block"
+            />
         </div>
-        <div class="grow min-w-0">
-            <h1 data-page-info-target="title"       class="mb-1 text-700 font-bold line-clamp-2 empty:hidden" ></h1>
-            <p  data-page-info-target="description" class="mb-1 line-clamp-3 text-sm empty:hidden"></p>
-            <p  data-page-info-target="url"         class="mb-1 text-500 truncate text-sm empty:hidden"></p>
+        <div class="min-w-0 grow">
+            <h1
+                data-page-info-target="title"
+                class="text-700 mb-1 line-clamp-2 font-bold empty:hidden"
+            ></h1>
+            <p
+                data-page-info-target="description"
+                class="mb-1 line-clamp-3 text-sm empty:hidden"
+            ></p>
+            <p
+                data-page-info-target="url"
+                class="text-500 mb-1 truncate text-sm empty:hidden"
+            ></p>
         </div>
     </div>
 </div>

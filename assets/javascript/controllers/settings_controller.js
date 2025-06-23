@@ -1,37 +1,36 @@
 import { Controller } from "../lib/stimulus.js"
 export default class extends Controller {
-  static targets = [ "results", "email", "password", "submitButton", "error", "signedInAs" ]
+  static targets = ["results", "email", "password", "submitButton", "error", "signedInAs"]
   static values = {
     loading: Boolean,
-    url: String
+    url: String,
   }
-
   connect() {
     this.userData()
   }
 
   async submit(event) {
-    console.log(event);
+    console.log(event)
 
     this.submitButtonTarget.disabled = true
     this.loadingValue = true
     this.errorTarget.textContent = ""
 
-    const formData = new FormData(this.element);
+    const formData = new FormData(this.element)
     let data = {}
     try {
       const response = await fetch(this.element.action, {
         method: this.element.method || "POST",
-        body: new URLSearchParams(formData)
-      });
+        body: new URLSearchParams(formData),
+      })
 
       if (!response.ok) {
         const error = new Error(`Invalid response`)
         error.response = response
-        throw error;
+        throw error
       }
 
-      data = await response.json();
+      data = await response.json()
     } catch (error) {
       if ("response" in error) {
         if (error.response.status == 401) {
@@ -42,7 +41,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error.`
       }
-      console.error("Request failed:", error);
+      console.error("Request failed:", error)
     }
 
     this.submitButtonTarget.disabled = false
@@ -51,23 +50,23 @@ export default class extends Controller {
     if ("page_token" in data) {
       let user = {
         page_token: data.page_token,
-        email: this.emailTarget.value
+        email: this.emailTarget.value,
       }
-      await browser.storage.sync.set({user});
-      await this.userData();
+      await browser.storage.sync.set({ user })
+      await this.userData()
       this.dispatch("authorize")
     }
   }
 
   async userData() {
-    let result = await browser.storage.sync.get();
+    let result = await browser.storage.sync.get()
     if ("user" in result && "email" in result.user) {
       this.signedInAsTarget.textContent = result.user.email
     }
   }
 
   async signOut() {
-    let result = await browser.storage.sync.remove("user");
+    let result = await browser.storage.sync.remove("user")
     this.dispatch("authorize")
   }
 }

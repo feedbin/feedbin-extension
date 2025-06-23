@@ -2,38 +2,33 @@
     novalidate
     action="{{ site.urls.find | build_url }}"
     method="POST"
-    class="group h-full flex flex-col data-[add-has-results-value=true]:hidden"
+    class="group flex h-full flex-col data-[add-has-results-value=true]:hidden"
     data-controller="add"
     data-add-loading-value="false"
     data-add-has-results-value="false"
     data-action="submit->add#submit:prevent"
 >
-    {% capture content %}
-    {% include shared/error.html content="" attributes="data-add-target='error'" %}
+    {% capture content %} {% include shared/error.html content="" attributes="data-add-target='error'" %}
 
-    <div class="group-data-[add-has-results-value=true]:hidden">
-        {% include page-info.html format="add" %}
-    </div>
+    <div class="group-data-[add-has-results-value=true]:hidden"> {% include page-info.html format="add" %} </div>
 
-    {% endcapture %}
-    {% capture button %}
-        <button data-add-target="submitButton" type="submit" class="primary-button">
-            <span class="hidden group-data-[add-loading-value=false]:block">
-                Find Feeds
-            </span>
-            <span class="hidden group-data-[add-loading-value=true]:block">
-                Finding Feeds…
-            </span>
-        </button>
-    {% endcapture %}
-    {% include shared/tab.html content=content button=button %}
+    {% endcapture %} {% capture button %}
+    <button
+        data-add-target="submitButton"
+        type="submit"
+        class="primary-button"
+    >
+        <span class="hidden group-data-[add-loading-value=false]:block"> Find Feeds </span>
+        <span class="hidden group-data-[add-loading-value=true]:block"> Finding Feeds… </span>
+    </button>
+    {% endcapture %} {% include shared/tab.html content=content button=button %}
 </form>
 
 <form
     novalidate
     action="{{ site.urls.subscribe | build_url }}"
     method="POST"
-    class="group h-full flex-col hidden data-[subscribe-has-results-value=true]:flex"
+    class="group hidden h-full flex-col data-[subscribe-has-results-value=true]:flex"
     data-controller="subscribe"
     data-subscribe-has-results-value="false"
     data-subscribe-loading-value="false"
@@ -43,55 +38,81 @@
         add:resultsLoaded@window->subscribe#displayResults
     "
 >
-    {% capture content %}
+    {% capture content %} {% include shared/error.html content="" attributes="data-subscribe-target='error'" %}
 
-    {% include shared/error.html content="" attributes="data-subscribe-target='error'" %}
-
-    <h1 class="mb-2 text-700 font-bold line-clamp-2">Feed<span class="group-data-[subscribe-results-count-value=1]:hidden">s</span></h1>
+    <h1 class="text-700 mb-2 line-clamp-2 font-bold">Feed<span class="group-data-[subscribe-results-count-value=1]:hidden">s</span></h1>
 
     <div data-subscribe-target="feedResults"></div>
 
-    <h1 class="mb-2 text-700 font-bold line-clamp-2">Tags</h1>
+    <h1 class="text-700 mb-2 line-clamp-2 font-bold">Tags</h1>
     <div class="flex flex-col gap-2">
-        <input type="text" class="text-input text-center border-400 mb-2 cursor-pointer focus-visible:border-blue-600 focus-visible:cursor-text focus-visible:text-left placeholder:font-bold placeholder:text-600 focus-visible:placeholder:font-normal focus-visible:placeholder:text-500 " placeholder="+ New Tag">
-        <div data-subscribe-target="tagResults" class="empty:hidden flex flex-col gap-2"></div>
+        <input
+            type="text"
+            class="text-input placeholder:text-600 focus-visible:placeholder:text-500 mb-2 cursor-pointer border-400 text-center placeholder:font-bold focus-visible:cursor-text focus-visible:border-blue-600 focus-visible:text-left focus-visible:placeholder:font-normal"
+            placeholder="+ New Tag"
+        />
+        <div
+            data-subscribe-target="tagResults"
+            class="flex flex-col gap-2 empty:hidden"
+        ></div>
     </div>
 
     <template data-subscribe-target="feedTemplate">
-        <div class="flex mb-4">
-            <input type="hidden" data-template="url">
-            <label class="h-[40px] flex items-center pr-2">
-                <input type="hidden" value="0" data-template="checkbox_dummy">
-                {% include shared/checkbox.html attributes="data-template='checkbox' data-subscribe-target='checkbox' data-action='change->subscribe#countSelected' value='1'" %}
+        <div class="mb-4 flex">
+            <input
+                type="hidden"
+                data-template="url"
+            />
+            <label class="flex h-[40px] items-center pr-2">
+                <input
+                    type="hidden"
+                    value="0"
+                    data-template="checkbox_dummy"
+                />
+                {% include shared/checkbox.html attributes="data-template='checkbox' data-subscribe-target='checkbox'
+                data-action='change->subscribe#countSelected' value='1'" %}
             </label>
-            <div class="grow min-w-0">
-                <input type="text" class="text-input" data-template="feed_input">
-                <div class="flex min-w-0 gap-4 text-sm mt-1 text-500">
-                    <div class="grow truncate" data-template="display_url"></div>
-                    <div class="shrink-0" data-template="volume"></div>
+            <div class="min-w-0 grow">
+                <input
+                    type="text"
+                    class="text-input"
+                    data-template="feed_input"
+                />
+                <div class="text-500 mt-1 flex min-w-0 gap-4 text-sm">
+                    <div
+                        class="grow truncate"
+                        data-template="display_url"
+                    ></div>
+                    <div
+                        class="shrink-0"
+                        data-template="volume"
+                    ></div>
                 </div>
             </div>
         </div>
     </template>
 
     <template data-subscribe-target="tagTemplate">
-        <label class="group/checkbutton flex items-center gap-3 min-w-0 border rounded p-3 cursor-pointer has-checked:border-600 has-checked:outline-2 has-checked:outline-600">
+        <label
+            class="group/checkbutton flex min-w-0 cursor-pointer items-center gap-3 rounded border p-3 has-checked:border-600 has-checked:outline-2 has-checked:outline-600"
+        >
             {% include shared/checkbox.html attributes="data-template='checkbox' name='tag[]'" %}
-            <div class="grow truncate" data-template="label"></div>
+            <div
+                class="grow truncate"
+                data-template="label"
+            ></div>
             {% include shared/icon.html icon="icon-tag" class="shrink-0 fill-400 group-has-checked/checkbutton:fill-700" %}
         </label>
     </template>
 
-    {% endcapture %}
-    {% capture button %}
-        <button data-subscribe-target="submitButton" type="submit" class="primary-button">
-            <span class="hidden group-data-[subscribe-loading-value=false]:block">
-                Subscribe
-            </span>
-            <span class="hidden group-data-[subscribe-loading-value=true]:block">
-                Subscribing…
-            </span>
-        </button>
-    {% endcapture %}
-    {% include shared/tab.html content=content button=button %}
+    {% endcapture %} {% capture button %}
+    <button
+        data-subscribe-target="submitButton"
+        type="submit"
+        class="primary-button"
+    >
+        <span class="hidden group-data-[subscribe-loading-value=false]:block"> Subscribe </span>
+        <span class="hidden group-data-[subscribe-loading-value=true]:block"> Subscribing… </span>
+    </button>
+    {% endcapture %} {% include shared/tab.html content=content button=button %}
 </form>

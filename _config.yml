@@ -4,9 +4,9 @@ postcss:
   cache: false
 urls:
   authentication: /extension/authentication.json
-  save:           /extension/pages.json
-  find:           /extension/subscriptions/new.json
-  subscribe:      /extension/subscriptions/create.json
+  save: /extension/pages.json
+  find: /extension/subscriptions/new.json
+  subscribe: /extension/subscriptions/create.json
 exclude:
   - .sass-cache/
   - .jekyll-cache/

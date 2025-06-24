@@ -29,7 +29,7 @@
     --color-red-200: #f8e8eb;
     --color-orange-600: #e86b0d;
 
-    --color-0: light-dark(var(--light-color-0), var(--dark-color-0));
+    --color-0:   light-dark(var(--light-color-0), var(--dark-color-0));
     --color-100: light-dark(var(--light-color-100), var(--dark-color-100));
     --color-200: light-dark(var(--light-color-200), var(--dark-color-200));
     --color-300: light-dark(var(--light-color-300), var(--dark-color-300));
@@ -64,6 +64,9 @@
         @apply text-700 placeholder:text-400 w-full max-w-full rounded-md border border-400 px-3 py-2 shadow-sm outline-offset-0 transition focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600;
     }
     .primary-button {
-        @apply text-700 disabled:bg-200 disabled:text-500 w-full cursor-pointer rounded-lg border border-400 py-2 text-sm font-medium shadow-sm outline-2 outline-offset-1 outline-transparent transition focus-visible:outline-blue-400 active:shadow-none disabled:cursor-default disabled:border-300 disabled:shadow-none;
+        @apply text-700 w-full cursor-pointer rounded-lg border border-400 py-2 text-sm font-medium shadow-sm outline-2 outline-offset-1 outline-transparent transition
+        disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
+        active:shadow-none active:inset-shadow-sm
+        focus-visible:outline-blue-400;
     }
 }

@@ -2,20 +2,14 @@ import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
 
 export default class extends Controller {
-  static targets = ["submitButton", "error", "feedTemplate", "feedResults", "tagTemplate", "tagResults"]
+  static targets = ["error"]
   static values = {
-    loading: Boolean,
     url: String,
-    hasResults: Boolean,
+    hasError: Boolean,
+    hasResults: Boolean
   }
 
-  async submit(event) {
-    console.log(event)
-
-    this.submitButtonTarget.disabled = true
-    this.loadingValue = true
-    this.errorTarget.textContent = ""
-
+  async search(event) {
     const user = sharedStore.getUser()
     const pageInfo = sharedStore.getPageInfo()
 
@@ -34,7 +28,7 @@ export default class extends Controller {
       //   error.response = response;
       //   throw error;
       // }
-
+      //
       // const data = await response.json();
       const data = {
         feeds: [
@@ -54,18 +48,23 @@ export default class extends Controller {
         tags: ["Favorites", "Feeds", "Social"],
       }
 
-      this.dispatch("resultsLoaded", { detail: data })
-      this.hasResultsValue = true
+
+      if (data.feeds.length === 0) {
+        this.hasErrorValue = true
+        this.errorTarget.textContent = "No feeds found"
+      } else {
+        this.hasResultsValue = true
+        this.dispatch("resultsLoaded", { detail: data })
+      }
+
+
     } catch (error) {
+      this.hasErrorValue = true
       if ("response" in error) {
         this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
       } else {
         this.errorTarget.textContent = `Unknown error. ${error}`
       }
-      console.log(error)
     }
-
-    this.submitButtonTarget.disabled = false
-    this.loadingValue = false
   }
 }

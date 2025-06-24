@@ -4,24 +4,22 @@
     method="POST"
     class="group flex h-full flex-col data-[add-has-results-value=true]:hidden"
     data-controller="add"
-    data-add-loading-value="false"
+    data-add-has-error-value="false"
     data-add-has-results-value="false"
-    data-action="submit->add#submit:prevent"
+    data-action="
+        submit->add#submit:prevent
+        app:pageInfoLoaded@window->add#search
+    "
 >
-    {% capture content %} {% include shared/error.html content="" attributes="data-add-target='error'" %}
+    <div class="flex grow flex-col items-center justify-center py-8 gap-4 text-500 group-data-[add-has-error-value=true]:hidden">
+        {% include shared/spinner.html %}
+        <p>Searching for Feeds…</p>
+    </div>
 
-    <div class="group-data-[add-has-results-value=true]:hidden"> {% include page-info.html format="add" %} </div>
-
-    {% endcapture %} {% capture button %}
-    <button
-        data-add-target="submitButton"
-        type="submit"
-        class="primary-button"
-    >
-        <span class="hidden group-data-[add-loading-value=false]:block"> Find Feeds </span>
-        <span class="hidden group-data-[add-loading-value=true]:block"> Finding Feeds… </span>
-    </button>
-    {% endcapture %} {% include shared/tab.html content=content button=button %}
+    <div class="flex grow flex-col items-center justify-center py-8 gap-4 text-500 hidden group-data-[add-has-error-value=true]:flex">
+        {% include shared/icon.html icon="icon-search" class="shrink-0" %}
+        <p data-add-target="error" class="text-center"></p>
+    </div>
 </form>
 
 <form

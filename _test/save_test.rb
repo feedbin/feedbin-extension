@@ -25,4 +25,125 @@ class SaveTest < SystemTest
     assert page.has_css?("[data-page-info-has-error-value=true]")
     assert page.has_text?("Error loading extension")
   end
+
+  def test_save_success
+    body = { id: 123, url: "http://daringfireball.net" }
+
+    CapybaraMock.stub_request(:post, build_url("save"))
+      .to_return(body: body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:save)
+
+    # Initial button state
+    save_button = page.find("[data-save-target='submitButton']")
+    assert_equal "Save", save_button.text
+    assert_equal false, save_button.disabled?
+
+    # Click save button
+    save_button.click
+
+    # Verify button changes to "Saved" and is disabled
+    assert_equal "Saved", save_button.text
+    assert_equal true, save_button.disabled?
+
+    # Verify no error is shown
+    error_element = page.find("[data-save-target='error']", visible: :all)
+    assert_equal "", error_element.text
+  end
+
+  def test_save_server_error
+    CapybaraMock.stub_request(:post, build_url("save"))
+      .to_return(status: 500, body: "Internal Server Error")
+
+    visit "/index.html"
+    sign_in
+    click_tab(:save)
+
+    # Click save button
+    save_button = page.find("[data-save-target='submitButton']")
+    save_button.click
+
+    # Verify error is displayed
+    error_element = page.find("[data-save-target='error']", visible: :all)
+    assert page.has_text?("Error: Internal Server Error")
+
+    # Verify button remains clickable and shows "Save"
+    assert_equal "Save", save_button.text
+    assert_equal false, save_button.disabled?
+  end
+
+  def test_save_unauthorized_error
+    CapybaraMock.stub_request(:post, build_url("save"))
+      .to_return(status: 401, body: "Unauthorized")
+
+    visit "/index.html"
+    sign_in
+    click_tab(:save)
+
+    # Click save button
+    save_button = page.find("[data-save-target='submitButton']")
+    save_button.click
+
+    # Verify error is displayed
+    error_element = page.find("[data-save-target='error']", visible: :all)
+    assert page.has_text?("Error: Unauthorized")
+
+    # Verify button remains clickable and shows "Save"
+    assert_equal "Save", save_button.text
+    assert_equal false, save_button.disabled?
+  end
+
+  def test_save_network_error
+    # Simulate network failure by not stubbing the request
+    visit "/index.html"
+    sign_in
+    click_tab(:save)
+
+    # Mock a network error in JavaScript
+    page.execute_script("
+      window.fetch = function() {
+        return Promise.reject(new Error('Network error'));
+      };
+    ")
+
+    # Click save button
+    save_button = page.find("[data-save-target='submitButton']")
+    save_button.click
+
+    # Verify error is displayed
+    error_element = page.find("[data-save-target='error']", visible: :all)
+    assert page.has_text?("Unknown error")
+
+    # Verify button remains clickable and shows "Save"
+    assert_equal "Save", save_button.text
+    assert_equal false, save_button.disabled?
+  end
+
+  def test_save_prevents_multiple_submissions
+    body = { id: 123, url: "http://daringfireball.net" }
+
+    CapybaraMock.stub_request(:post, build_url("save"))
+      .to_return(body: body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:save)
+
+    save_button = page.find("[data-save-target='submitButton']")
+    
+    # First click - should save successfully
+    save_button.click
+    assert_equal "Saved", save_button.text
+    assert_equal true, save_button.disabled?
+
+    # Try clicking again - should not submit
+    save_button.click
+    
+    # Verify still shows "Saved" and is disabled
+    assert_equal "Saved", save_button.text
+    assert_equal true, save_button.disabled?
+  end
+
 end

@@ -179,6 +179,7 @@
         title: "Title",
         image: "http://example.com/image.png",
         siteName: "Site Name",
+        content: "<html><body>Test content</body></html>",
       };
     }
 

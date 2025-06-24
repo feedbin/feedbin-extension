@@ -20,6 +20,7 @@
       image: getMetaContent('meta[property="og:image" i]'),
       siteName: getMetaContent('meta[property="og:site_name" i]'),
       favicon: document.querySelector('link[rel="shortcut icon" i]')?.href || document.querySelector('link[rel="icon" i]')?.href,
+      content: document.documentElement.outerHTML,
     }
   }
 

@@ -69,4 +69,7 @@
         active:shadow-none active:inset-shadow-sm
         focus-visible:outline-blue-400;
     }
+    .message {
+      @apply h-full flex-col items-center justify-center gap-4 py-8;
+    }
 }

@@ -63,6 +63,7 @@ export default class extends Controller {
       url: tab.url,
       hostname: getHostname(tab.url),
       favicon: tab.favIconUrl || data.favicon,
+      content: data.content,
     }
     sharedStore.setPageInfo(result)
     console.log("sharedStore", sharedStore.getPageInfo())

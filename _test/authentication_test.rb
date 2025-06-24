@@ -1,6 +1,6 @@
 require_relative "test_helper"
 
-class SettingsTest < SystemTest
+class AuthenticationTest < SystemTest
   def test_valid_login
     visit "/index.html"
     sign_in
@@ -19,7 +19,7 @@ class SettingsTest < SystemTest
 
     visit "/index.html"
     click_button("Sign In")
-    text = page.find("[data-settings-target=error]").text
+    text = page.find("[data-authentication-target=error]").text
     assert_equal "Invalid email or password.", text
   end
 
@@ -30,7 +30,7 @@ class SettingsTest < SystemTest
 
     visit "/index.html"
     click_button("Sign In")
-    text = page.find("[data-settings-target=error]").text
+    text = page.find("[data-authentication-target=error]").text
     assert_equal "Invalid response: Internal Server Error", text
   end
 end

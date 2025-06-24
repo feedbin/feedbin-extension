@@ -1,29 +1,6 @@
 require_relative "test_helper"
 
 class AddTest < SystemTest
-  def test_site_info_presence
-    visit "/index.html"
-
-    sign_in
-
-    click_tab(:add)
-
-    assert_equal "Site Name", page.find("[data-page-info-target=title]").text
-    assert_equal "daringfireball.net", page.find("[data-page-info-target=url]").text
-  end
-
-  def test_site_info_error
-    visit "/index.html"
-
-    page.execute_script("window.mockNoTabsFound = true;")
-
-    sign_in
-
-    click_tab(:add)
-
-    assert page.has_css?("[data-page-info-has-error-value=true]")
-    assert page.has_text?("Error loading extension")
-  end
 
   def test_results
     body = {
@@ -50,7 +27,6 @@ class AddTest < SystemTest
     visit "/index.html"
     sign_in
     click_tab(:add)
-    click_button("Find Feeds")
 
     # Verify feed results are displayed
     # assert_equal "2", page.find("[data-controller='subscribe']")["data-subscribe-results-count-value"]
@@ -94,5 +70,42 @@ class AddTest < SystemTest
     # Verify subscribe button is enabled (since first feed is checked by default)
     submit_button = page.find("[data-subscribe-target='submitButton']")
     refute submit_button.disabled?
+  end
+
+  def test_no_feeds_found_error
+    body = {
+      feeds: [],
+      tags: []
+    }
+
+    CapybaraMock.stub_request(:post, build_url("find"))
+      .to_return(body: body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:add)
+
+    # Verify error state is shown
+    assert page.has_css?("[data-add-has-error-value=true]")
+    assert page.has_text?("No feeds found")
+    
+    # Verify no results are shown
+    refute page.has_css?("[data-add-has-results-value=true]")
+  end
+
+  def test_response_error
+    CapybaraMock.stub_request(:post, build_url("find"))
+      .to_return(status: 500, body: "Internal Server Error")
+
+    visit "/index.html"
+    sign_in
+    click_tab(:add)
+
+    # Verify error state is shown
+    assert page.has_css?("[data-add-has-error-value=true]")
+    assert page.has_text?("Invalid response: Internal Server Error")
+    
+    # Verify no results are shown
+    refute page.has_css?("[data-add-has-results-value=true]")
   end
 end

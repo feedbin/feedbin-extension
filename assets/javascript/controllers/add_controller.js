@@ -6,7 +6,7 @@ export default class extends Controller {
   static values = {
     url: String,
     hasError: Boolean,
-    hasResults: Boolean
+    hasResults: Boolean,
   }
 
   async search(event) {
@@ -18,36 +18,18 @@ export default class extends Controller {
     formData.append("url", pageInfo.url)
 
     try {
-      // const response = await fetch(this.element.action, {
-      //   method: this.element.method || "POST",
-      //   body: new URLSearchParams(formData),
-      // });
-      //
-      // if (!response.ok) {
-      //   const error = new Error(`Invalid response`);
-      //   error.response = response;
-      //   throw error;
-      // }
-      //
-      // const data = await response.json();
-      const data = {
-        feeds: [
-          {
-            url: "https://daringfireball.net/feeds",
-            title: "Daring Fireball",
-            display_url: "daringfireball.net › index.xml",
-            volume: "16h ago, 98/mo",
-          },
-          {
-            url: "https://daringfireball.net/feeds/json",
-            title: "Daring Fireball",
-            display_url: "daringfireball.net › feed.json",
-            volume: "16h ago, 98/mo",
-          },
-        ],
-        tags: ["Favorites", "Feeds", "Social"],
+      const response = await fetch(this.element.action, {
+        method: this.element.method || "POST",
+        body: new URLSearchParams(formData),
+      })
+
+      if (!response.ok) {
+        const error = new Error(`Invalid response`)
+        error.response = response
+        throw error
       }
 
+      const data = await response.json()
 
       if (data.feeds.length === 0) {
         this.hasErrorValue = true
@@ -56,8 +38,6 @@ export default class extends Controller {
         this.hasResultsValue = true
         this.dispatch("resultsLoaded", { detail: data })
       }
-
-
     } catch (error) {
       this.hasErrorValue = true
       if ("response" in error) {

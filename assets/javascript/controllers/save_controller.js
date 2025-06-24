@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
-import { gzip } from "../lib/compress.js"
+import { gzip } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["error", "submitButton"]
@@ -48,13 +48,13 @@ export default class extends Controller {
 
       this.stateValue = this.#states.saved;
     } catch (error) {
-      this.stateValue = this.#states.initial;
+      this.stateValue = this.#states.error;
       this.submitButtonTarget.disabled = false
 
       if ("response" in error) {
-        this.errorTarget.textContent = `Error: ${error.response.statusText}`
+        this.errorTarget.textContent = `Error Saving Page: ${error.response.statusText}`
       } else {
-        this.errorTarget.textContent = `Unknown error. ${error}`
+        this.errorTarget.textContent = `Error Saving Page: ${error}`
       }
     }
   }

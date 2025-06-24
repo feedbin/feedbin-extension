@@ -7,20 +7,31 @@
     method="POST"
     novalidate
 >
-    {% capture content %}
-        {% include shared/error.html content="" attributes="data-save-target='error'" %}
-        {% include page-info.html format="save" %}
-    {% endcapture %}
 
-    {% capture button %}
-    <button
-        data-save-target="submitButton"
-        type="submit"
-        class="primary-button"
-    >
-        <span class="hidden group-data-[save-state-value=initial]:block">Save</span>
-        <span class="hidden group-data-[save-state-value=loading]:block">Saving…</span>
-        <span class="hidden group-data-[save-state-value=saved]:block">Saved</span>
-    </button>
-    {% endcapture %} {% include shared/tab.html content=content button=button %}
+    <div class="message flex hidden group-data-[save-state-value=saved]:flex">
+        {% include shared/icon.html icon="icon-success" class="shrink-0" %}
+        <p>Page Saved</p>
+    </div>
+
+    <div class="message flex hidden group-data-[save-state-value=error]:flex">
+        {% include shared/icon.html icon="icon-error" class="shrink-0" %}
+        <p data-save-target="error"></p>
+    </div>
+
+    <div class="hidden h-full flex-col group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
+        {% capture content %}
+            {% include page-info.html format="save" %}
+        {% endcapture %}
+
+        {% capture button %}
+        <button
+            data-save-target="submitButton"
+            type="submit"
+            class="primary-button"
+        >
+            <span class="hidden group-data-[save-state-value=initial]:block">Save</span>
+            <span class="hidden group-data-[save-state-value=loading]:block">Saving…</span>
+        </button>
+        {% endcapture %} {% include shared/tab.html content=content button=button %}
+    </div>
 </form>

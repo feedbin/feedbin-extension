@@ -9,14 +9,15 @@ require "fileutils"
 
 ENV["JEKYLL_ENV"] = "test"
 
-# Clean screenshots directory before running tests
-screenshots_dir = File.join("tmp", "screenshots")
-FileUtils.mkdir_p(screenshots_dir)
-Dir.glob(File.join(screenshots_dir, "*.png")).each { |file| FileUtils.rm(file) }
+PROJECT_ROOT = File.expand_path("..", __dir__)
+SCREENSHOTS_DIR = File.join(PROJECT_ROOT, "tmp", "screenshots")
+
+FileUtils.mkdir_p(SCREENSHOTS_DIR)
+Dir.glob(File.join(SCREENSHOTS_DIR, "*.png")).each { |file| FileUtils.rm(file) }
 
 $site = Jekyll::Site.new(Jekyll.configuration({
-  source:  Dir.pwd,
-  destination: File.join(Dir.pwd, "tmp", "_site"),
+  source:  PROJECT_ROOT,
+  destination: File.join(PROJECT_ROOT, "tmp", "_site"),
 }))
 $site.process
 
@@ -41,9 +42,9 @@ class SystemTest < Minitest::Test
 
   def teardown
     if failure
-      path = File.join("tmp", "screenshots", "#{name}.png")
-      page.save_screenshot(path)
-      failure.message << "\nScreenshot: #{path}"
+      screenshot_path = File.join(SCREENSHOTS_DIR, "#{name}.png")
+      page.save_screenshot(screenshot_path)
+      failure.message << "\nScreenshot: #{screenshot_path}"
     end
     Capybara.reset_sessions!
     Capybara.use_default_driver

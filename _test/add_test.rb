@@ -88,7 +88,7 @@ class AddTest < SystemTest
     # Verify error state is shown
     assert page.has_css?("[data-add-has-error-value=true]")
     assert page.has_text?("No feeds found")
-    
+
     # Verify no results are shown
     refute page.has_css?("[data-add-has-results-value=true]")
   end
@@ -104,7 +104,7 @@ class AddTest < SystemTest
     # Verify error state is shown
     assert page.has_css?("[data-add-has-error-value=true]")
     assert page.has_text?("Invalid response: Internal Server Error")
-    
+
     # Verify no results are shown
     refute page.has_css?("[data-add-has-results-value=true]")
   end

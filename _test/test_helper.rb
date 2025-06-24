@@ -5,8 +5,14 @@ require "capybara/minitest"
 require "capybara/cuprite"
 require "capybara_mock"
 require "minitest/autorun"
+require "fileutils"
 
 ENV["JEKYLL_ENV"] = "test"
+
+# Clean screenshots directory before running tests
+screenshots_dir = File.join("tmp", "screenshots")
+FileUtils.mkdir_p(screenshots_dir)
+Dir.glob(File.join(screenshots_dir, "*.png")).each { |file| FileUtils.rm(file) }
 
 $site = Jekyll::Site.new(Jekyll.configuration({
   source:  Dir.pwd,
@@ -37,7 +43,7 @@ class SystemTest < Minitest::Test
     if failure
       path = File.join("tmp", "screenshots", "#{name}.png")
       page.save_screenshot(path)
-      puts "failed screenshot: #{path}"
+      failure.message << "\nScreenshot: #{path}"
     end
     Capybara.reset_sessions!
     Capybara.use_default_driver

@@ -3,6 +3,12 @@
  *  — Mocks browser.storage, browser.scripting, browser.runtime, browser.tabs
  * -------------------------------------------------*/
 (function () {
+
+  // do not load in an extension context
+  if ((window.browser && window.browser.runtime && window.browser.runtime.id)) {
+    return
+  }
+
   // Re-use an existing browser object if one is already present
   const root = typeof browser !== "undefined" ? browser : (window.browser = {});
 

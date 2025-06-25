@@ -42,6 +42,7 @@
     --color-red-600: light-dark(#ba0730, #d30d36);
     --color-green-600: light-dark(#05ab48, #04c451);
     --border-color: light-dark(var(--light-color-200), #000);
+    --color-safari-shadow: light-dark(#EFEEEC, #2F2E2C);
 }
 
 @layer base {

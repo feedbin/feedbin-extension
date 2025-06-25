@@ -18,22 +18,16 @@
             href="assets/css/wrapper.css"
         />
 
-        {% if jekyll.environment == "browser" or jekyll.environment == "test" %}
-        <script src="assets/javascript/lib/browser-polyfill.js"></script>
-        {% endif %}
-
         <script src="assets/javascript/lib/extension-polyfill.js"></script>
-        <script
-            src="assets/javascript/application.js"
-            type="module"
-        ></script>
+        <script src="assets/javascript/lib/browser-polyfill.js"></script>
+        <script src="assets/javascript/application.js" type="module" ></script>
     </head>
 
     <body
         data-controller="app"
         data-app-authorized-value="false"
         data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
-        class="group bg-0 text-600 h-full w-[400px] cursor-default text-sm! leading-[1.4] antialiased select-none [text-size-adjust:none]"
+        class="bg-gradient-to-b from-safari-shadow from-[0px] to-[12px] to-0 group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] min-w-[400px] [text-size-adjust:none]"
     >
         <div
             data-controller="tabs"
@@ -44,9 +38,17 @@
                 {% include shared/nav.html %}
             </ul>
 
-            <div class="hidden grow group-has-[[value=tab-settings]:checked]:block"> {% include settings.html %} </div>
-            <div class="hidden grow group-has-[[value=tab-add]:checked]:block"> {% include add.html %} </div>
-            <div class="hidden grow group-has-[[value=tab-save]:checked]:block"> {% include save.html %} </div>
+            <div class="grow min-h-0">
+                <div class="hidden h-full group-has-[[value=tab-settings]:checked]:block">
+                    {% include settings.html %}
+                </div>
+                <div class="hidden h-full group-has-[[value=tab-add]:checked]:block">
+                    {% include add.html %}
+                </div>
+                <div class="hidden h-full group-has-[[value=tab-save]:checked]:block">
+                    {% include save.html %}
+                </div>
+            </div>
         </div>
 
         <svg class="hidden">

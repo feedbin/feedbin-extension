@@ -36,7 +36,9 @@
         add:resultsLoaded@window->subscribe#displayResults
     "
 >
-    {% capture content %} {% include shared/error.html content="" attributes="data-subscribe-target='error'" %}
+    {% capture content %}
+
+    {% include shared/error.html content="" attributes="data-subscribe-target='error'" %}
 
     <h1 class="text-700 mb-2 line-clamp-2 font-bold">Feed<span class="group-data-[subscribe-results-count-value=1]:hidden">s</span></h1>
 
@@ -46,7 +48,7 @@
     <div class="flex flex-col gap-2">
         <input
             type="text"
-            class="text-input placeholder:text-600 focus-visible:placeholder:text-500 mb-2 cursor-pointer border-400 text-center placeholder:font-bold focus-visible:cursor-text focus-visible:border-blue-600 focus-visible:text-left focus-visible:placeholder:font-normal"
+            class="text-input placeholder:text-600 focus-visible:placeholder:text-500 mb-2 cursor-pointer border-400 text-center placeholder:font-medium focus-visible:cursor-text focus-visible:border-blue-600 focus-visible:text-left focus-visible:placeholder:font-normal"
             placeholder="+ New Tag"
         />
         <div
@@ -102,8 +104,9 @@
             {% include shared/icon.html icon="icon-tag" class="shrink-0 fill-400 group-has-checked/checkbutton:fill-700" %}
         </label>
     </template>
+    {% endcapture %}
 
-    {% endcapture %} {% capture button %}
+    {% capture button %}
     <button
         data-subscribe-target="submitButton"
         type="submit"
@@ -112,5 +115,6 @@
         <span class="hidden group-data-[subscribe-loading-value=false]:block"> Subscribe </span>
         <span class="hidden group-data-[subscribe-loading-value=true]:block"> Subscribing… </span>
     </button>
-    {% endcapture %} {% include shared/tab.html content=content button=button %}
+    {% endcapture %}
+    {% include shared/tab.html content=content button=button %}
 </form>

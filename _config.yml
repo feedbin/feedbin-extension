@@ -12,7 +12,6 @@ exclude:
     - .jekyll-cache/
     - package.json
     - package-lock.json
-    - postcss.config.js
     - gemfiles/
     - tmp/
     - Gemfile

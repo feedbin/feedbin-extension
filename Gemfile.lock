@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/feedbin/jekyll-postcss-v2.git
+  revision: 895f548e865e1d97f436a25633280a9482b80964
+  branch: feedbin
+  specs:
+    jekyll-postcss-v2 (1.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -93,7 +100,6 @@ GEM
       safe_yaml (~> 1.0)
       terminal-table (>= 1.8, < 4.0)
       webrick (~> 1.7)
-    jekyll-postcss-v2 (1.0.2)
     jekyll-sass-converter (3.1.0)
       sass-embedded (~> 1.75)
     jekyll-watch (2.2.1)
@@ -216,7 +222,7 @@ DEPENDENCIES
   capybara_mock
   cuprite
   jekyll
-  jekyll-postcss-v2
+  jekyll-postcss-v2!
   minitest
   puma
   webrick

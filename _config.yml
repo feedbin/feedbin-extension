@@ -17,6 +17,8 @@ exclude:
     - Gemfile
     - Gemfile.lock
     - Rakefile
+    - postcss.config.js
+    - CLAUDE.md
     - node_modules/
     - vendor/bundle/
     - vendor/cache/

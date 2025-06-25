@@ -26,8 +26,9 @@
     <body
         data-controller="app"
         data-app-authorized-value="false"
+        data-app-browser-value="chrome"
         data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
-        class="group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] min-w-[400px] [text-size-adjust:none]"
+        class="group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] data-[app-browser-value=safari-ios]:w-full [text-size-adjust:none]"
     >
         <div
             data-controller="tabs"

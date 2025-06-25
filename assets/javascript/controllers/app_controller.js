@@ -1,14 +1,16 @@
 import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
-import { getHostname } from "../helpers.js"
+import { getHostname, detectBrowser } from "../helpers.js"
 
 export default class extends Controller {
   static values = {
     authorized: Boolean,
+    browser: String,
   }
 
   connect() {
     this.authorize()
+    this.browserValue = detectBrowser()
   }
 
   async authorize() {

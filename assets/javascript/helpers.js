@@ -41,3 +41,18 @@ export async function gzip(text) {
 
   return result
 }
+
+export function detectBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase()
+
+  if (userAgent.includes("firefox")) {
+    return "firefox"
+  } else if (userAgent.includes("safari") && !userAgent.includes("chrome")) {
+    if (userAgent.includes("mobile") || userAgent.includes("iphone") || userAgent.includes("ipad")) {
+      return "safari-ios"
+    }
+    return "safari"
+  }
+
+  return "chrome"
+}

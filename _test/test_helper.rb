@@ -9,16 +9,16 @@ require "fileutils"
 
 ENV["JEKYLL_ENV"] = "test"
 
-PROJECT_ROOT = File.expand_path("..", __dir__)
-SCREENSHOTS_DIR = File.join(PROJECT_ROOT, "tmp", "screenshots")
+SCREENSHOTS = File.join("tmp", "screenshots")
+
 SITE = Jekyll::Site.new(Jekyll.configuration({
-  source: PROJECT_ROOT,
-  destination: File.join(PROJECT_ROOT, "tmp", "_site"),
+  source: "./",
+  destination: File.join("tmp", "_site"),
 }))
 SITE.process
 
-FileUtils.mkdir_p(SCREENSHOTS_DIR)
-Dir.glob(File.join(SCREENSHOTS_DIR, "*.png")).each { |file| FileUtils.rm(file) }
+FileUtils.mkdir_p(SCREENSHOTS)
+Dir.glob(File.join(SCREENSHOTS, "*.png")).each { |file| FileUtils.rm(file) }
 
 Capybara.register_driver(:cuprite) do
   Capybara::Cuprite::Driver.new(it)
@@ -49,7 +49,7 @@ class SystemTest < Minitest::Test
   def capture_screenshot_on_failure
     return unless failure
 
-    screenshot_path = File.join(SCREENSHOTS_DIR, "#{name}.png")
+    screenshot_path = File.join(SCREENSHOTS, "#{name}.png")
     page.save_screenshot(screenshot_path)
     failure.message << "\nScreenshot: #{screenshot_path}"
   end

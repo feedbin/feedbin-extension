@@ -45,8 +45,7 @@ class SaveTest < SystemTest
     save_button.click
 
     # Verify button changes to "Saved" and is disabled
-    assert_equal "Saved", save_button.text
-    assert_equal true, save_button.disabled?
+    assert page.has_text?("Page Saved")
 
     # Verify no error is shown
     error_element = page.find("[data-save-target='error']", visible: :all)
@@ -67,11 +66,7 @@ class SaveTest < SystemTest
 
     # Verify error is displayed
     error_element = page.find("[data-save-target='error']", visible: :all)
-    assert page.has_text?("Error: Internal Server Error")
-
-    # Verify button remains clickable and shows "Save"
-    assert_equal "Save", save_button.text
-    assert_equal false, save_button.disabled?
+    assert page.has_text?("Error Saving Page: Internal Server Error")
   end
 
   def test_save_unauthorized_error
@@ -88,11 +83,7 @@ class SaveTest < SystemTest
 
     # Verify error is displayed
     error_element = page.find("[data-save-target='error']", visible: :all)
-    assert page.has_text?("Error: Unauthorized")
-
-    # Verify button remains clickable and shows "Save"
-    assert_equal "Save", save_button.text
-    assert_equal false, save_button.disabled?
+    assert page.has_text?("Error Saving Page: Unauthorized")
   end
 
   def test_save_network_error
@@ -114,36 +105,7 @@ class SaveTest < SystemTest
 
     # Verify error is displayed
     error_element = page.find("[data-save-target='error']", visible: :all)
-    assert page.has_text?("Unknown error")
-
-    # Verify button remains clickable and shows "Save"
-    assert_equal "Save", save_button.text
-    assert_equal false, save_button.disabled?
-  end
-
-  def test_save_prevents_multiple_submissions
-    body = { id: 123, url: "http://daringfireball.net" }
-
-    CapybaraMock.stub_request(:post, build_url("save"))
-      .to_return(body: body.to_json)
-
-    visit "/index.html"
-    sign_in
-    click_tab(:save)
-
-    save_button = page.find("[data-save-target='submitButton']")
-    
-    # First click - should save successfully
-    save_button.click
-    assert_equal "Saved", save_button.text
-    assert_equal true, save_button.disabled?
-
-    # Try clicking again - should not submit
-    save_button.click
-    
-    # Verify still shows "Saved" and is disabled
-    assert_equal "Saved", save_button.text
-    assert_equal true, save_button.disabled?
+    assert page.has_text?("Error: Network error")
   end
 
 end

@@ -9,9 +9,10 @@ export default class extends Controller {
   }
 
    #states = {
-    initial: 'initial',
-    loading: 'loading',
-    saved: 'saved'
+    initial: "initial",
+    loading: "loading",
+    saved: "saved",
+    error: "error"
   }
 
   async submit(event) {
@@ -48,13 +49,12 @@ export default class extends Controller {
 
       this.stateValue = this.#states.saved;
     } catch (error) {
-      this.stateValue = this.#states.error;
-      this.submitButtonTarget.disabled = false
 
+      this.stateValue = this.#states.error;
       if ("response" in error) {
         this.errorTarget.textContent = `Error Saving Page: ${error.response.statusText}`
       } else {
-        this.errorTarget.textContent = `Error Saving Page: ${error}`
+        this.errorTarget.textContent = `${error}`
       }
     }
   }

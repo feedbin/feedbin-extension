@@ -5,4 +5,4 @@
 hack to get tailwind-language-server to work with jekyll
 as jekyll requires frontmatter and the ls chokes on the front-matter
 */
-@import "{% dest_dir %}/assets/css/main.css";
+@import "./main.css";

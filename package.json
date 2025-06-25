@@ -7,7 +7,8 @@
     "postcss-cli": "^11.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
-    "tailwindcss": "^4.1.8"
+    "tailwindcss": "^4.1.8",
+    "@modelcontextprotocol/server-puppeteer": "^2025.5.12"
   },
   "devDependencies": {
     "web-ext": "^8.7.1"

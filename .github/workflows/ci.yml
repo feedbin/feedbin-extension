@@ -35,5 +35,5 @@ jobs:
       if: failure()
       with:
         name: screenshots ${{ matrix.os }}-${{ matrix.ruby }}
-        path: tmp/screenshots
+        path: tmp
         if-no-files-found: ignore

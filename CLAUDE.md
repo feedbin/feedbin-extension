@@ -39,6 +39,15 @@ source ~/.bash_profile && bundle exec rake test
 # Run specific test file
 source ~/.bash_profile && bundle exec ruby _test/add_test.rb
 ```
+## Stimulus with Tailwind classes
+
+When creating a stimulus controller, never set styles or classes directly on elements. Instead leverage stimulus `values` combined with tailwind data attributes. Here is an example:
+
+<div class="group" data-controller="chat" data-chat-icon-value="true">
+  <img class="hidden group-data-[chat-icon-value=true]:block">
+</div>
+
+Then to toggle the icon visibility you only need to toggle the `this.iconValue = true` to show the icon
 
 ## Architecture
 

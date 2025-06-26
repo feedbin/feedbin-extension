@@ -1,8 +1,9 @@
 import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
+import { loadFavicon } from "../helpers.js"
 
 export default class extends Controller {
-  static targets = ["submitButton", "error", "checkbox", "feedTemplate", "feedResults", "tagTemplate", "tagResults"]
+  static targets = ["submitButton", "error", "checkbox", "feedTemplate", "feedResults", "tagTemplate", "tagResults", "favicon"]
   static values = {
     loading: Boolean,
     url: String,
@@ -109,5 +110,9 @@ export default class extends Controller {
 
     this.tagResultsTarget.innerHTML = ""
     this.tagResultsTarget.append(...[tagContent].flat())
+  }
+
+  faviconTargetConnected(element) {
+    loadFavicon(this, element, sharedStore)
   }
 }

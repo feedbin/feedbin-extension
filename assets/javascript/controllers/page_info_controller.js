@@ -1,5 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
-import { sanitize, getHostname } from "../helpers.js"
+import { sanitize, getHostname, loadFavicon } from "../helpers.js"
+import { sharedStore } from "../store.js"
 
 export default class extends Controller {
   static targets = ["error", "favicon", "title", "description", "url", "formUrl"]
@@ -20,8 +21,7 @@ export default class extends Controller {
     this.hasDataValue = true
 
     if (event.detail?.favicon) {
-      this.hasFaviconValue = true
-      this.faviconTarget.setAttribute("src", event.detail?.favicon)
+      loadFavicon(this, this.faviconTarget, sharedStore)
     }
 
     if (this.formatValue === "add") {

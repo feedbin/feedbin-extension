@@ -38,28 +38,33 @@
 
             {% include shared/error.html content="" attributes="data-authentication-target='error'" %}
 
+
             <div class="flex flex-col gap-3">
-                <input
-                    class="text-input"
-                    type="text"
-                    name="email"
-                    data-authentication-target="email"
-                    placeholder="Email"
-                    autocorrect="off"
-                    autocapitalize="off"
-                    spellcheck="false"
-                    required
-                />
-                <input
-                    class="text-input"
-                    type="password"
-                    name="password"
-                    data-authentication-target="password"
-                    placeholder="Password"
-                />
+                <label class="text-input">
+                    <input
+                        type="text"
+                        name="email"
+                        data-authentication-target="email"
+                        placeholder="Email"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        required
+                    />
+                </label>
+                <label class="text-input">
+                    <input
+                        type="password"
+                        name="password"
+                        data-authentication-target="password"
+                        placeholder="Password"
+                    />
+                </label>
             </div>
         </div>
-        {% endcapture %} {% capture button %}
+        {% endcapture %}
+
+        {% capture button %}
         <button
             data-authentication-target="submitButton"
             type="submit"
@@ -68,6 +73,7 @@
             <span class="hidden group-data-[authentication-loading-value=false]:block"> Sign In </span>
             <span class="hidden group-data-[authentication-loading-value=true]:block"> Loading… </span>
         </button>
-        {% endcapture %} {% include shared/tab.html content=content button=button %}
+        {% endcapture %}
+        {% include shared/tab.html content=content button=button %}
     </form>
 </div>

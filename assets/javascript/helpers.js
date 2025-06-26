@@ -56,3 +56,11 @@ export function detectBrowser() {
 
   return "chrome"
 }
+
+export function loadFavicon(context, element, store) {
+  const pageInfo = store.getPageInfo()
+  const controller = context.application.getControllerForElementAndIdentifier(element, "favicon")
+  if (pageInfo.favicon && controller) {
+    controller.load(pageInfo.favicon)
+  }
+}

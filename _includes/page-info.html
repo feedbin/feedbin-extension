@@ -22,15 +22,7 @@
     </div>
 
     <div class="hidden gap-2 group-data-[page-info-has-data-value=true]:flex">
-        <div
-            class="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-xs dark:group-data-[page-info-has-data-value=true]:bg-white"
-        >
-            {% include shared/icon.html icon="icon-feed" class="fill-600 hidden group-data-[page-info-has-favicon-value=false]:block" %}
-            <img
-                data-page-info-target="favicon"
-                class="hidden max-h-[16px] max-w-[16px] group-data-[page-info-has-favicon-value=true]:block"
-            />
-        </div>
+        {% include shared/favicon.html attributes="data-page-info-target='favicon'" %}
         <div class="min-w-0 grow">
             <h1
                 data-page-info-target="title"

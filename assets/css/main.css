@@ -42,7 +42,7 @@
     --color-red-600: light-dark(#ba0730, #d30d36);
     --color-green-600: light-dark(#05ab48, #04c451);
     --border-color: light-dark(var(--light-color-200), #000);
-    --color-safari-shadow: light-dark(#EFEEEC, #2F2E2C);
+    --color-input: light-dark(var(--light-color-400), #000);
 }
 
 @layer base {
@@ -62,10 +62,13 @@
 
 @layer components {
     .text-input {
-        @apply text-700 placeholder:text-400 w-full max-w-full rounded-md border border-400 px-3 py-2 shadow-sm outline-offset-0 transition focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-blue-600;
+        @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden -outline-offset-1 outline-3 outline-transparent transition focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
+    }
+    .text-input input {
+      @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
     }
     .primary-button {
-        @apply text-700 w-full cursor-pointer rounded-lg border border-400 py-2 text-sm font-medium shadow-sm outline-2 outline-offset-1 outline-transparent transition
+        @apply text-700 w-full cursor-pointer rounded-lg border border-input py-2.5 text-sm font-medium shadow-sm outline-2 outline-offset-1 outline-transparent transition
         disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
         active:shadow-none active:inset-shadow-sm
         focus-visible:outline-blue-400;

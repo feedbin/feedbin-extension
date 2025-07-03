@@ -50,6 +50,7 @@ GEM
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
+    foreman (0.88.1)
     forwardable-extended (2.6.0)
     google-protobuf (4.31.1)
       bigdecimal
@@ -221,6 +222,7 @@ DEPENDENCIES
   capybara
   capybara_mock
   cuprite
+  foreman
   jekyll
   jekyll-postcss-v2!
   minitest

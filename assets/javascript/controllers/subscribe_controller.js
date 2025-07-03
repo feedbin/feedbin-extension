@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
-import { loadFavicon } from "../helpers.js"
+import { loadFavicon, prettyUrl } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["submitButton", "error", "checkbox", "feedTemplate", "feedResults", "tagTemplate", "tagResults", "favicon"]
@@ -25,19 +25,22 @@ export default class extends Controller {
     formData.append("page_token", user.page_token)
     formData.append("url", pageInfo.url)
 
+    let body = new URLSearchParams(formData)
+    console.log("body", body);
+
     try {
-      // const response = await fetch(this.element.action, {
-      //   method: this.element.method || "POST",
-      //   body: new URLSearchParams(formData)
-      // });
-      //
-      // if (!response.ok) {
-      //   const error = new Error(`Invalid response`)
-      //   error.response = response
-      //   throw error;
-      // }
-      //
-      // data = await response.json();
+      const response = await fetch(this.element.action, {
+        method: this.element.method || "POST",
+        body: new URLSearchParams(formData)
+      });
+
+      if (!response.ok) {
+        const error = new Error(`Invalid response`)
+        error.response = response
+        throw error;
+      }
+
+      data = await response.json();
 
       // The displayResults method will be called via the event listener
       // when the add controller dispatches the resultsLoaded event
@@ -82,13 +85,13 @@ export default class extends Controller {
       }
 
       url.setAttribute("name", `feed[${index}][url]`)
-      url.setAttribute("value", feed.url)
+      url.setAttribute("value", feed.feed_url)
 
       feedInput.setAttribute("name", `feed[${index}][title]`)
       feedInput.setAttribute("value", feed.title)
       feedInput.setAttribute("placeholder", feed.title)
 
-      displayUrl.textContent = feed.display_url
+      displayUrl.textContent = prettyUrl(feed.feed_url)
       volume.textContent = feed.volume
 
       return template

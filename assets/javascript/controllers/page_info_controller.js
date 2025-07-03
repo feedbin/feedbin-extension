@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { sanitize, getHostname, loadFavicon } from "../helpers.js"
+import { sanitize, getHostname, loadFavicon, prettyUrl } from "../helpers.js"
 import { sharedStore } from "../store.js"
 
 export default class extends Controller {
@@ -39,7 +39,7 @@ export default class extends Controller {
         this.descriptionTarget.textContent = sanitize(event.detail?.description)
       }
 
-      this.urlTarget.textContent = sanitize(event.detail?.url)
+      this.urlTarget.textContent = prettyUrl(sanitize(event.detail?.url))
     }
   }
 }

@@ -64,3 +64,17 @@ export function loadFavicon(context, element, store) {
     controller.load(pageInfo.favicon)
   }
 }
+
+export function prettyUrl(url) {
+  try {
+    const parsed = new URL(url)
+    const segments = parsed
+      .pathname
+      .split('/')
+      .filter(segment => segment.length > 0)
+
+    return [parsed.hostname, ...segments].join(' › ')
+  } catch (error) {
+    return url
+  }
+}

@@ -11,12 +11,12 @@
         app:pageInfoLoaded@window->add#search
     "
 >
-    <div class="flex grow flex-col items-center justify-center py-8 gap-4 text-500 group-data-[add-has-error-value=true]:hidden">
+    <div class="message group-data-[add-has-error-value=true]:hidden">
         {% include shared/spinner.html %}
         <p>Searching for Feeds…</p>
     </div>
 
-    <div class="flex grow flex-col items-center justify-center py-8 gap-4 text-500 hidden group-data-[add-has-error-value=true]:flex">
+    <div class="message hidden group-data-[add-has-error-value=true]:flex">
         {% include shared/icon.html icon="icon-search" class="shrink-0" %}
         <p data-add-target="error" class="text-center"></p>
     </div>

@@ -74,6 +74,6 @@
         focus-visible:outline-blue-400;
     }
     .message {
-      @apply h-full flex-col items-center justify-center gap-4 py-8;
+      @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-6 text-500;
     }
 }

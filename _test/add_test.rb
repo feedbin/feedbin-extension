@@ -68,7 +68,7 @@ class AddTest < SystemTest
     assert_equal "Social", tag_labels[2].text
 
     # Verify subscribe button is enabled (since first feed is checked by default)
-    submit_button = page.find("[data-subscribe-target='submitButton']")
+    submit_button = page.find("[data-add-target='submitButton']")
     refute submit_button.disabled?
   end
 
@@ -86,11 +86,8 @@ class AddTest < SystemTest
     click_tab(:add)
 
     # Verify error state is shown
-    assert page.has_css?("[data-add-has-error-value=true]")
+    assert page.has_css?("[data-add-state-value=error]")
     assert page.has_text?("No feeds found")
-
-    # Verify no results are shown
-    refute page.has_css?("[data-add-has-results-value=true]")
   end
 
   def test_response_error
@@ -102,10 +99,7 @@ class AddTest < SystemTest
     click_tab(:add)
 
     # Verify error state is shown
-    assert page.has_css?("[data-add-has-error-value=true]")
+    assert page.has_css?("[data-add-state-value=error]")
     assert page.has_text?("Invalid response: Internal Server Error")
-
-    # Verify no results are shown
-    refute page.has_css?("[data-add-has-results-value=true]")
   end
 end

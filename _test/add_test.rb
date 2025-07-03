@@ -6,15 +6,13 @@ class AddTest < SystemTest
     body = {
       feeds: [
         {
-          url: "https://daringfireball.net/feeds",
+          feed_url: "https://daringfireball.net/feeds",
           title: "Daring Fireball",
-          display_url: "daringfireball.net › index.xml",
           volume: "16h ago, 98/mo"
         },
         {
-          url: "https://daringfireball.net/feeds/json",
+          feed_url: "https://daringfireball.net/feeds.json",
           title: "Daring Fireball",
-          display_url: "daringfireball.net › feed.json",
           volume: "16h ago, 98/mo"
         }
       ],
@@ -40,8 +38,8 @@ class AddTest < SystemTest
     # Check display URLs are shown
     display_urls = page.all("[data-template='display_url']")
     assert_equal 2, display_urls.length
-    assert_equal "daringfireball.net › index.xml", display_urls[0].text
-    assert_equal "daringfireball.net › feed.json", display_urls[1].text
+    assert_equal "daringfireball.net › feeds", display_urls[0].text
+    assert_equal "daringfireball.net › feeds.json", display_urls[1].text
 
     # Check volume information
     volumes = page.all("[data-template='volume']")
@@ -58,7 +56,7 @@ class AddTest < SystemTest
     url_inputs = page.all("input[data-template='url']", visible: false)
     assert_equal 2, url_inputs.length
     assert_equal "https://daringfireball.net/feeds", url_inputs[0].value
-    assert_equal "https://daringfireball.net/feeds/json", url_inputs[1].value
+    assert_equal "https://daringfireball.net/feeds.json", url_inputs[1].value
 
     # Check that tags are displayed
     tag_labels = page.all("[data-template='label']")

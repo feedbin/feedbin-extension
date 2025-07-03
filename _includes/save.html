@@ -3,7 +3,7 @@
     data-controller="save"
     data-action="submit->save#submit:prevent"
     data-save-state-value="initial"
-    action="{{ site.api_host }}{{ site.urls.save }}"
+    action="{{ site.urls.save | build_url }}"
     method="POST"
     novalidate
 >

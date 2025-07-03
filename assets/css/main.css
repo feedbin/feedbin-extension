@@ -2,47 +2,69 @@
 
 :root {
     color-scheme: light dark;
+
+    --color-0:   #ffffff;
+    --color-100: #f5f5f7;
+    --color-200: #e9e9eb;
+    --color-300: #bdbfc3;
+    --color-400: #91959b;
+    --color-500: #707680;
+    --color-600: #39404b;
+    --color-700: #0d1623;
+
+    --color-blue-600:  #065fe3;
+    --color-red-600:   #ba0730;
+    --color-green-600: #05ab48;
+
+    --color-border: var(--color-200);
+    --color-input:  var(--color-400);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-0:   #262626;
+        --color-100: #2d2d2d;
+        --color-200: #353535;
+        --color-300: #4d4d4d;
+        --color-400: #707070;
+        --color-500: #8c8c8c;
+        --color-600: #d4d4d4;
+        --color-700: #f6f6f6;
+
+        --color-blue-600:  #0773ff;
+        --color-red-600:   #d30d36;
+        --color-green-600: #04c451;
+
+        --color-border: #000000;
+        --color-input: var(--color-border);
+    }
 }
 
 @theme {
-    --light-color-0: #ffffff;
-    --light-color-100: #f5f5f7;
-    --light-color-200: #e9e9eb;
-    --light-color-300: #bdbfc3;
-    --light-color-400: #91959b;
-    --light-color-500: #707680;
-    --light-color-600: #39404b;
-    --light-color-700: #0d1623;
+    --color-0:   var(--color-0);
+    --color-100: var(--color-100);
+    --color-200: var(--color-200);
+    --color-300: var(--color-300);
+    --color-400: var(--color-400);
+    --color-500: var(--color-500);
+    --color-600: var(--color-600);
+    --color-700: var(--color-700);
 
-    --dark-color-0: #262626;
-    --dark-color-100: #2d2d2d;
-    --dark-color-200: #353535;
-    --dark-color-300: #4d4d4d;
-    --dark-color-400: #707070;
-    --dark-color-500: #8c8c8c;
-    --dark-color-600: #d4d4d4;
-    --dark-color-700: #f6f6f6;
-
-    --color-blue-400: #619eeb;
-    --color-blue-700: #0554ba;
-    --color-green-700: #03913a;
-    --color-red-200: #f8e8eb;
+    --color-blue-400:   #619eeb;
+    --color-blue-700:   #0554ba;
+    --color-green-700:  #03913a;
+    --color-red-200:    #f8e8eb;
     --color-orange-600: #e86b0d;
 
-    --color-0:   light-dark(var(--light-color-0), var(--dark-color-0));
-    --color-100: light-dark(var(--light-color-100), var(--dark-color-100));
-    --color-200: light-dark(var(--light-color-200), var(--dark-color-200));
-    --color-300: light-dark(var(--light-color-300), var(--dark-color-300));
-    --color-400: light-dark(var(--light-color-400), var(--dark-color-400));
-    --color-500: light-dark(var(--light-color-500), var(--dark-color-500));
-    --color-600: light-dark(var(--light-color-600), var(--dark-color-600));
-    --color-700: light-dark(var(--light-color-700), var(--dark-color-700));
 
-    --color-blue-600: light-dark(#065fe3, #0773ff);
-    --color-red-600: light-dark(#ba0730, #d30d36);
-    --color-green-600: light-dark(#05ab48, #04c451);
-    --border-color: light-dark(var(--light-color-200), #000);
-    --color-input: light-dark(var(--light-color-400), #000);
+    --color-border: var(--color-border);
+    --color-input: var(--color-input);
+
+
+    /* higher contrast dark mode variants */
+    --color-blue-600:  var(--color-blue-600);
+    --color-red-600:   var(--color-red-600);
+    --color-green-600: var(--color-green-600);
 }
 
 @layer base {
@@ -51,12 +73,10 @@
     ::before,
     ::backdrop,
     ::file-selector-button {
-        border-color: var(--border-color, currentColor);
+        border-color: var(--color-border);
     }
     input[type="checkbox"]::before {
-        clip-path: path(
-            "M5.25 5.5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0 M7.712.228a.75.75 0 0 1 1.171.924l-.044.063-3.75 4.75a.75.75 0 0 1-1.178-.93l3.75-4.75z M.9 2.8a.75.75 0 0 1 .987-.193l.063.043 3 2.25.059.05a.75.75 0 0 1-.895 1.193L4.05 6.1l-3-2.25-.059-.05a.75.75 0 0 1-.09-1z"
-        );
+        clip-path: path("M5.25 5.5a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0 M7.712.228a.75.75 0 0 1 1.171.924l-.044.063-3.75 4.75a.75.75 0 0 1-1.178-.93l3.75-4.75z M.9 2.8a.75.75 0 0 1 .987-.193l.063.043 3 2.25.059.05a.75.75 0 0 1-.895 1.193L4.05 6.1l-3-2.25-.059-.05a.75.75 0 0 1-.09-1z");
     }
 }
 
@@ -65,7 +85,7 @@
         @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden -outline-offset-1 outline-3 outline-transparent transition focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
     }
     .text-input input {
-      @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
+        @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
     }
     .primary-button {
         @apply text-700 w-full cursor-pointer rounded-lg border border-input py-2.5 text-sm font-medium shadow-sm outline-2 outline-offset-1 outline-transparent transition
@@ -74,6 +94,6 @@
         focus-visible:outline-blue-400;
     }
     .message {
-      @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-6 text-500;
+        @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-6 text-500;
     }
 }

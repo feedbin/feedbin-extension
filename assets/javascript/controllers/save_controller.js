@@ -8,7 +8,7 @@ export default class extends Controller {
     state: String,
   }
 
-   #states = {
+  #states = {
     initial: "initial",
     loading: "loading",
     saved: "saved",

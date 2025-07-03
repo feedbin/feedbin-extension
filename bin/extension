@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -e
+
+case "$1" in
+  setup)
+    # Check for Ruby
+    if ! command -v ruby &> /dev/null; then
+      echo "Error: Ruby is not installed"
+      exit 1
+    fi
+
+    # Check for Node
+    if ! command -v node &> /dev/null; then
+      echo "Error: Node is not installed"
+      exit 1
+    fi
+
+    # Install dependencies
+    bundle install
+    npm install
+    ;;
+
+  test)
+    bundle exec rake
+    ;;
+
+  run)
+    bundle exec foreman start
+    ;;
+
+  build)
+    JEKYLL_ENV=production bundle exec jekyll build
+    ;;
+
+  *)
+    echo "Usage: $0 {setup|test|run|build}"
+    exit 1
+    ;;
+esac

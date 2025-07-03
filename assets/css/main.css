@@ -96,4 +96,7 @@
     .message {
         @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-6 text-500;
     }
+    .heading {
+      @apply text-700 font-bold;
+    }
 }

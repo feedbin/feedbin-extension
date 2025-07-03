@@ -10,18 +10,20 @@ export default class extends Controller {
   }
 
   async search(event) {
-    const user = sharedStore.getUser()
-    const pageInfo = sharedStore.getPageInfo()
-
-    const formData = new FormData(this.element)
-    formData.append("page_token", user.page_token)
-    formData.append("url", pageInfo.url)
-
     try {
-      const response = await fetch(this.element.action, {
+      const user = sharedStore.getUser()
+      const pageInfo = sharedStore.getPageInfo()
+
+      const formData = new FormData(this.element)
+      formData.append("page_token", user.page_token)
+      formData.append("url", pageInfo.url)
+
+      const request = {
         method: this.element.method || "POST",
         body: new URLSearchParams(formData),
-      })
+      }
+
+      const response = await fetch(this.element.action, request)
 
       if (!response.ok) {
         const error = new Error(`Invalid response`)
@@ -45,6 +47,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error. ${error}`
       }
+      console.log(error)
     }
   }
 }

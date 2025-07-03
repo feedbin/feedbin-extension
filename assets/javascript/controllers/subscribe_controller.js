@@ -18,21 +18,18 @@ export default class extends Controller {
     this.loadingValue = true
     this.errorTarget.textContent = ""
 
-    const user = sharedStore.getUser()
-    const pageInfo = sharedStore.getPageInfo()
-
-    const formData = new FormData(this.element)
-    formData.append("page_token", user.page_token)
-    formData.append("url", pageInfo.url)
-
-    let body = new URLSearchParams(formData)
-    console.log("body", body);
-
     try {
-      const response = await fetch(this.element.action, {
+      const user = sharedStore.getUser()
+      const pageInfo = sharedStore.getPageInfo()
+      const formData = new FormData(this.element)
+      formData.append("page_token", user.page_token)
+
+      const request = {
         method: this.element.method || "POST",
         body: new URLSearchParams(formData)
-      });
+      }
+
+      const response = await fetch(this.element.action, request);
 
       if (!response.ok) {
         const error = new Error(`Invalid response`)
@@ -40,7 +37,7 @@ export default class extends Controller {
         throw error;
       }
 
-      data = await response.json();
+      // data = await response.json();
 
       // The displayResults method will be called via the event listener
       // when the add controller dispatches the resultsLoaded event
@@ -77,17 +74,19 @@ export default class extends Controller {
       const displayUrl = template.querySelector("[data-template=display_url]")
       const volume = template.querySelector("[data-template=volume]")
 
-      const checkboxName = `feed[${index}][subscribe]`
+      const inputBase = `feeds[${feed.id}]`
+
+      const checkboxName = `${inputBase}[subscribe]`
       checkboxDummy.setAttribute("name", checkboxName)
       checkbox.setAttribute("name", checkboxName)
       if (index === 0) {
         checkbox.checked = true
       }
 
-      url.setAttribute("name", `feed[${index}][url]`)
+      url.setAttribute("name", `${inputBase}[url]`)
       url.setAttribute("value", feed.feed_url)
 
-      feedInput.setAttribute("name", `feed[${index}][title]`)
+      feedInput.setAttribute("name", `${inputBase}[title]`)
       feedInput.setAttribute("value", feed.title)
       feedInput.setAttribute("placeholder", feed.title)
 

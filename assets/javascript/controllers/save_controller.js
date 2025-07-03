@@ -30,16 +30,18 @@ export default class extends Controller {
         title: pageInfo.title,
         content: pageInfo.content,
       })
-      const body = await gzip(json)
 
-      const response = await fetch(this.element.action, {
+      const body = await gzip(json)
+      const request = {
         method: this.element.method || "POST",
         headers: {
           "Content-Type": "application/json",
           "Content-Encoding": "gzip",
         },
         body: body,
-      })
+      }
+
+      const response = await fetch(this.element.action, request)
 
       if (!response.ok) {
         const error = new Error(`Invalid response`)
@@ -49,13 +51,13 @@ export default class extends Controller {
 
       this.stateValue = this.#states.saved;
     } catch (error) {
-
       this.stateValue = this.#states.error;
       if ("response" in error) {
         this.errorTarget.textContent = `Error Saving Page: ${error.response.statusText}`
       } else {
         this.errorTarget.textContent = `${error}`
       }
+      console.log(error)
     }
   }
 }

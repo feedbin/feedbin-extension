@@ -6,11 +6,13 @@ class AddTest < SystemTest
     body = {
       feeds: [
         {
+          id: 31,
           feed_url: "https://daringfireball.net/feeds",
           title: "Daring Fireball",
           volume: "16h ago, 98/mo"
         },
         {
+          id: 36,
           feed_url: "https://daringfireball.net/feeds.json",
           title: "Daring Fireball",
           volume: "16h ago, 98/mo"

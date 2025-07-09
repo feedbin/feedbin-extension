@@ -7,7 +7,7 @@ module Jekyll
       when "production"
         "https://feedbin.com"
       else
-        "https://feedbin.resolv.app"
+        "https://feedbin.mac.resolv.app"
       end
     end
   end

@@ -28,7 +28,7 @@ export default class extends Controller {
         page_token: user.page_token,
         url: pageInfo.url,
         title: pageInfo.title,
-        content: pageInfo.content,
+        content: pageInfo.content
       })
 
       const body = await gzip(json)

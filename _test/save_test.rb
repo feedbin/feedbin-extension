@@ -38,7 +38,7 @@ class SaveTest < SystemTest
 
     # Initial button state
     save_button = page.find("[data-save-target='submitButton']")
-    assert_equal "Save", save_button.text
+    assert_equal "Send", save_button.text
     assert_equal false, save_button.disabled?
 
     # Click save button

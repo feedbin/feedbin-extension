@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@custom-variant browser-safari  (&:where([data-app-browser-value="safari"] *));
+@custom-variant browser-ios     (&:where([data-app-browser-value="ios"] *));
+@custom-variant browser-firefox (&:where([data-app-browser-value="firefox"] *));
+@custom-variant browser-chrome  (&:where([data-app-browser-value="chrome"] *));
+
 :root {
     color-scheme: light dark;
 
@@ -41,6 +46,8 @@
 }
 
 @theme {
+    /* disable all default colors */
+    --color-*:    initial;
     --color-0:   var(--color-0);
     --color-100: var(--color-100);
     --color-200: var(--color-200);
@@ -50,16 +57,17 @@
     --color-600: var(--color-600);
     --color-700: var(--color-700);
 
+    --color-white:   #ffffff;
+    --color-black:   #000000;
+
     --color-blue-400:   #619eeb;
     --color-blue-700:   #0554ba;
     --color-green-700:  #03913a;
     --color-red-200:    #f8e8eb;
     --color-orange-600: #e86b0d;
 
-
     --color-border: var(--color-border);
     --color-input: var(--color-input);
-
 
     /* higher contrast dark mode variants */
     --color-blue-600:  var(--color-blue-600);

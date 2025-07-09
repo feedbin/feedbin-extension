@@ -134,8 +134,6 @@
       windowId: 1,
     };
 
-    console.log("mockTab", mockTab);
-
     return Promise.resolve([mockTab]);
   };
 

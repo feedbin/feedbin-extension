@@ -32,7 +32,6 @@ export default class extends Controller {
         body: new URLSearchParams(formData),
       }
 
-      console.log("this.searchUrlValue", this.searchUrlValue);
       const response = await fetch(this.searchUrlValue, request)
 
       if (!response.ok) {
@@ -57,13 +56,11 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error. ${error}`
       }
-      console.log(error)
+      console.log("search_error", error)
     }
   }
 
   async subscribe(event) {
-    console.log(event)
-
     this.submitButtonTarget.disabled = true
     this.stateValue = this.#states.loading
     this.errorTarget.textContent = ""
@@ -95,7 +92,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error.`
       }
-      console.log(error)
+      console.log("subscribe_error", error)
     }
   }
 

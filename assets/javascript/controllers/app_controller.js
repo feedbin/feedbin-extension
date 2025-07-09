@@ -29,7 +29,6 @@ export default class extends Controller {
   }
 
   async loadPageData() {
-    console.log("load")
     try {
       const [tab] = await browser.tabs.query({
         active: true,
@@ -68,7 +67,6 @@ export default class extends Controller {
       content: data.content,
     }
     sharedStore.setPageInfo(result)
-    console.log("sharedStore", sharedStore.getPageInfo())
     this.dispatch("pageInfoLoaded", { detail: result })
   }
 }

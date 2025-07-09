@@ -57,7 +57,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `${error}`
       }
-      console.log(error)
+      console.log("save submit_error", error)
     }
   }
 }

@@ -1,6 +1,6 @@
-<div class="grow min-h-[300px] max-h-[300px] overflow-scroll">
+<div class="grow min-h-[300px] max-h-[300px] browser-ios:min-h-auto browser-ios:max-h-auto overflow-scroll browser-ios:overflow-visible">
     <div class="px-6 py-4">
         {{ include.content }}
     </div>
 </div>
-<div class="w-full shrink-0 border-t px-6 py-4 empty:hidden">{{ include.button }}</div>
+<div class="w-full shrink-0 border-t browser-ios:border-t-transparent px-6 py-4 empty:hidden">{{ include.button }}</div>

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Feedbin Subscribe & Save",
   "version": "1.0",
-  "description": "Subscribe to websites and save pages to read in Feedbin",
+  "description": "Subscribe to feeds and save pages to Feedbin.",
   "icons": {
     "32": "assets/images/icon-32.png",
     "48": "assets/images/icon-48.png",

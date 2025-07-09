@@ -1,10 +1,12 @@
 ---
 ---
-
 <!doctype html>
 <html
-    lang="en"
-    class="h-full"
+    class="group h-full"
+    data-controller="app"
+    data-app-authorized-value="false"
+    data-app-browser-value="chrome"
+    data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
 >
     <head>
         <meta charset="UTF-8" />
@@ -23,13 +25,7 @@
         <script src="assets/javascript/application.js" type="module" ></script>
     </head>
 
-    <body
-        data-controller="app"
-        data-app-authorized-value="false"
-        data-app-browser-value="chrome"
-        data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
-        class="group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] data-[app-browser-value=safari-ios]:w-full [text-size-adjust:none]"
-    >
+    <body class="group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] browser-ios:w-full [text-size-adjust:none]">
         <div
             data-controller="tabs"
             class="group flex h-full flex-col"

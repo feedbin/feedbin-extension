@@ -7,8 +7,6 @@ export default class extends Controller {
   }
 
   async submit(event) {
-    console.log(event)
-
     this.submitButtonTarget.disabled = true
     this.loadingValue = true
     this.errorTarget.textContent = ""

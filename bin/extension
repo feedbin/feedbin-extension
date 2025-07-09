@@ -30,7 +30,7 @@ case "$1" in
     ;;
 
   build)
-    JEKYLL_ENV=production bundle exec jekyll build
+    JEKYLL_ENV=${JEKYLL_ENV:-"production"} bundle exec jekyll build
     ;;
 
   *)

@@ -47,7 +47,7 @@
 
 @theme {
     /* disable all default colors */
-    --color-*:    initial;
+    --color-*:   initial;
     --color-0:   var(--color-0);
     --color-100: var(--color-100);
     --color-200: var(--color-200);
@@ -67,7 +67,7 @@
     --color-orange-600: #e86b0d;
 
     --color-border: var(--color-border);
-    --color-input: var(--color-input);
+    --color-input:  var(--color-input);
 
     /* higher contrast dark mode variants */
     --color-blue-600:  var(--color-blue-600);

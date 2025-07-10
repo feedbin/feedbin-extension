@@ -2,7 +2,7 @@
   id: tab-add
   icon: icon-add
 
-- title: Send to Pages
+- title: Save Page
   id: tab-save
   icon: icon-save
 

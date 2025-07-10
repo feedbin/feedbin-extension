@@ -3,6 +3,6 @@
 
 /*
 hack to get tailwind-language-server to work with jekyll
-as jekyll requires frontmatter and the ls chokes on the front-matter
+as jekyll requires front-matter and the ls chokes on the front-matter
 */
 @import "./main.css";

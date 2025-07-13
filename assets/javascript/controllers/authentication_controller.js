@@ -13,6 +13,11 @@ export default class extends Controller {
   async appAuth() {
     try {
       const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
+      if (response.credentials) {
+        this.emailTarget.value = response.credentials.email
+        this.passwordTarget.value = response.credentials.password
+        await this.submit()
+      }
       console.log("response 2", response);
     } catch (error) {
       console.error("Failed to retrieve password from keychain:", error)

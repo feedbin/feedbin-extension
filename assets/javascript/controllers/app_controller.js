@@ -52,7 +52,7 @@ export default class extends Controller {
       } else {
         this.dispatch("pageInfoError")
       }
-      console.error("Error getting tab information:", error)
+      console.trace("Error getting tab information:", error)
     }
   }
 

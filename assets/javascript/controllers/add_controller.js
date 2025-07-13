@@ -56,7 +56,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error. ${error}`
       }
-      console.log("search_error", error)
+      console.trace("search_error", error)
     }
   }
 
@@ -92,7 +92,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error.`
       }
-      console.log("subscribe_error", error)
+      console.trace("subscribe_error", error)
     }
   }
 

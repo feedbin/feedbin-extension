@@ -3,10 +3,10 @@ plugins:
 postcss:
     cache: false
 urls:
-    authentication: /extension/authentication.json
-    save: /extension/pages.json
-    find: /extension/subscriptions/new.json
-    subscribe: /extension/subscriptions/create.json
+    authentication: /extension/v1/authentication.json
+    save: /extension/v1/pages.json
+    find: /extension/v1/subscriptions/new.json
+    subscribe: /extension/v1/subscriptions/create.json
 exclude:
     - .sass-cache/
     - .jekyll-cache/

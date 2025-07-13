@@ -28,7 +28,7 @@
     if (request && request.action === "loadPageInfo") {
       sendResponse(loadPageInfo())
     } else {
-      console.log("unkown request", request)
+      console.trace("unkown request", request)
     }
   })
 })()

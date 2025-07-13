@@ -6,6 +6,19 @@ export default class extends Controller {
     url: String,
   }
 
+  async connect() {
+    await this.appAuth()
+  }
+
+  async appAuth() {
+    try {
+      const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
+      console.log("response", response);
+    } catch (error) {
+      console.error("Failed to retrieve password from keychain:", error)
+    }
+  }
+
   async submit(event) {
     this.submitButtonTarget.disabled = true
     this.loadingValue = true
@@ -36,7 +49,7 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error.`
       }
-      console.error("Request failed:", error)
+      console.trace("Request failed:", error)
     }
 
     this.submitButtonTarget.disabled = false

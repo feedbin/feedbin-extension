@@ -12,7 +12,7 @@
     "256": "assets/images/icon-256.png",
     "512": "assets/images/icon-512.png"
   },
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["activeTab", "scripting", "storage", "nativeMessaging"],
   "action": {
     "default_popup": "index.html",
     "default_title": "Subscribe & Save",

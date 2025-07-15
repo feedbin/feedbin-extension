@@ -1,24 +1,27 @@
-<ul class="hidden rounded-[7px] bg-100 w-full shrink-0 p-1 group-data-[app-authorized-value=true]:flex">
-    {% for tab in site.data.tabs -%}
-    <li class="flex grow">
-        <label
-            class="
-                text-500 fill-500 flex grow cursor-pointer items-center justify-center gap-2 rounded-[4px]
-                py-2 text-sm whitespace-nowrap outline-2 outline-offset-1 outline-transparent transition
-                has-checked:text-700 has-checked:fill-700 has-checked:bg-0
-                has-focus-visible:outline-blue-400
-                "
-        >
-            {% include shared/icon.html icon=tab.icon %} {{ tab.title }}
+<div class="p-4 pb-0 hidden group-data-[app-authorized-value=true]:flex">
+    <ul class="flex rounded-[7px] bg-100 w-full shrink-0 p-1">
+        {% for tab in site.data.tabs -%}
+        <li class="flex grow">
+            <label
+                class="
+                    text-500 fill-500 flex grow cursor-pointer items-center justify-center gap-2 rounded-[4px]
+                    py-2 text-sm whitespace-nowrap outline-2 outline-offset-1 outline-transparent transition
+                    has-checked:text-700 has-checked:fill-700 has-checked:bg-0
+                    has-focus-visible:outline-blue-400
+                    pointer-fine:hover:text-700 pointer-fine:hover:fill-700
+                    "
+            >
+                {% include shared/icon.html icon=tab.icon %} {{ tab.title }}
 
-            <input
-                name="tab"
-                type="radio"
-                class="sr-only"
-                data-tabs-target="tab"
-                value="{{ tab.id }}"
-            />
-        </label>
-    </li>
-    {% endfor %}
-</ul>
+                <input
+                    name="tab"
+                    type="radio"
+                    class="sr-only"
+                    data-tabs-target="tab"
+                    value="{{ tab.id }}"
+                />
+            </label>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

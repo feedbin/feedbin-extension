@@ -22,7 +22,6 @@
     --color-green-600: #05ab48;
 
     --color-border: var(--color-200);
-    --color-input:  var(--color-400);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -41,7 +40,6 @@
         --color-green-600: #04c451;
 
         --color-border: #000000;
-        --color-input: var(--color-border);
     }
 }
 
@@ -67,7 +65,7 @@
     --color-orange-600: #e86b0d;
 
     --color-border: var(--color-border);
-    --color-input:  var(--color-input);
+    --color-input:  var(--color-400);
 
     /* higher contrast dark mode variants */
     --color-blue-600:  var(--color-blue-600);

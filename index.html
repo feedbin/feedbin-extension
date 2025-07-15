@@ -31,9 +31,7 @@
             class="group flex h-full flex-col"
             data-action="app:authorized@window->tabs#selectTab"
         >
-            <ul class="hidden shrink-0 gap-2 px-6 py-4 group-data-[app-authorized-value=true]:flex">
-                {% include shared/nav.html %}
-            </ul>
+            {% include shared/nav.html %}
 
             <div class="grow min-h-0">
                 <div class="hidden h-full group-has-[[value=tab-settings]:checked]:block">

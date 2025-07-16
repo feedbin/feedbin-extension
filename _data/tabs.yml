@@ -1,11 +1,11 @@
 - title: Add Feed
   id: tab-add
-  icon: icon-add
+  icon: add
 
 - title: Save Page
   id: tab-save
-  icon: icon-save
+  icon: save
 
 - title: Settings
   id: tab-settings
-  icon: icon-settings
+  icon: settings

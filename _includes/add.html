@@ -78,7 +78,7 @@
                     data-template="checkbox_dummy"
                 />
                 {% include shared/checkbox.html attributes="data-template='checkbox' data-add-target='checkbox'
-                data-action='change->subscribe#countSelected' value='1'" %}
+                data-action='change->add#countSelected' value='1'" %}
             </label>
             <div class="min-w-0 grow">
                 <label class="text-input">
@@ -90,7 +90,7 @@
                         data-template="feed_input"
                     />
                 </label>
-                <div class="text-500 mt-1 flex min-w-0 gap-4 text-sm">
+                <div class="text-500 mt-1 flex min-w-0 gap-4">
                     <div
                         class="grow truncate"
                         data-template="display_url"

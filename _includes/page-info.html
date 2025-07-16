@@ -22,7 +22,9 @@
     </div>
 
     <div class="hidden gap-2 group-data-[page-info-has-data-value=true]:flex">
-        {% include shared/favicon.html attributes="data-page-info-target='favicon'" %}
+        <div class="relative top-[-1px]">
+            {% include shared/favicon.html attributes="data-page-info-target='favicon'" %}
+        </div>
         <div class="min-w-0 grow">
             <h1
                 data-page-info-target="title"
@@ -30,11 +32,11 @@
             ></h1>
             <p
                 data-page-info-target="description"
-                class="mb-1 line-clamp-3 text-sm empty:hidden"
+                class="mb-1 line-clamp-3 empty:hidden"
             ></p>
             <p
                 data-page-info-target="url"
-                class="text-500 mb-1 truncate text-sm empty:hidden"
+                class="text-500 mb-1 truncate empty:hidden"
             ></p>
         </div>
     </div>

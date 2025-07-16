@@ -115,7 +115,7 @@
         @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
     }
     .primary-button {
-        @apply bg-blue-600 text-white w-full cursor-pointer rounded-lg py-2.5 text-sm font-medium outline-2 outline-offset-1 outline-transparent transition
+        @apply bg-blue-600 text-white w-full cursor-pointer rounded-lg py-2.5 font-medium outline-2 outline-offset-1 outline-transparent transition
         disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
         active:bg-blue-700
         focus-visible:outline-blue-400;

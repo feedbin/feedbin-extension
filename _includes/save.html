@@ -9,12 +9,12 @@
 >
 
     <div class="message flex hidden group-data-[save-state-value=saved]:flex">
-        {% include shared/success.html %}
+        {% include shared/message-icon.html type="success" %}
         <p>Page Saved</p>
     </div>
 
     <div class="message flex hidden group-data-[save-state-value=error]:flex">
-        {% include shared/icon.html icon="icon-error" class="shrink-0" %}
+        {% include shared/message-icon.html type="error" %}
         <p data-save-target="error"></p>
     </div>
 

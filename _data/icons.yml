@@ -28,18 +28,6 @@ icon-search:
   height: 16
   markup: <path d="M12.5 7A5.5 5.5 0 1 0 7 12.5V14A7 7 0 1 1 7 0a7 7 0 0 1 0 14v-1.5A5.5 5.5 0 0 0 12.5 7"/><path d="M11.47 11.47a.75.75 0 0 1 1.004-.052l.056.052 2.5 2.5.052.056a.75.75 0 0 1-1.056 1.056l-.056-.052-2.5-2.5-.052-.056a.75.75 0 0 1 .052-1.004"/>
 
-icon-success:
-  width:  24
-  height: 24
-  markup: >
-    <circle cx="12" cy="12" r="12" class="fill-green-600"/> <circle cx="8" cy="12" r="1" fill="white"/> <circle cx="11" cy="15" r="1" fill="white"/> <circle cx="16" cy="10" r="1" fill="white"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.2928 15.7072L7.29285 12.7072L8.70706 11.293L11.7071 14.293L10.2928 15.7072Z" fill="white"/> <path fill-rule="evenodd" clip-rule="evenodd" d="M10.2928 14.293L15.2928 9.29297L16.7071 10.7072L11.7071 15.7072L10.2928 14.293Z" fill="white"/>
-
-icon-error:
-  width:  24
-  height: 24
-  markup: >
-    <circle cx="12" cy="12" r="12" class="fill-red-600" /> <rect x="11" y="6" width="2" height="9" rx="1" fill="white"/> <rect x="11" y="17" width="2" height="2" rx="1" fill="white"/>
-
 icon-spinner:
   width:  16
   height: 16
@@ -61,3 +49,9 @@ icon-check:
   height: 9.33
   markup: >
     <path d="M1.667 5.333a1.333 1.333 0 1 0 0-2.666 1.333 1.333 0 0 0 0 2.666M5.667 9.333a1.333 1.333 0 1 0 0-2.666 1.333 1.333 0 0 0 0 2.666M12.333 2.667a1.333 1.333 0 1 0 0-2.667 1.333 1.333 0 0 0 0 2.667"/><path fill-rule="evenodd" d="m4.724 8.943-4-4 1.885-1.886 4 4z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M4.724 7.057 11.39.391l1.886 1.885-6.667 6.667z" clip-rule="evenodd"/>
+
+icon-exclamation:
+  width: 2
+  height: 13
+  markup: >
+    <path d="M2 1a1 1 0 0 0-2 0v7a1 1 0 1 0 2 0zM2 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>

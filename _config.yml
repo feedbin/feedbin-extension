@@ -26,3 +26,4 @@ exclude:
     - vendor/ruby/
     - bin/
     - Procfile
+    - manifest.yml

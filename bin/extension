@@ -26,35 +26,30 @@ case "$1" in
     ;;
 
   run)
-    bundle exec foreman start
+    BUILD_TARGET=${BUILD_TARGET:-"firefox"} bundle exec foreman start
     ;;
 
-  build)
-    JEKYLL_ENV=${JEKYLL_ENV:-"production"} bundle exec jekyll build
+  package_ios)
+    BUILD_TARGET=${BROWSER:-"safari"} JEKYLL_ENV=${JEKYLL_ENV:-"production"} bundle exec jekyll build --destination _site/safari
     ;;
 
-  build_chrome)
-    # Build the extension
-    JEKYLL_ENV=${JEKYLL_ENV:-"production"} bundle exec jekyll build
-    
-    # Remove action.default_icon from manifest.json
-    ruby -rjson -e '
-      manifest_path = "_site/manifest.json"
-      manifest = JSON.parse(File.read(manifest_path))
-      manifest["action"]&.delete("default_icon")
-      File.write(manifest_path, JSON.pretty_generate(manifest))
-    '
-    
-    # Get version from manifest.json
-    VERSION=$(ruby -rjson -e 'puts JSON.parse(File.read("_site/manifest.json"))["version"]')
-    
-    # Create zip file
-    cd _site && zip -r "../chrome_${VERSION}.zip" . && cd ..
+  package)
+    # Parse version from manifest.yml
+    VERSION=$(ruby -ryaml -e "puts YAML.load_file('manifest.yml', aliases: true)['defaults']['version']")
+
+    # Build and package Chrome
+    BUILD_TARGET=chrome JEKYLL_ENV=production bundle exec jekyll build --destination _site/chrome
+    cd _site/chrome && zip -r ../../tmp/chrome_${VERSION}.zip . && cd ../..
     echo "Created chrome_${VERSION}.zip"
+
+    # Build and package Firefox
+    BUILD_TARGET=firefox JEKYLL_ENV=production bundle exec jekyll build --destination _site/firefox
+    cd _site/firefox && zip -r ../../tmp/firefox_${VERSION}.zip . && cd ../..
+    echo "Created firefox_${VERSION}.zip"
     ;;
 
   *)
-    echo "Usage: $0 {setup|test|run|build|build_chrome}"
+    echo "Usage: $0 {setup|test|run|build|package}"
     exit 1
     ;;
 esac

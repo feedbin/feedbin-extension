@@ -3,6 +3,7 @@ import { sharedStore } from "../store.js"
 import { getHostname, detectBrowser } from "../helpers.js"
 
 export default class extends Controller {
+  static targets = ["footerSpacer"]
   static values = {
     authorized: Boolean,
     browser: String,

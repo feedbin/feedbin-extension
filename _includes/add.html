@@ -24,7 +24,7 @@
         novalidate
         action="{{ site.urls.subscribe | build_url }}"
         method="POST"
-        class="sr-only h-full flex-col opacity-0 transition duration-250 group-data-[add-state-value=hasResults]:not-sr-only group-data-[add-state-value=hasResults]:flex group-data-[add-state-value=hasResults]:opacity-100"
+        class="hidden h-full flex-col group-data-[add-state-value=hasResults]:flex"
         data-add-target="subscribeForm"
         data-action="submit->add#subscribe:prevent"
     >

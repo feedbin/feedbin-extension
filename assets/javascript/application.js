@@ -3,6 +3,7 @@
 import { Application } from "./lib/stimulus.js"
 import AppController from "./controllers/app_controller.js"
 import AuthenticationController from "./controllers/authentication_controller.js"
+import VisualViewportController from "./controllers/visual_viewport_controller.js"
 import FaviconController from "./controllers/favicon_controller.js"
 import SettingsController from "./controllers/settings_controller.js"
 import TabsController from "./controllers/tabs_controller.js"
@@ -14,6 +15,7 @@ const application = Application.start()
 application.debug = {% if jekyll.environment == "production" %} false {% else %} true {% endif %}
 
 application.register("app", AppController)
+application.register("visual-viewport", VisualViewportController)
 application.register("authentication", AuthenticationController)
 application.register("favicon", FaviconController)
 application.register("settings", SettingsController)

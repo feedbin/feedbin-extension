@@ -1,6 +1,7 @@
-<div class="grow browser-ios:grow-0 min-h-[300px] max-h-[300px] browser-ios:min-h-auto browser-ios:max-h-none overflow-scroll browser-ios:overflow-visible">
+<div class="grow min-h-[300px] max-h-[300px] browser-ios:min-h-auto browser-ios:max-h-none overflow-scroll">
     <div class="px-4 py-4">
         {{ include.content }}
     </div>
 </div>
-<div class="w-full shrink-0 border-t browser-ios:border-t-transparent px-4 py-4 empty:hidden">{{ include.button }}</div>
+<div class="w-full shrink-0 border-t px-4 py-4 empty:hidden">{{ include.button }}</div>
+<div class="shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"></div>

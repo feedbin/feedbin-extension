@@ -3,7 +3,7 @@
 <!doctype html>
 <html
     class="group h-full"
-    data-controller="app"
+    data-controller="app visual-viewport"
     data-app-authorized-value="false"
     data-app-browser-value="chrome"
     data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
@@ -25,10 +25,10 @@
         <script src="assets/javascript/application.js" type="module" ></script>
     </head>
 
-    <body class="group bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] browser-ios:w-full [text-size-adjust:none]">
+    <body class="group flex flex-col bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] [text-size-adjust:none] browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen">
         <div
             data-controller="tabs"
-            class="group flex h-full flex-col"
+            class="group flex h-full flex-col shrink-0"
             data-action="app:authorized@window->tabs#selectTab"
         >
             {% include shared/nav.html %}

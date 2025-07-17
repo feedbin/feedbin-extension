@@ -1,4 +1,4 @@
-<div class="p-4 hidden group-data-[app-authorized-value=true]:flex">
+<div class="p-4 hidden border-b transition group-data-[app-header-border-value=false]:border-transparent group-data-[app-authorized-value=true]:flex">
     <ul class="flex rounded-[7px] bg-100 w-full shrink-0 p-1">
         {% for tab in site.data.tabs -%}
         <li class="flex grow">
@@ -17,8 +17,8 @@
                     name="tab"
                     type="radio"
                     class="sr-only"
-                    data-tabs-target="tab"
                     value="{{ tab.id }}"
+                    data-tabs-target="tab"
                 />
             </label>
         </li>

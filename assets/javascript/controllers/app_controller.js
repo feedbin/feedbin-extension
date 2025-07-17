@@ -1,17 +1,34 @@
 import { Controller } from "../lib/stimulus.js"
 import { sharedStore } from "../store.js"
-import { getHostname, detectBrowser } from "../helpers.js"
+import { getHostname, detectBrowser, afterTransition } from "../helpers.js"
 
 export default class extends Controller {
-  static targets = ["footerSpacer"]
+  static targets = ["footerSpacer", "scrollContainer", "contentContainer"]
   static values = {
     authorized: Boolean,
     browser: String,
+    footerBorder: Boolean,
+    headerBorder: Boolean,
   }
 
   connect() {
     this.authorize()
     this.browserValue = detectBrowser()
+    this.boundCheckScroll = this.checkScroll.bind(this)
+    window.addEventListener("resize", this.boundCheckScroll)
+
+    this.resizeObserver = new ResizeObserver(elements => {
+      this.checkScroll()
+    })
+
+    this.contentContainerTargets.forEach((element) => this.resizeObserver.observe(element))
+  }
+
+  disconnect() {
+    window.removeEventListener("resize", this.boundCheckScroll)
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
+    }
   }
 
   async authorize() {
@@ -27,6 +44,38 @@ export default class extends Controller {
     this.dispatch("authorized")
 
     await this.loadPageData()
+  }
+
+  checkScroll() {
+    const visibleScrollContainer = this.scrollContainerTargets.find((element) => element.checkVisibility())
+    if (!visibleScrollContainer) {
+      return
+    }
+
+    const scrollTop = visibleScrollContainer.scrollTop
+    const scrollHeight = visibleScrollContainer.scrollHeight
+    const clientHeight = visibleScrollContainer.clientHeight
+    const maxScroll = scrollHeight - clientHeight
+
+    if (scrollTop > 0) {
+      this.headerBorderValue = true
+    } else {
+      this.headerBorderValue = false
+    }
+
+    if (scrollHeight > clientHeight && scrollTop < maxScroll) {
+      this.footerBorderValue = true
+    } else {
+      this.footerBorderValue = false
+    }
+  }
+
+  delayedCheckScroll() {
+    if (this.hasFooterSpacerTarget) {
+      afterTransition(this.footerSpacerTarget, true, () => {
+        this.checkScroll()
+      })
+    }
   }
 
   async loadPageData() {

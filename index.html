@@ -6,7 +6,13 @@
     data-controller="app visual-viewport"
     data-app-authorized-value="false"
     data-app-browser-value="chrome"
-    data-action="authentication:authorize@window->app#authorize settings:authorize@window->app#authorize"
+    data-app-header-border-value="false"
+    data-app-footer-border-value="false"
+    data-action="
+        authentication:authorize@window->app#authorize
+        settings:authorize@window->app#authorize
+        visual-viewport:change@window->app#delayedCheckScroll
+    "
 >
     <head>
         <meta charset="UTF-8" />

@@ -18,7 +18,6 @@ export default class extends Controller {
         this.passwordTarget.value = response.credentials.password
         await this.submit()
       }
-      console.log("response 2", response);
     } catch (error) {
       console.error("Failed to retrieve password from keychain:", error)
     }

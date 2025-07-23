@@ -22,7 +22,13 @@
 
 </div>
 
-<div class="hidden group-data-[app-authorized-value=false]:block">
+<div class="sr-only browser-ios:not-sr-only">
+    <div class="message">
+        <p>Sign in with <a href="feedbin://">Feedbin</a> to continue</p>
+    </div>
+</div>
+
+<div class="hidden group-data-[app-authorized-value=false]:block browser-safari:sr-only">
     <form
         action="{{ site.urls.authentication | build_url }}"
         method="POST"

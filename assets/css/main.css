@@ -126,4 +126,7 @@
     .heading {
       @apply text-700 font-bold;
     }
+    .hide-separator::before {
+      opacity: 0 !important;
+    }
 }

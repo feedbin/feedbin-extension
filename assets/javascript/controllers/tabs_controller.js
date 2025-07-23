@@ -1,6 +1,8 @@
 import { Controller } from "../lib/stimulus.js"
 export default class extends Controller {
-  static targets = ["tab"]
+  static targets = ["tab", "tabContainer"]
+
+  #separatorClass = "hide-separator"
 
   connect() {
     this.selectTab()
@@ -17,6 +19,20 @@ export default class extends Controller {
     this.tabTargets.forEach((element, index) => {
       if (element.value === selectedTab) {
         element.checked = true
+        const event = new Event("change", { bubbles: true })
+        element.dispatchEvent(event)
+      }
+    })
+  }
+
+  separator(event) {
+    this.tabContainerTargets.forEach((element) => element.classList.remove(this.#separatorClass) )
+    this.tabContainerTargets.forEach((element, index) => {
+      if (element.contains(event.target)) {
+        const sibling = this.tabContainerTargets[index + 1]
+        if (sibling) {
+          sibling.classList.add(this.#separatorClass)
+        }
       }
     })
   }

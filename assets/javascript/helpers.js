@@ -12,6 +12,16 @@ export function getHostname(url) {
   }
 }
 
+export function checkAuth() {
+  const event = new Event("helpers:checkAuth", { bubbles: true });
+  window.dispatchEvent(event);
+}
+
+export async function signOut() {
+  await browser.storage.sync.remove("user")
+  checkAuth()
+}
+
 export async function gzip(text) {
   const encoder = new TextEncoder()
   const data = encoder.encode(text)

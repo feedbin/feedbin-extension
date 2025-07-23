@@ -36,13 +36,14 @@ export default class extends Controller {
 
     const result = await browser.storage.sync.get()
     if (!result.user?.email) {
+      this.dispatch("notAuthorized")
       return
     }
 
     this.authorizedValue = true
     sharedStore.setUser(result.user)
-    this.dispatch("authorized")
 
+    this.dispatch("authorized")
     await this.loadPageData()
   }
 

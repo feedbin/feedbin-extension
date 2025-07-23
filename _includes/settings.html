@@ -22,65 +22,74 @@
 
 </div>
 
-<div class="sr-only browser-ios:not-sr-only">
-    <div class="message">
-        <p>Sign in with <a href="feedbin://">Feedbin</a> to continue</p>
+<div
+    class="group h-full"
+    data-controller="authentication"
+    data-authentication-loading-value="false"
+    data-authentication-ios-auth-value="true"
+>
+    <div class="message hidden browser-ios:flex">
+        <p class="hidden group-data-[authentication-ios-auth-value=true]:block">Signing in…</p>
+        <p class="hidden group-data-[authentication-ios-auth-value=false]:block"><a href="feedbin://" class="p-4 block">Sign in with <span class="text-blue-600">Feedbin</span> to continue</a></p>
     </div>
-</div>
 
-<div class="hidden group-data-[app-authorized-value=false]:block browser-safari:sr-only">
-    <form
-        action="{{ site.urls.authentication | build_url }}"
-        method="POST"
-        class="group flex h-full flex-col"
-        data-controller="authentication"
-        data-action="submit->authentication#submit:prevent click->authentication#appAuth"
-        data-authentication-loading-value="false"
-        novalidate
-    >
-        {% capture content %}
+    <div class="browser-ios:sr-only">
+        <div class="hidden group-data-[app-authorized-value=false]:block">
+            <form
+                novalidate
+                action="{{ site.urls.authentication | build_url }}"
+                method="POST"
+                class="group flex h-full flex-col"
+                data-action="submit->authentication#submit:prevent"
+                data-authentication-target="form"
+            >
+                {% capture content %}
 
-        <div class="hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex">
-            <h1 class="text-700 mb-4 line-clamp-2 font-bold">Sign in to Feedbin</h1>
+                <div class="hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex">
+                    <h1 class="text-700 mb-4 line-clamp-2 font-bold">Sign in to Feedbin</h1>
 
-            {% include shared/error.html content="" attributes="data-authentication-target='error'" %}
+                    {% include shared/error.html content="" attributes="data-authentication-target='error'" %}
 
 
-            <div class="flex flex-col gap-3">
-                <label class="text-input">
-                    <input
-                        type="text"
-                        name="email"
-                        data-authentication-target="email"
-                        placeholder="Email"
-                        autocorrect="off"
-                        autocapitalize="off"
-                        spellcheck="false"
-                        required
-                    />
-                </label>
-                <label class="text-input">
-                    <input
-                        type="password"
-                        name="password"
-                        data-authentication-target="password"
-                        placeholder="Password"
-                    />
-                </label>
-            </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="text-input">
+                            <input
+                                type="text"
+                                name="email"
+                                data-authentication-target="email"
+                                placeholder="Email"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                required
+                            />
+                        </label>
+                        <label class="text-input">
+                            <input
+                                type="password"
+                                name="password"
+                                data-authentication-target="password"
+                                placeholder="Password"
+                            />
+                        </label>
+                    </div>
+                </div>
+                {% endcapture %}
+
+                {% capture button %}
+                <button
+                    data-authentication-target="submitButton"
+                    type="submit"
+                    class="primary-button hidden group-data-[app-authorized-value=false]:block"
+                >
+                    <span class="hidden group-data-[authentication-loading-value=false]:block"> Sign In </span>
+                    <span class="hidden group-data-[authentication-loading-value=true]:block"> Loading… </span>
+                </button>
+                {% endcapture %}
+                {% include shared/tab.html content=content button=button %}
+            </form>
         </div>
-        {% endcapture %}
+    </div>
 
-        {% capture button %}
-        <button
-            data-authentication-target="submitButton"
-            type="submit"
-            class="primary-button hidden group-data-[app-authorized-value=false]:block"
-        >
-            <span class="hidden group-data-[authentication-loading-value=false]:block"> Sign In </span>
-            <span class="hidden group-data-[authentication-loading-value=true]:block"> Loading… </span>
-        </button>
-        {% endcapture %}
-        {% include shared/tab.html content=content button=button %}
-    </form>
 </div>
+

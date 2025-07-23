@@ -1,4 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
+import { signOut } from "../helpers.js"
+
 export default class extends Controller {
   static targets = ["signedInAs"]
 
@@ -14,7 +16,6 @@ export default class extends Controller {
   }
 
   async signOut() {
-    let result = await browser.storage.sync.remove("user")
-    this.dispatch("authorize")
+    await signOut()
   }
 }

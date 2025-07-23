@@ -1,9 +1,12 @@
 import { Controller } from "../lib/stimulus.js"
+import { checkAuth, signOut } from "../helpers.js"
+
 export default class extends Controller {
-  static targets = ["results", "email", "password", "submitButton", "error", "signedInAs"]
+  static targets = ["results", "email", "password", "submitButton", "error", "signedInAs", "form"]
   static values = {
     loading: Boolean,
     url: String,
+    iosAuth: Boolean
   }
 
   async connect() {
@@ -11,15 +14,16 @@ export default class extends Controller {
   }
 
   async appAuth() {
-    try {
+    if ("sendNativeMessage" in browser.runtime) {
       const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
       if (response.credentials) {
         this.emailTarget.value = response.credentials.email
         this.passwordTarget.value = response.credentials.password
         await this.submit()
+      } else {
+        this.iosAuthValue = false
+        await signOut()
       }
-    } catch (error) {
-      console.error("Failed to retrieve password from keychain:", error)
     }
   }
 
@@ -28,11 +32,11 @@ export default class extends Controller {
     this.loadingValue = true
     this.errorTarget.textContent = ""
 
-    const formData = new FormData(this.element)
+    const formData = new FormData(this.formTarget)
     let data = {}
     try {
-      const response = await fetch(this.element.action, {
-        method: this.element.method || "POST",
+      const response = await fetch(this.formTarget.action, {
+        method: this.formTarget.method || "POST",
         body: new URLSearchParams(formData),
       })
 
@@ -65,7 +69,7 @@ export default class extends Controller {
         email: this.emailTarget.value,
       }
       await browser.storage.sync.set({ user })
-      this.dispatch("authorize")
+      checkAuth()
     }
   }
 }

@@ -15,8 +15,8 @@ export default class extends Controller {
   }
 
   async appAuth() {
-    const browser = sharedStore.getBrowser()
-    if (browser === "ios" && "sendNativeMessage" in browser.runtime) {
+    const browserName = sharedStore.getBrowser()
+    if (browserName === "ios" && "sendNativeMessage" in browser.runtime) {
       const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
       if (response.credentials) {
         this.emailTarget.value = response.credentials.email

@@ -1,6 +1,7 @@
 class Store {
   constructor() {
     this.user = null
+    this.browser = null
     this.pageInfo = null
   }
 
@@ -10,6 +11,14 @@ class Store {
 
   getUser() {
     return this.user
+  }
+
+  setBrowser(browser) {
+    this.browser = browser
+  }
+
+  getBrowser() {
+    return this.browser
   }
 
   setPageInfo(pageInfo) {

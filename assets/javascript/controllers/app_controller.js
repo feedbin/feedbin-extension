@@ -14,6 +14,7 @@ export default class extends Controller {
   connect() {
     this.authorize()
     this.browserValue = detectBrowser()
+    sharedStore.setBrowser(this.browserValue)
     this.boundCheckScroll = this.checkScroll.bind(this)
     window.addEventListener("resize", this.boundCheckScroll)
 

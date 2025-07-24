@@ -1,5 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { checkAuth, signOut } from "../helpers.js"
+import { sharedStore } from "../store.js"
 
 export default class extends Controller {
   static targets = ["results", "email", "password", "submitButton", "error", "signedInAs", "form"]
@@ -14,7 +15,8 @@ export default class extends Controller {
   }
 
   async appAuth() {
-    if ("sendNativeMessage" in browser.runtime) {
+    const browser = sharedStore.getBrowser()
+    if (browser === "ios" && "sendNativeMessage" in browser.runtime) {
       const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
       if (response.credentials) {
         this.emailTarget.value = response.credentials.email
@@ -49,7 +51,7 @@ export default class extends Controller {
       data = await response.json()
     } catch (error) {
       if ("response" in error) {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           this.errorTarget.textContent = "Invalid email or password."
         } else {
           this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`

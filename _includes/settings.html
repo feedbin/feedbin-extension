@@ -1,6 +1,6 @@
 <div
     data-controller="settings"
-    data-action="authentication:authorize@window->settings#userData"
+    data-action="helpers:checkAuth@window->settings#userData"
     class="message hidden group-data-[app-authorized-value=true]:flex"
 >
     {% include shared/icon.html icon="logo" class="shrink-0" %}

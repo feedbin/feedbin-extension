@@ -38,15 +38,15 @@
         >
             {% include shared/nav.html %}
 
-            <div class="grow min-h-0">
-                <div class="hidden h-full group-has-[[value=tab-settings]:checked]:block">
-                    {% include settings.html %}
-                </div>
+            <div class="grow min-h-0 shrink-0 browser-ios:shrink">
                 <div class="hidden h-full group-has-[[value=tab-add]:checked]:block">
                     {% include add.html %}
                 </div>
                 <div class="hidden h-full group-has-[[value=tab-save]:checked]:block">
                     {% include save.html %}
+                </div>
+                <div class="hidden h-full group-has-[[value=tab-settings]:checked]:block">
+                    {% include settings.html %}
                 </div>
             </div>
         </div>

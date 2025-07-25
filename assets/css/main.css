@@ -121,7 +121,10 @@
         focus-visible:outline-blue-400;
     }
     .message {
-        @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-4 text-500;
+        @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-4 text-500 shrink-0;
+    }
+    .message * {
+      @apply shrink-0;
     }
     .heading {
       @apply text-700 font-bold;

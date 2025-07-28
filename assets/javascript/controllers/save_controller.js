@@ -3,7 +3,7 @@ import { sharedStore } from "../store.js"
 import { gzip } from "../helpers.js"
 
 export default class extends Controller {
-  static targets = ["error", "submitButton"]
+  static targets = ["error", "submitButton", "form"]
   static values = {
     state: String,
   }
@@ -12,7 +12,8 @@ export default class extends Controller {
     initial: "initial",
     loading: "loading",
     saved: "saved",
-    error: "error"
+    error: "error",
+    loadError: "loadError"
   }
 
   async submit(event) {
@@ -33,7 +34,7 @@ export default class extends Controller {
 
       const body = await gzip(json)
       const request = {
-        method: this.element.method || "POST",
+        method: this.formTarget.method || "POST",
         headers: {
           "Content-Type": "application/json",
           "Content-Encoding": "gzip",
@@ -41,7 +42,7 @@ export default class extends Controller {
         body: body,
       }
 
-      const response = await fetch(this.element.action, request)
+      const response = await fetch(this.formTarget.action, request)
 
       if (!response.ok) {
         const error = new Error(`Invalid response`)
@@ -49,9 +50,9 @@ export default class extends Controller {
         throw error
       }
 
-      this.stateValue = this.#states.saved;
+      this.stateValue = this.#states.saved
     } catch (error) {
-      this.stateValue = this.#states.error;
+      this.stateValue = this.#states.error
       if ("response" in error) {
         this.errorTarget.textContent = `Error Saving Page: ${error.response.statusText}`
       } else {
@@ -59,5 +60,9 @@ export default class extends Controller {
       }
       console.trace("save submit_error", error)
     }
+  }
+
+  loadError() {
+    this.stateValue = this.#states.loadError
   }
 }

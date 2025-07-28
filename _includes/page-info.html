@@ -1,5 +1,5 @@
 <div
-    class="group"
+    class="container group"
     data-controller="page-info"
     data-page-info-has-error-value="false"
     data-page-info-has-data-value="false"
@@ -10,19 +10,8 @@
         app:pageInfoError@window->page-info#pageInfoError
     "
 >
-    <input
-        name="url"
-        type="hidden"
-        data-page-info-target="formUrl"
-        value=""
-    />
-
-    <div class="hidden group-data-[page-info-has-error-value=true]:block">
-        {% include shared/error.html content="Error loading extension" %}
-    </div>
-
     <div class="hidden gap-2 group-data-[page-info-has-data-value=true]:flex">
-        <div class="relative top-[-1px]">
+        <div class="relative top-[-1px] browser-ios:top-[1px]">
             {% include shared/favicon.html attributes="data-page-info-target='favicon'" %}
         </div>
         <div class="min-w-0 grow">

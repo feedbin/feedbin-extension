@@ -3,15 +3,15 @@
     data-controller="add"
     data-add-state-value="initial"
     data-add-search-url-value="{{ site.urls.find | build_url }}"
-    data-action="app:pageInfoLoaded@window->add#search"
+    data-action="app:pageInfoLoaded@window->add#search app:pageInfoError@window->add#noFeeds"
 >
-    <div class="message hidden group-data-[add-state-value=initial]:flex">
+    <div class="message hidden group-data-[add-state-value=initial]:flex" data-action="click->add#search">
         {% include shared/spinner.html %}
         <p>Searching for Feeds…</p>
     </div>
 
     <div class="message hidden group-data-[add-state-value=error]:flex">
-        {% include shared/icon.html icon="search" class="shrink-0 fill-600" %}
+        {% include shared/message-icon.html type="neutral" icon="search" %}
         <p data-add-target="error" class="text-center"></p>
     </div>
 

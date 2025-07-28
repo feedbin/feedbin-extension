@@ -1,38 +1,50 @@
-<form
+<div
     class="container group"
     data-controller="save"
-    data-action="submit->save#submit:prevent"
+    data-action="app:pageInfoError@window->save#loadError"
     data-save-state-value="initial"
-    action="{{ site.urls.save | build_url }}"
-    method="POST"
-    novalidate
 >
+    <form
+        class="container"
+        data-action="submit->save#submit:prevent"
+        action="{{ site.urls.save | build_url }}"
+        method="POST"
+        data-save-target="form"
+        novalidate
+    >
 
-    <div class="message flex hidden group-data-[save-state-value=saved]:flex">
-        {% include shared/message-icon.html type="success" %}
-        <p>Page Saved</p>
-    </div>
+        <div class="message flex hidden group-data-[save-state-value=saved]:flex">
+            {% include shared/message-icon.html type="success" %}
+            <p>Page Saved</p>
+        </div>
 
-    <div class="message flex hidden group-data-[save-state-value=error]:flex">
-        {% include shared/message-icon.html type="error" %}
-        <p data-save-target="error"></p>
-    </div>
+        <div class="message flex hidden group-data-[save-state-value=error]:flex">
+            {% include shared/message-icon.html type="error" %}
+            <p data-save-target="error"></p>
+        </div>
 
-    <div class="hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
-        {% capture content %}
-            {% include page-info.html format="save" %}
-        {% endcapture %}
+        <div class="message flex hidden group-data-[save-state-value=loadError]:flex">
+            {% include shared/message-icon.html type="neutral" icon="save" %}
+            <p>Page cannot be saved</p>
+        </div>
 
-        {% capture button %}
-        <button
-            data-save-target="submitButton"
-            type="submit"
-            class="primary-button"
-        >
-            <span class="hidden group-data-[save-state-value=initial]:block">Save</span>
-            <span class="hidden group-data-[save-state-value=loading]:block">Saving…</span>
-        </button>
-        {% endcapture %}
-        {% include shared/tab.html content=content button=button %}
-    </div>
-</form>
+        <div class="hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
+            {% capture content %}
+                {% include page-info.html format="save" %}
+            {% endcapture %}
+
+            {% capture button %}
+            <button
+                data-save-target="submitButton"
+                type="submit"
+                class="primary-button"
+            >
+                <span class="hidden group-data-[save-state-value=initial]:block">Save</span>
+                <span class="hidden group-data-[save-state-value=loading]:block">Saving…</span>
+            </button>
+            {% endcapture %}
+            {% include shared/tab.html content=content button=button %}
+        </div>
+    </form>
+
+</div>

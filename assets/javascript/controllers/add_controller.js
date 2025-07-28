@@ -43,8 +43,7 @@ export default class extends Controller {
       const data = await response.json()
 
       if (data.feeds.length === 0) {
-        this.stateValue = this.#states.error
-        this.errorTarget.textContent = "No feeds found"
+        this.noFeeds()
       } else {
         this.displayResults(data)
         this.stateValue = this.#states.hasResults
@@ -94,6 +93,11 @@ export default class extends Controller {
       }
       console.trace("subscribe_error", error)
     }
+  }
+
+  noFeeds() {
+    this.stateValue = this.#states.error
+    this.errorTarget.textContent = "No feeds found"
   }
 
   displayResults(results) {

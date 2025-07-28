@@ -1,7 +1,7 @@
 defaults: &defaults
   manifest_version: 3
   name: Feedbin Subscribe & Save
-  version: 1.0.2
+  version: 1.0.3
   description: Subscribe to feeds and save pages to Feedbin.
   icons:
     32:  assets/images/icon-32.png

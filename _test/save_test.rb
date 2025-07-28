@@ -22,8 +22,7 @@ class SaveTest < SystemTest
 
     click_tab(:save)
 
-    assert page.has_css?("[data-page-info-has-error-value=true]")
-    assert page.has_text?("Error loading extension")
+    assert page.has_text?("Page cannot be saved")
   end
 
   def test_save_success

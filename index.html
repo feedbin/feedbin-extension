@@ -2,7 +2,7 @@
 ---
 <!doctype html>
 <html
-    class="group h-full"
+    class="group"
     data-controller="app visual-viewport"
     data-app-authorized-value="false"
     data-app-browser-value="chrome"
@@ -30,24 +30,22 @@
         <script src="assets/javascript/application.js" type="module" ></script>
     </head>
 
-    <body class="group flex flex-col bg-0 h-full cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] [text-size-adjust:none] browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen">
+    <body class="group flex flex-col bg-0 cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[400px] h-[444px] [text-size-adjust:none] browser-ios:text-base! browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen">
         <div
             data-controller="tabs"
-            class="group flex h-full flex-col shrink-0"
+            class="container group"
             data-action="app:authorized@window->tabs#selectTab app:notAuthorized@window->tabs#selectTab"
         >
             {% include shared/nav.html %}
 
-            <div class="grow min-h-0 shrink-0 browser-ios:shrink">
-                <div class="hidden h-full group-has-[[value=tab-add]:checked]:block">
-                    {% include add.html %}
-                </div>
-                <div class="hidden h-full group-has-[[value=tab-save]:checked]:block">
-                    {% include save.html %}
-                </div>
-                <div class="hidden h-full group-has-[[value=tab-settings]:checked]:block">
-                    {% include settings.html %}
-                </div>
+            <div class="hidden container group-has-[[value=tab-add]:checked]:flex">
+                {% include add.html %}
+            </div>
+            <div class="hidden container group-has-[[value=tab-save]:checked]:flex">
+                {% include save.html %}
+            </div>
+            <div class="hidden container group-has-[[value=tab-settings]:checked]:flex">
+                {% include settings.html %}
             </div>
         </div>
 

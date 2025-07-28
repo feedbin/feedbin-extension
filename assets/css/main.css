@@ -60,7 +60,6 @@
 
     --color-blue-400:   #619eeb;
     --color-blue-700:   #0554ba;
-    --color-green-400:  #D6F4DE;
     --color-green-700:  #03913a;
     --color-red-200:    #f8e8eb;
     --color-orange-600: #e86b0d;
@@ -121,15 +120,18 @@
         focus-visible:outline-blue-400;
     }
     .message {
-        @apply flex h-full flex-col items-center justify-center gap-4 py-8 px-4 text-500 shrink-0;
+        @apply flex grow min-h-0 flex-col items-center justify-center gap-4 px-4 text-500;
     }
     .message * {
-      @apply shrink-0;
+        @apply shrink-0;
     }
     .heading {
-      @apply text-700 font-bold;
+        @apply text-700 font-bold;
     }
     .hide-separator::before {
-      opacity: 0 !important;
+        @apply opacity-0!;
+    }
+    .container {
+        @apply flex flex-col grow min-h-0;
     }
 }

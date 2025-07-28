@@ -1,5 +1,5 @@
 <form
-    class="group flex h-full flex-col"
+    class="container group"
     data-controller="save"
     data-action="submit->save#submit:prevent"
     data-save-state-value="initial"
@@ -18,7 +18,7 @@
         <p data-save-target="error"></p>
     </div>
 
-    <div class="hidden h-full flex-col group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
+    <div class="hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
         {% capture content %}
             {% include page-info.html format="save" %}
         {% endcapture %}

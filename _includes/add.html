@@ -1,17 +1,18 @@
 <div
-    class="group flex h-full flex-col"
+    class="container group"
     data-controller="add"
     data-add-state-value="initial"
     data-add-search-url-value="{{ site.urls.find | build_url }}"
     data-action="app:pageInfoLoaded@window->add#search"
 >
+
     <div class="message hidden group-data-[add-state-value=initial]:flex">
         {% include shared/spinner.html %}
         <p>Searching for Feeds…</p>
     </div>
 
     <div class="message hidden group-data-[add-state-value=error]:flex">
-        {% include shared/icon.html icon="search" class="shrink-0" %}
+        {% include shared/icon.html icon="search" class="shrink-0 fill-600" %}
         <p data-add-target="error" class="text-center"></p>
     </div>
 
@@ -24,7 +25,7 @@
         novalidate
         action="{{ site.urls.subscribe | build_url }}"
         method="POST"
-        class="hidden h-full flex-col group-data-[add-state-value=hasResults]:flex"
+        class="hidden container group-data-[add-state-value=hasResults]:flex"
         data-add-target="subscribeForm"
         data-action="submit->add#subscribe:prevent"
     >

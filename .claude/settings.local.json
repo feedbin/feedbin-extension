@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "mcp__puppeteer__puppeteer_screenshot",
-      "mcp__puppeteer__puppeteer_navigate"
-    ],
-    "deny": []
-  }
-}

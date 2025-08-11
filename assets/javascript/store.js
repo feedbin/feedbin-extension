@@ -1,33 +1,25 @@
 class Store {
   constructor() {
-    this.user = null
-    this.browser = null
-    this.pageInfo = null
+    this.settings = {
+      user: null,
+      browser: null,
+      pageInfo: null,
+    }
   }
 
-  setUser(user) {
-    this.user = user
+  update(key, value) {
+    if (!(key in this.settings)) {
+      throw new Error(`Unknown setting: ${key}`)
+    }
+    this.settings[key] = value
   }
 
-  getUser() {
-    return this.user
-  }
-
-  setBrowser(browser) {
-    this.browser = browser
-  }
-
-  getBrowser() {
-    return this.browser
-  }
-
-  setPageInfo(pageInfo) {
-    this.pageInfo = pageInfo
-  }
-
-  getPageInfo() {
-    return this.pageInfo
+  get(key) {
+    if (!(key in this.settings)) {
+      throw new Error(`Unknown setting: ${key}`)
+    }
+    return this.settings[key]
   }
 }
 
-export const sharedStore = new Store()
+export const store = new Store()

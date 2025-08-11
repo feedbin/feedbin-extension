@@ -68,7 +68,7 @@ export function detectBrowser() {
 }
 
 export function loadFavicon(context, element, store) {
-  const pageInfo = store.getPageInfo()
+  const pageInfo = store.get("pageInfo")
   const controller = context.application.getControllerForElementAndIdentifier(element, "favicon")
   if (pageInfo.favicon && controller) {
     controller.load(pageInfo.favicon)

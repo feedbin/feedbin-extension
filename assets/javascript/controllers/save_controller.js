@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { sharedStore } from "../store.js"
+import { store } from "../store.js"
 import { gzip } from "../helpers.js"
 
 export default class extends Controller {
@@ -22,8 +22,8 @@ export default class extends Controller {
     this.submitButtonTarget.disabled = true
 
     try {
-      const user = sharedStore.getUser()
-      const pageInfo = sharedStore.getPageInfo()
+      const user = store.get("user")
+      const pageInfo = store.get("pageInfo")
 
       const json = JSON.stringify({
         page_token: user.page_token,

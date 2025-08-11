@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { checkAuth, signOut } from "../helpers.js"
-import { sharedStore } from "../store.js"
+import { store } from "../store.js"
 
 export default class extends Controller {
   static targets = ["results", "email", "password", "submitButton", "error", "signedInAs", "form"]
@@ -15,7 +15,7 @@ export default class extends Controller {
   }
 
   async appAuth() {
-    const browserName = sharedStore.getBrowser()
+    const browserName = store.get("browser")
     if (browserName === "ios" && "sendNativeMessage" in browser.runtime) {
       const response = await browser.runtime.sendNativeMessage("application.id", {action: "authorize"})
       if (response.credentials) {

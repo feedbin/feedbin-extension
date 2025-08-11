@@ -13,7 +13,7 @@ export default class extends Controller {
 
     const result = await browser.storage.sync.get()
     if ("user" in result && "email" in result.user) {
-      selectedTab = "tab-add"
+      selectedTab = result.tab || "tab-add"
     }
 
     this.tabTargets.forEach((element, index) => {
@@ -23,6 +23,11 @@ export default class extends Controller {
         element.dispatchEvent(event)
       }
     })
+  }
+
+  async save(event) {
+    const tab = event.target.value
+    await browser.storage.sync.set({ tab })
   }
 
   separator(event) {

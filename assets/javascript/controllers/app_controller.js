@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { sharedStore } from "../store.js"
+import { store } from "../store.js"
 import { getHostname, detectBrowser, afterTransition } from "../helpers.js"
 
 export default class extends Controller {
@@ -14,7 +14,7 @@ export default class extends Controller {
   connect() {
     this.authorize()
     this.browserValue = detectBrowser()
-    sharedStore.setBrowser(this.browserValue)
+    store.update("browser", this.browserValue)
     this.boundCheckScroll = this.checkScroll.bind(this)
     window.addEventListener("resize", this.boundCheckScroll)
 
@@ -42,7 +42,7 @@ export default class extends Controller {
     }
 
     this.authorizedValue = true
-    sharedStore.setUser(result.user)
+    store.update("user", result.user)
 
     this.dispatch("authorized")
     await this.loadPageData()
@@ -118,7 +118,7 @@ export default class extends Controller {
       favicon: tab.favIconUrl || data.favicon,
       content: data.content,
     }
-    sharedStore.setPageInfo(result)
+    store.update("pageInfo", result)
     this.dispatch("pageInfoLoaded", { detail: result })
   }
 }

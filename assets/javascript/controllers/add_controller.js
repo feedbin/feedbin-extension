@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { sharedStore } from "../store.js"
+import { store } from "../store.js"
 import { loadFavicon, prettyUrl } from "../helpers.js"
 
 export default class extends Controller {
@@ -20,8 +20,8 @@ export default class extends Controller {
 
   async search(event) {
     try {
-      const user = sharedStore.getUser()
-      const pageInfo = sharedStore.getPageInfo()
+      const user = store.get("user")
+      const pageInfo = store.get("pageInfo")
 
       const formData = new FormData()
       formData.append("page_token", user.page_token)
@@ -65,8 +65,8 @@ export default class extends Controller {
     this.errorTarget.textContent = ""
 
     try {
-      const user = sharedStore.getUser()
-      const pageInfo = sharedStore.getPageInfo()
+      const user = store.get("user")
+      const pageInfo = store.get("pageInfo")
       const formData = new FormData(this.subscribeFormTarget)
       formData.append("page_token", user.page_token)
 
@@ -159,6 +159,6 @@ export default class extends Controller {
   }
 
   faviconTargetConnected(element) {
-    loadFavicon(this, element, sharedStore)
+    loadFavicon(this, element, store)
   }
 }

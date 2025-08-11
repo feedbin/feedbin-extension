@@ -62,6 +62,13 @@ export default class extends Controller {
     }
   }
 
+  async keydown(event) {
+    const result = await browser.storage.sync.get()
+    if (!this.submitButtonTarget.disabled && event.key === "Enter" && result.tab === "tab-save") {
+      this.formTarget.requestSubmit()
+    }
+  }
+
   loadError() {
     this.stateValue = this.#states.loadError
   }

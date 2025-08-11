@@ -108,10 +108,13 @@
         animation: grow-then-fade 1.5s ease-out forwards;
     }
     .text-input {
-        @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden -outline-offset-1 outline-3 outline-transparent transition focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
+        @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden relative -outline-offset-1 outline-3 outline-transparent transition focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
     }
     .text-input input {
         @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
+    }
+    .text-input select {
+        @apply text-700 grow max-w-0 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5 pr-8;
     }
     .primary-button {
         @apply bg-blue-600 text-white w-full cursor-pointer rounded-lg py-2.5 font-medium outline-2 outline-offset-1 outline-transparent transition

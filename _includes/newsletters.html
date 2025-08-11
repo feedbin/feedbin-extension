@@ -1,0 +1,86 @@
+<div
+    class="container group"
+    data-controller="newsletters"
+    data-save-state-value="initial"
+>
+    <div class="hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
+        {% capture content %}
+            <form
+                data-action="submit->save#submit:prevent"
+                action="{{ site.urls.save | build_url }}"
+                method="POST"
+                data-save-target="form"
+                class="flex flex-col gap-4"
+                novalidate
+            >
+
+                <h1 class="heading">Create Email Address</h1>
+                <div>
+                    <label class="text-input group/address">
+                        <div class="pl-2 flex items-center justify-center shrink-0 pointer-events-none">
+                            {% include shared/icon.html icon="newsletters" class="fill-400 transition group-focus-within/address:fill-blue-600" %}
+                        </div>
+                        <input
+                            type="text"
+                            name="address"
+                        />
+                    </label>
+                    <div class="text-500 mt-1 flex min-w-0 gap-4">
+                        Optionally choose a custom prefix
+                    </div>
+                </div>
+
+                <label class="text-input">
+                    <input
+                        type="text"
+                        name="description"
+                        placeholder="Description"
+                    />
+                </label>
+
+                <div class="flex gap-6 mt-8 items-center">
+                    <div class="flex flex-col gap-1 grow min-w-0">
+                        <div class="text-700">Default Tag</div>
+                        <div class="text-500">Automatically put newsletters sent to this address in this tag</div>
+                    </div>
+                    <div class="shrink-0">
+                        <label class="text-input group/tag">
+                            <select name="tag">
+                                <option value="option1">Newsletters</option>
+                                <option value="option2">Favorites</option>
+                            </select>
+                            <div class="pr-2 absolute inset-y-0 right-0 flex items-center justify-center shrink-0 pointer-events-none">
+                                {% include shared/icon.html icon="caret" class="fill-400 transition group-focus-within/tag:fill-blue-600" %}
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </form>
+
+            <div class="flex flex-col gap-4">
+                <h1 class="heading mt-8">Addresses</h1>
+                <ul>
+                    {% for i in (1..5) %}
+                    <li class="flex border-b first:border-t">
+                        <button class="text-left grow min-w-0 flex items-center gap-6 cursor-pointer py-4">
+                            <div class="grow min-w-0">
+                                <div class="flex flex-col gap-1 grow min-w-0">
+                                    <div class="text-700">blanc.863@feedb.in</div>
+                                    <div class="text-500">Blanc Creatives</div>
+                                </div>
+                            </div>
+                            <div class="shrink-0">
+                                Copy
+                            </div>
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        {% endcapture %}
+        {% include shared/tab.html content=content %}
+    </div>
+
+</div>

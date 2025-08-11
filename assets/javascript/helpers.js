@@ -19,6 +19,7 @@ export function checkAuth() {
 
 export async function signOut() {
   await browser.storage.sync.remove("user")
+  await browser.storage.sync.remove("tab")
   checkAuth()
 }
 

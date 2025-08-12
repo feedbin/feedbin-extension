@@ -1,13 +1,15 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
-import { loadFavicon, prettyUrl } from "../helpers.js"
+import { loadFavicon, prettyUrl, sendForm, sendRequest, debounce } from "../helpers.js"
 
 export default class extends Controller {
-  static targets = ["submitButton", "form", "addressInput", "descriptionInput", "tagSelect", "addressTemplate", "addressList"]
+  static targets = ["submitButton", "form", "verifiedTokenInput", "addressOutput", "numbers", "addressInput", "addressDescription", "addressTag", "addressTemplate", "addressList", "error"]
 
   static values = {
     newAddressUrl: String,
-    state: String
+    createAddressUrl: String,
+    state: String,
+    edited: Boolean
   }
 
   #states = {
@@ -18,56 +20,39 @@ export default class extends Controller {
     error: "error"
   }
 
+  #createTimeout = null
+
+  initialize() {
+    this.submit = debounce(this.submit.bind(this), 100)
+  }
+
+
   async new(event) {
+    this.stateValue = this.#states.loading
 
     try {
       const user = store.get("user")
-      const pageInfo = store.get("pageInfo")
-
-      const formData = new FormData()
-      formData.append("page_token", user.page_token)
-
-      const request = {
-        method: "POST",
-        body: new URLSearchParams(formData),
-      }
-
-      const response = await fetch(this.newAddressUrlValue, request)
-
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error
-      }
+      const response = await sendRequest("POST", this.newAddressUrlValue, {
+        page_token: user.page_token
+      })
 
       const data = await response.json()
 
-      console.log(data);
+      this.addressInputTarget.value = data.token
+      this.addressInputTarget.dataset.originalValue = data.token
 
-      let addressesContent = data.addresses.map((address, index) => {
-        const template    = this.addressTemplateTarget.content.cloneNode(true)
+      this.addressOutputTarget.textContent = data.email
 
-        const container   = template.querySelector("[data-template=container]")
-        const email       = template.querySelector("[data-template=email]")
-        const description = template.querySelector("[data-template=description]")
-
-        container.dataset.copyDataValue = address.email
-        email.textContent               = address.email
-        description.textContent         = address.description || ""
-
-        return template
+      data.tags.forEach(tag => {
+        const option = document.createElement('option')
+        option.value = tag
+        option.textContent = tag
+        this.addressTagTarget.appendChild(option)
       })
 
-      this.addressListTarget.innerHTML = ""
-      this.addressListTarget.append(...[addressesContent].flat())
+      this.updateAddressList(data.addresses)
 
-
-      // if (data.feeds.length === 0) {
-      //   this.noFeeds()
-      // } else {
-      //   this.displayResults(data)
-      //   this.stateValue = this.#states.hasResults
-      // }
+      this.stateValue = this.#states.initial
     } catch (error) {
       this.stateValue = this.#states.error
       if ("response" in error) {
@@ -75,110 +60,65 @@ export default class extends Controller {
       } else {
         this.errorTarget.textContent = `Unknown error. ${error}`
       }
-      console.trace("search_error", error)
+      console.trace("newsletters_error", error)
     }
   }
 
-  async subscribe(event) {
+  disable(event) {
     this.submitButtonTarget.disabled = true
-    this.stateValue = this.#states.loading
-    this.errorTarget.textContent = ""
+    clearTimeout(this.#createTimeout);
+  }
 
-    try {
-      const user = store.get("user")
-      const pageInfo = store.get("pageInfo")
-      const formData = new FormData(this.subscribeFormTarget)
-      formData.append("page_token", user.page_token)
+  async submit(event) {
+    const user = store.get("user")
+    let response = await sendForm(event, {
+      page_token: user.page_token
+    })
 
-      const request = {
-        method: this.subscribeFormTarget.method || "POST",
-        body: new URLSearchParams(formData)
-      }
+    const data = await response.json()
 
-      const response = await fetch(this.subscribeFormTarget.action, request);
+    if (data.token) {
+      this.numbersTarget.textContent = data.numbers
+      this.addressOutputTarget.textContent = data.email
+      this.verifiedTokenInputTarget.value = data.verified_token
+      this.updateAddressList(data.addresses)
 
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error;
-      }
-
-      this.stateValue = this.#states.success
-    } catch (error) {
-      this.stateValue = this.#states.error
-      if ("response" in error) {
-        this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
-      } else {
-        this.errorTarget.textContent = `Unknown error.`
-      }
-      console.trace("subscribe_error", error)
+      this.#createTimeout = setTimeout(() => {
+        this.submitButtonTarget.disabled = false
+      }, 500);
+    } else {
+      // if there is an empty response it means no valid input was given
+      this.numbersTarget.textContent = ""
+      this.addressOutputTarget.textContent = "Invalid Address"
     }
   }
 
-  noFeeds() {
+  updateAddressList(addresses) {
+    let addressesContent = addresses.map((address, index) => {
+      const template    = this.addressTemplateTarget.content.cloneNode(true)
+
+      const container   = template.querySelector("[data-template=container]")
+      const email       = template.querySelector("[data-template=email]")
+      const description = template.querySelector("[data-template=description]")
+
+      container.dataset.copyDataValue = address.email
+      email.textContent               = address.email
+      description.textContent         = address.description || ""
+
+      return template
+    })
+
+    this.addressListTarget.innerHTML = ""
+    this.addressListTarget.append(...[addressesContent].flat())
+  }
+
+  addressInputChanged(event) {
+    this.editedValue = true
+    this.formTarget.requestSubmit()
+  }
+
+  error(event) {
     this.stateValue = this.#states.error
-    this.errorTarget.textContent = "No feeds found"
-  }
-
-  displayResults(results) {
-    this.resultsCountValue = results.feeds.length
-    this.hasResultsValue = true
-
-    let feedContent = results.feeds.map((feed, index) => {
-      const template = this.feedTemplateTarget.content.cloneNode(true)
-      const checkboxDummy = template.querySelector("[data-template=checkbox_dummy]")
-      const checkbox = template.querySelector("[data-template=checkbox]")
-      const feedInput = template.querySelector("[data-template=feed_input]")
-      const url = template.querySelector("[data-template=url]")
-      const displayUrl = template.querySelector("[data-template=display_url]")
-      const volume = template.querySelector("[data-template=volume]")
-
-      const inputBase = `feeds[${feed.id}]`
-
-      const checkboxName = `${inputBase}[subscribe]`
-      checkboxDummy.setAttribute("name", checkboxName)
-      checkbox.setAttribute("name", checkboxName)
-      if (index === 0) {
-        checkbox.checked = true
-      }
-
-      url.setAttribute("name", `${inputBase}[url]`)
-      url.setAttribute("value", feed.feed_url)
-
-      feedInput.setAttribute("name", `${inputBase}[title]`)
-      feedInput.setAttribute("value", feed.title)
-      feedInput.setAttribute("placeholder", feed.title)
-
-      displayUrl.textContent = prettyUrl(feed.feed_url)
-      volume.textContent = feed.volume
-
-      return template
-    })
-
-    this.feedResultsTarget.innerHTML = ""
-    this.feedResultsTarget.append(...[feedContent].flat())
-
-    let tagContent = results.tags.map((tag, index) => {
-      const template = this.tagTemplateTarget.content.cloneNode(true)
-      const checkbox = template.querySelector("[data-template=checkbox]")
-      const label = template.querySelector("[data-template=label]")
-
-      checkbox.setAttribute("value", tag)
-      label.textContent = tag
-
-      return template
-    })
-
-    this.tagResultsTarget.innerHTML = ""
-    this.tagResultsTarget.append(...[tagContent].flat())
-  }
-
-  countSelected() {
-    const count = this.checkboxTargets.filter((input) => input.checked).length
-    this.submitButtonTarget.disabled = count === 0 ? true : false
-  }
-
-  faviconTargetConnected(element) {
-    loadFavicon(this, element, store)
+    this.errorTarget.textContent = "Error loading newsletter addresses"
   }
 }

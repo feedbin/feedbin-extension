@@ -97,3 +97,47 @@ export function afterTransition(element, condition, callback) {
   }
   setTimeout(callback, timeout)
 }
+
+export function debounce(callback, delay = 10) {
+  let timeoutId = null
+
+  return (...args) => {
+    const debouncedCallback = () => callback.apply(this, args)
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(debouncedCallback, delay)
+  }
+}
+
+export async function sendRequest(method, action, data, event = null) {
+  let formData = new FormData()
+  if (event) {
+    formData = new FormData(event.target)
+    const button = event.submitter
+    if (button?.name) {
+      formData.append(button.name, button.value)
+    }
+  }
+
+  Object.entries(data).forEach(([key, value]) => {
+    formData.append(key, value)
+  })
+
+  const request = {
+    method: method,
+    body: new URLSearchParams(formData),
+  }
+
+  const response = await fetch(action, request)
+
+  if (!response.ok) {
+    const error = new Error(`Invalid response`)
+    error.response = response
+    throw error
+  }
+
+  return response
+}
+
+export async function sendForm(event, data = {}) {
+  return await sendRequest(event.target.method, event.target.action, data, event)
+}

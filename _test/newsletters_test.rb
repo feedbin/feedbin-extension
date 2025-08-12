@@ -53,4 +53,26 @@ class NewslettersTest < SystemTest
     end
 
   end
+
+  def test_auto_submit
+    body = {
+      token: "df.225",
+      verified_token: "ImRmLjIyNSI=--d2ccbec34cce7ee9215bf331a55962bda726b912",
+      numbers: "225",
+      email: "df.225@feedb.in",
+      addresses: [
+        {
+          email: "example.864@feedb.in",
+          description: "Example Description"
+        },
+      ]
+    }
+    CapybaraMock.stub_request(:post, build_url("new_address"))
+      .to_return(body: body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:newsletters)
+
+  end
 end

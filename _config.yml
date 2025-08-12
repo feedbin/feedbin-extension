@@ -7,6 +7,8 @@ urls:
     save: /extension/v1/pages.json
     find: /extension/v1/subscriptions/new.json
     subscribe: /extension/v1/subscriptions/create.json
+    new_address: /extension/v1/addresses/new.json
+    create_address: /extension/v1/addresses/create.json
     password_reset: /password_resets/new
 exclude:
     - .sass-cache/

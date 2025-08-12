@@ -1,26 +1,29 @@
 <div
     class="container group"
     data-controller="newsletters"
-    data-save-state-value="initial"
+    data-newsletters-state-value="initial"
+    data-newsletters-new-address-url-value="{{ site.urls.new_address | build_url }}"
+    data-action="app:pageInfoLoaded@window->newsletters#new app:pageInfoError@window->add#error"
 >
-    <div class="hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex">
+    <div class="container">
         {% capture content %}
             <form
-                data-action="submit->save#submit:prevent"
-                action="{{ site.urls.save | build_url }}"
+                data-action="submit->newsletters#submit:prevent"
+                action="{{ site.urls.create_address | build_url }}"
                 method="POST"
                 data-save-target="form"
                 class="flex flex-col gap-4"
                 novalidate
             >
 
-                <h1 class="heading">Create Email Address</h1>
+                <h1 class="heading">New Address</h1>
                 <div>
                     <label class="text-input group/address">
                         <div class="pl-2 flex items-center justify-center shrink-0 pointer-events-none">
                             {% include shared/icon.html icon="newsletters" class="fill-400 transition group-focus-within/address:fill-blue-600" %}
                         </div>
                         <input
+                            data-newsletters-target="addressInput"
                             type="text"
                             name="address"
                         />
@@ -32,20 +35,22 @@
 
                 <label class="text-input">
                     <input
+                        data-newsletters-target="addressDescription"
                         type="text"
                         name="description"
                         placeholder="Description"
                     />
                 </label>
 
-                <div class="flex gap-6 mt-8 items-center">
+                <div class="flex gap-6 items-center">
                     <div class="flex flex-col gap-1 grow min-w-0">
                         <div class="text-700">Default Tag</div>
                         <div class="text-500">Automatically put newsletters sent to this address in this tag</div>
                     </div>
                     <div class="shrink-0">
                         <label class="text-input group/tag">
-                            <select name="tag">
+                            <select name="tag" data-newsletters-target="addressTag">
+                                <option value="">None</option>
                                 <option value="option1">Newsletters</option>
                                 <option value="option2">Favorites</option>
                             </select>
@@ -55,32 +60,37 @@
                         </label>
                     </div>
                 </div>
+
+                <button type="submit" value="create" class="secondary-button mt-4">Create</button>
             </form>
 
-            <div class="flex flex-col gap-4">
-                <h1 class="heading mt-8">Addresses</h1>
-                <ul>
-                    {% for i in (1..5) %}
-                    <li class="flex border-b first:border-t">
-                        <button class="text-left grow min-w-0 flex items-center gap-6 cursor-pointer py-4">
-                            <div class="grow min-w-0">
-                                <div class="flex flex-col gap-1 grow min-w-0">
-                                    <div class="text-700">blanc.863@feedb.in</div>
-                                    <div class="text-500">Blanc Creatives</div>
-                                </div>
-                            </div>
-                            <div class="shrink-0">
-                                Copy
-                            </div>
-                        </button>
-                    </li>
-                    {% endfor %}
-                </ul>
-
+            <div class="flex flex-col gap-4 mt-12">
+                <h1 class="heading">Addresses</h1>
+                <ul data-newsletters-target="addressList"></ul>
             </div>
 
         {% endcapture %}
         {% include shared/tab.html content=content %}
     </div>
+
+    <template data-newsletters-target="addressTemplate">
+        <li class="group flex border-b first:border-t" data-template="container" data-controller="copy" data-copy-copied-value="false" data-copy-data-value="">
+            <button class="text-left grow min-w-0 flex items-center gap-6 cursor-pointer py-4 outline-2 outline-transparent transition focus-visible:outline-blue-400 focus-visible:rounded" data-action="click->copy#copy">
+                <div class="grow min-w-0">
+                    <div class="flex flex-col gap-1 grow min-w-0">
+                        <div class="text-700" data-template="email"></div>
+                        <div class="text-500 empty:hidden" data-template="description"></div>
+                    </div>
+                </div>
+                <div class="flex gap-2 items-center">
+                    {% include shared/icon.html icon="copy" class="fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600" %}
+                    <div class="shrink-0" data-copy-target="copyMessage">
+                        <span class="hidden group-data-[copy-copied-value=false]:block">Copy</span>
+                        <span class="hidden group-data-[copy-copied-value=true]:block">Copied</span>
+                    </div>
+                </div>
+            </button>
+        </li>
+    </template>
 
 </div>

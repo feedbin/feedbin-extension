@@ -7,7 +7,7 @@ export default class extends Controller {
   static targets = [
     "addressOutput", "numbers",
     "form", "verifiedTokenInput", "addressInput", "submitButton",
-    "addressDescription", "addressTag", "addressList", "error",
+    "addressDescription", "addressTag", "addressList", "error", "copyButton",
     "addressTemplate", "optionTemplate"
   ]
 
@@ -46,7 +46,7 @@ export default class extends Controller {
 
       this.addressInputTarget.value = data.token
       this.addressInputTarget.dataset.originalValue = data.token
-      this.addressOutputTarget.textContent = data.email
+      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
 
       this.updateTagsList(data.tags)
       this.updateAddressList(data.addresses)
@@ -81,7 +81,7 @@ export default class extends Controller {
     } else {
       this.addressValidValue = true
       this.numbersTarget.textContent = data.numbers
-      this.addressOutputTarget.textContent = data.email
+      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
       this.verifiedTokenInputTarget.value = data.verified_token
       this.updateAddressList(data.addresses)
 

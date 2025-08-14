@@ -7,9 +7,12 @@ export default class extends Controller {
     data: String,
   }
 
+  #timeout = null
+
   copy(event) {
     this.copiedValue = true
-    setTimeout(() => {
+    clearTimeout(this.#timeout)
+    this.#timeout = setTimeout(() => {
       this.copiedValue = false
     }, 1000)
     navigator.clipboard.writeText(this.dataValue).then(

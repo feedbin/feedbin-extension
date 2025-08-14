@@ -18,9 +18,23 @@
         <p data-newsletters-target="error" class="text-center"></p>
     </div>
 
-    <div class="message flex hidden group-data-[newsletters-state-value=success]:flex">
-        {% include shared/message-icon.html type="success" %}
-        <p>Address Created</p>
+    <div class="py-8 hidden group-data-[newsletters-state-value=success]:block">
+        <div class="message">
+            {% include shared/message-icon.html type="success" %}
+            <p>Address Created</p>
+
+            <button class="mt-6 inline-flex w-auto items-center justify-center group secondary-button" data-newsletters-target="copyButton" data-action="click->copy#copy" data-controller="copy" data-copy-copied-value="false" data-copy-data-value="">
+                <div class="flex gap-2 items-center">
+                    {% include shared/icon.html icon="copy" class="fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600" %}
+                    <div class="shrink-0" data-copy-target="copyMessage">
+                        <span class="hidden group-data-[copy-copied-value=false]:block">Copy</span>
+                        <span class="hidden group-data-[copy-copied-value=true]:block">Copied</span>
+                    </div>
+                </div>
+            </button>
+
+            <div class="-mt-2 text-500 max-w-[90%] min-w-0 truncate" data-newsletters-target="addressOutput">asdf.asdf@feedb.in</div>
+        </div>
     </div>
 
     <div class="container hidden group-data-[newsletters-state-value=initial]:block">
@@ -50,7 +64,7 @@
                             autocapitalize="off"
                             spellcheck="false"
                         />
-                        <div data-newsletters-target="numbers" class="px-4 border-l border-400 bg-100 flex items-center justify-center shrink-0 pointer-events-none empty:hidden"></div>
+                        <div data-newsletters-target="numbers" class="px-4 border-l border-400 bg-100 flex items-center justify-center shrink-0 pointer-events-none empty:hidden group-data-[newsletters-address-valid-value=false]:hidden"></div>
                     </label>
                     <div class="text-500 mt-1 flex min-w-0 gap-4">
                         <div class="grow hidden group-data-[newsletters-address-valid-value=false]:block">Invalid Address</div>

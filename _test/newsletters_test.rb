@@ -84,7 +84,6 @@ class NewslettersTest < SystemTest
     sign_in
     click_tab(:newsletters)
 
-    # Wait for initial data to load
     assert_selector("[data-newsletters-target='addressInput']")
 
     input = find("[data-newsletters-target='addressInput']")
@@ -99,13 +98,40 @@ class NewslettersTest < SystemTest
 
     assert_equal "true", find("[data-newsletters-edited-value]")["data-newsletters-edited-value"]
 
-    # Verify submit button was temporarily disabled and should re-enable after 500ms
     submit_button = find("[data-newsletters-target='submitButton']")
-    # Button is disabled during auto-submit
+
     assert submit_button.disabled?
 
-    # Wait for button to re-enable after timeout (500ms in the controller)
-    sleep 0.6
-    assert !submit_button.disabled?
+    assert_selector("[data-newsletters-target='submitButton']:not(:disabled)")
+  end
+
+  def test_invalid_address
+    body = {
+      token: "eovwr",
+      email: "df.225@feedb.in",
+      addresses: [],
+      tags: []
+    }
+
+    CapybaraMock.stub_request(:post, build_url("new_address"))
+      .to_return(body: body.to_json)
+
+    body = {
+      error: true
+    }
+    CapybaraMock.stub_request(:post, build_url("create_address"))
+      .to_return(body: body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:newsletters)
+
+    assert_selector("[data-newsletters-target='addressInput']")
+
+    input = find("[data-newsletters-target='addressInput']")
+    input.set("custom")
+
+    assert page.has_text?("Invalid Address")
+    refute page.has_text?("df.225@feedb.in")
   end
 end

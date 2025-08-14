@@ -74,7 +74,7 @@
 }
 
 @utility button-base {
-  @apply w-full cursor-pointer rounded-lg py-2.5 font-medium outline-2 outline-offset-1 outline-transparent transition
+  @apply w-full cursor-pointer rounded-lg py-2.5 px-8 font-medium outline-2 outline-offset-1 outline-transparent transition
   disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
   focus-visible:outline-blue-400;
 }

@@ -57,6 +57,7 @@ class NewslettersTest < SystemTest
   def test_auto_submit
     body = {
       token: "eovwr",
+      email: "df.225@feedb.in",
       addresses: [],
       tags: []
     }
@@ -96,7 +97,7 @@ class NewslettersTest < SystemTest
     assert_selector("[data-newsletters-target='addressOutput']", text: "custom.456@feedb.in")
     assert_selector("[data-newsletters-target='numbers']", text: "456")
 
-    assert_equal "true", find("[data-newsletters-edited-value]").value
+    assert_equal "true", find("[data-newsletters-edited-value]")["data-newsletters-edited-value"]
 
     # Verify submit button was temporarily disabled and should re-enable after 500ms
     submit_button = find("[data-newsletters-target='submitButton']")

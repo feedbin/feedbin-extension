@@ -1,6 +1,7 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
-import { loadFavicon, prettyUrl, sendForm, sendRequest, debounce } from "../helpers.js"
+import { loadFavicon, prettyUrl, debounce } from "../helpers.js"
+import { httpClient } from "../http_client.js"
 import { Hydrate } from "../hydrate.js"
 
 export default class extends Controller {
@@ -38,7 +39,7 @@ export default class extends Controller {
 
     try {
       const user = store.get("user")
-      const response = await sendRequest("POST", this.newAddressUrlValue, {
+      const response = await httpClient.sendRequest("POST", this.newAddressUrlValue, {
         page_token: user.page_token
       })
 
@@ -70,7 +71,7 @@ export default class extends Controller {
 
   async submit(event) {
     const user = store.get("user")
-    let response = await sendForm(event, {
+    let response = await httpClient.sendForm(event, {
       page_token: user.page_token
     })
 

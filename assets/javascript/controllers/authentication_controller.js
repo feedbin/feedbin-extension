@@ -1,5 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
-import { checkAuth, signOut, sendForm } from "../helpers.js"
+import { checkAuth, signOut } from "../helpers.js"
+import { httpClient } from "../http_client.js"
 import { store } from "../store.js"
 
 export default class extends Controller {
@@ -36,7 +37,7 @@ export default class extends Controller {
 
     let data = {}
     try {
-      const response = await sendForm(event)
+      const response = await httpClient.sendForm(event)
 
       data = await response.json()
     } catch (error) {

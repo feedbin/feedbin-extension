@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
-import { gzip } from "../helpers.js"
+import { httpClient } from "../http_client.js"
 
 export default class extends Controller {
   static targets = ["error", "submitButton", "form"]
@@ -25,30 +25,12 @@ export default class extends Controller {
       const user = store.get("user")
       const pageInfo = store.get("pageInfo")
 
-      const json = JSON.stringify({
+      await httpClient.sendJson(event, {
         page_token: user.page_token,
-        url: pageInfo.url,
-        title: pageInfo.title,
-        content: pageInfo.content
+        url:        pageInfo.url,
+        title:      pageInfo.title,
+        content:    pageInfo.content
       })
-
-      const body = await gzip(json)
-      const request = {
-        method: this.formTarget.method || "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Content-Encoding": "gzip",
-        },
-        body: body,
-      }
-
-      const response = await fetch(this.formTarget.action, request)
-
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error
-      }
 
       this.stateValue = this.#states.saved
     } catch (error) {

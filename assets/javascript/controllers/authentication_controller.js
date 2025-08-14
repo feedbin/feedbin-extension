@@ -1,5 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { checkAuth, signOut } from "../helpers.js"
+import { checkAuth, signOut, sendForm } from "../helpers.js"
 import { store } from "../store.js"
 
 export default class extends Controller {
@@ -34,19 +34,9 @@ export default class extends Controller {
     this.loadingValue = true
     this.errorTarget.textContent = ""
 
-    const formData = new FormData(this.formTarget)
     let data = {}
     try {
-      const response = await fetch(this.formTarget.action, {
-        method: this.formTarget.method || "POST",
-        body: new URLSearchParams(formData),
-      })
-
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error
-      }
+      const response = await sendForm(event)
 
       data = await response.json()
     } catch (error) {

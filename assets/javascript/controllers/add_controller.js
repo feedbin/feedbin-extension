@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
-import { loadFavicon, prettyUrl } from "../helpers.js"
+import { loadFavicon, prettyUrl, sendRequest, sendForm } from "../helpers.js"
 import { Hydrate } from "../hydrate.js"
 
 export default class extends Controller {
@@ -24,22 +24,10 @@ export default class extends Controller {
       const user = store.get("user")
       const pageInfo = store.get("pageInfo")
 
-      const formData = new FormData()
-      formData.append("page_token", user.page_token)
-      formData.append("url", pageInfo.url)
-
-      const request = {
-        method: "POST",
-        body: new URLSearchParams(formData),
-      }
-
-      const response = await fetch(this.searchUrlValue, request)
-
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error
-      }
+      const response = await sendRequest("POST", this.searchUrlValue, {
+        page_token: user.page_token,
+        url: pageInfo.url
+      })
 
       const data = await response.json()
 
@@ -66,22 +54,10 @@ export default class extends Controller {
 
     try {
       const user = store.get("user")
-      const pageInfo = store.get("pageInfo")
-      const formData = new FormData(this.subscribeFormTarget)
-      formData.append("page_token", user.page_token)
-
-      const request = {
-        method: this.subscribeFormTarget.method || "POST",
-        body: new URLSearchParams(formData)
-      }
-
-      const response = await fetch(this.subscribeFormTarget.action, request);
-
-      if (!response.ok) {
-        const error = new Error(`Invalid response`)
-        error.response = response
-        throw error;
-      }
+      
+      const response = await sendForm(event, {
+        page_token: user.page_token
+      })
 
       this.stateValue = this.#states.success
     } catch (error) {

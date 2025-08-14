@@ -1,13 +1,20 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
 import { loadFavicon, prettyUrl, sendForm, sendRequest, debounce } from "../helpers.js"
+import { Hydrate } from "../hydrate.js"
 
 export default class extends Controller {
-  static targets = ["submitButton", "form", "verifiedTokenInput", "addressOutput", "numbers", "addressInput", "addressDescription", "addressTag", "addressTemplate", "addressList", "error"]
+  static targets = [
+    "addressOutput", "numbers",
+    "form", "verifiedTokenInput", "addressInput", "submitButton",
+    "addressDescription", "addressTag", "addressList", "error",
+    "addressTemplate", "optionTemplate"
+  ]
 
   static values = {
     newAddressUrl: String,
     createAddressUrl: String,
+    addressValid: Boolean,
     state: String,
     edited: Boolean
   }
@@ -26,7 +33,6 @@ export default class extends Controller {
     this.submit = debounce(this.submit.bind(this), 100)
   }
 
-
   async new(event) {
     this.stateValue = this.#states.loading
 
@@ -40,16 +46,9 @@ export default class extends Controller {
 
       this.addressInputTarget.value = data.token
       this.addressInputTarget.dataset.originalValue = data.token
-
       this.addressOutputTarget.textContent = data.email
 
-      data.tags.forEach(tag => {
-        const option = document.createElement('option')
-        option.value = tag
-        option.textContent = tag
-        this.addressTagTarget.appendChild(option)
-      })
-
+      this.updateTagsList(data.tags)
       this.updateAddressList(data.addresses)
 
       this.stateValue = this.#states.initial
@@ -77,7 +76,10 @@ export default class extends Controller {
 
     const data = await response.json()
 
-    if (data.token) {
+    if (data.error) {
+      this.addressValidValue = false
+    } else {
+      this.addressValidValue = true
       this.numbersTarget.textContent = data.numbers
       this.addressOutputTarget.textContent = data.email
       this.verifiedTokenInputTarget.value = data.verified_token
@@ -86,39 +88,41 @@ export default class extends Controller {
       this.#createTimeout = setTimeout(() => {
         this.submitButtonTarget.disabled = false
       }, 500);
-    } else {
-      // if there is an empty response it means no valid input was given
-      this.numbersTarget.textContent = ""
-      this.addressOutputTarget.textContent = "Invalid Address"
     }
   }
 
-  updateAddressList(addresses) {
-    let addressesContent = addresses.map((address, index) => {
-      const template    = this.addressTemplateTarget.content.cloneNode(true)
+  updateTagsList(tags) {
+    tags.unshift("None");
+    let content = tags.map((tag, index) => {
+      const template = this.optionTemplateTarget.content.cloneNode(true)
+      const hydrate  = new Hydrate(template)
 
-      const container   = template.querySelector("[data-template=container]")
-      const email       = template.querySelector("[data-template=email]")
-      const description = template.querySelector("[data-template=description]")
+      hydrate.attribute("option", "value", ((index === 0) ? "" : tag))
+      hydrate.text("option", tag)
 
-      container.dataset.copyDataValue = address.email
-      email.textContent               = address.email
-      description.textContent         = address.description || ""
-
-      return template
+      return hydrate
     })
 
-    this.addressListTarget.innerHTML = ""
-    this.addressListTarget.append(...[addressesContent].flat())
+    Hydrate.hydrate(this.addressTagTarget, content)
+  }
+
+  updateAddressList(addresses) {
+    let content = addresses.map((address, index) => {
+      const template = this.addressTemplateTarget.content.cloneNode(true)
+      const hydrate  = new Hydrate(template)
+
+      hydrate.attribute("container", "data-copy-data-value", address.email)
+      hydrate.text("email", address.email)
+      hydrate.text("description", address.description || "")
+
+      return hydrate
+    })
+
+    Hydrate.hydrate(this.addressListTarget, content)
   }
 
   addressInputChanged(event) {
     this.editedValue = true
     this.formTarget.requestSubmit()
-  }
-
-  error(event) {
-    this.stateValue = this.#states.error
-    this.errorTarget.textContent = "Error loading newsletter addresses"
   }
 }

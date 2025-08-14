@@ -47,7 +47,6 @@ export default class extends Controller {
         this.noFeeds()
       } else {
         this.displayResults(data)
-        this.stateValue = this.#states.hasResults
       }
     } catch (error) {
       this.stateValue = this.#states.error
@@ -104,54 +103,47 @@ export default class extends Controller {
   displayResults(results) {
     this.resultsCountValue = results.feeds.length
     this.hasResultsValue = true
+    this.stateValue = this.#states.hasResults
 
-    let feedContent = results.feeds.map((feed, index) => {
+    const feedContent = results.feeds.map((feed, index) => {
       const template = this.feedTemplateTarget.content.cloneNode(true)
-      const checkboxDummy = template.querySelector("[data-template=checkbox_dummy]")
-      const checkbox = template.querySelector("[data-template=checkbox]")
-      const feedInput = template.querySelector("[data-template=feed_input]")
-      const url = template.querySelector("[data-template=url]")
-      const displayUrl = template.querySelector("[data-template=display_url]")
-      const volume = template.querySelector("[data-template=volume]")
+      const hydrate = new Hydrate(template)
 
       const inputBase = `feeds[${feed.id}]`
-
       const checkboxName = `${inputBase}[subscribe]`
-      checkboxDummy.setAttribute("name", checkboxName)
-      checkbox.setAttribute("name", checkboxName)
+
       if (index === 0) {
-        checkbox.checked = true
+        hydrate.attribute("checkbox", "checked", "true")
       }
 
-      url.setAttribute("name", `${inputBase}[url]`)
-      url.setAttribute("value", feed.feed_url)
+      hydrate.attribute("checkbox_dummy", "name", checkboxName)
+      hydrate.attribute("checkbox", "name", checkboxName)
 
-      feedInput.setAttribute("name", `${inputBase}[title]`)
-      feedInput.setAttribute("value", feed.title)
-      feedInput.setAttribute("placeholder", feed.title)
+      hydrate.attribute("url", "name", `${inputBase}[url]`)
+      hydrate.attribute("url", "value", feed.feed_url)
 
-      displayUrl.textContent = prettyUrl(feed.feed_url)
-      volume.textContent = feed.volume
+      hydrate.attribute("feed_input", "name", `${inputBase}[title]`)
+      hydrate.attribute("feed_input", "value", feed.title)
+      hydrate.attribute("feed_input", "placeholder", feed.title)
 
-      return template
+      hydrate.text("display_url", prettyUrl(feed.feed_url))
+      hydrate.text("volume", feed.volume)
+
+      return hydrate
     })
 
-    this.feedResultsTarget.innerHTML = ""
-    this.feedResultsTarget.append(...[feedContent].flat())
-
-    let tagContent = results.tags.map((tag, index) => {
+    const tagContent = results.tags.map((tag, index) => {
       const template = this.tagTemplateTarget.content.cloneNode(true)
-      const checkbox = template.querySelector("[data-template=checkbox]")
-      const label = template.querySelector("[data-template=label]")
+      const hydrate = new Hydrate(template)
 
-      checkbox.setAttribute("value", tag)
-      label.textContent = tag
+      hydrate.attribute("checkbox", "value", tag)
+      hydrate.text("label", tag)
 
-      return template
+      return hydrate
     })
 
-    this.tagResultsTarget.innerHTML = ""
-    this.tagResultsTarget.append(...[tagContent].flat())
+    Hydrate.hydrate(this.feedResultsTarget, feedContent)
+    Hydrate.hydrate(this.tagResultsTarget, tagContent)
   }
 
   countSelected() {

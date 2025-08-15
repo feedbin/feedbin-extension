@@ -76,6 +76,7 @@ class NewslettersTest < SystemTest
           description: "Example Description"
         },
       ],
+      tags: ["Favorites", "Newsletters"]
     }
     CapybaraMock.stub_request(:post, build_url("create_address"))
       .to_return(body: body.to_json)
@@ -98,11 +99,39 @@ class NewslettersTest < SystemTest
 
     assert_equal "true", find("[data-newsletters-edited-value]")["data-newsletters-edited-value"]
 
-    submit_button = find("[data-newsletters-target='submitButton']")
-
-    assert submit_button.disabled?
-
+    assert_selector("[data-newsletters-target='submitButton']:disabled")
     assert_selector("[data-newsletters-target='submitButton']:not(:disabled)")
+  end
+
+  def test_created
+    body = {
+      token: "eovwr",
+      email: "df.225@feedb.in",
+      addresses: [],
+      tags: []
+    }
+
+    CapybaraMock.stub_request(:post, build_url("new_address"))
+      .to_return(body: body.to_json)
+
+    create_body = {
+      created: true,
+      email: body[:email]
+    }
+    CapybaraMock.stub_request(:post, build_url("create_address"))
+      .to_return(body: create_body.to_json)
+
+    visit "/index.html"
+    sign_in
+    click_tab(:newsletters)
+
+    submit_button = find("[data-newsletters-target='submitButton']")
+    submit_button.click
+
+    assert_selector("[data-newsletters-target='copyButton']")
+    copy_button = find("[data-newsletters-target='copyButton']")
+
+    assert_equal create_body[:email], copy_button["data-copy-data-value"]
   end
 
   def test_invalid_address

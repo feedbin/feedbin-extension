@@ -28,4 +28,8 @@ export default class extends Controller {
     )
     event.preventDefault()
   }
+
+  setData(data) {
+    this.dataValue = data
+  }
 }

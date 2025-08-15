@@ -46,12 +46,7 @@ export default class extends Controller {
       const data = await response.json()
 
       this.addressInputTarget.value = data.token
-      this.addressInputTarget.dataset.originalValue = data.token
-      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
-
-      this.updateTagsList(data.tags)
-      this.updateAddressList(data.addresses)
-
+      this.updateForm(data)
       this.stateValue = this.#states.initial
     } catch (error) {
       this.stateValue = this.#states.error
@@ -77,19 +72,29 @@ export default class extends Controller {
 
     const data = await response.json()
 
-    if (data.error) {
+    if (data.created) {
+      this.stateValue = this.#states.success
+      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
+      this.updateAddressList(data.addresses)
+      const copyController = this.application.getControllerForElementAndIdentifier(this.copyButtonTarget, "copy")
+      copyController.setData(data.email)
+    } else if (data.error) {
       this.addressValidValue = false
     } else {
-      this.addressValidValue = true
       this.numbersTarget.textContent = data.numbers
-      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
-      this.verifiedTokenInputTarget.value = data.verified_token
-      this.updateAddressList(data.addresses)
-
+      this.updateForm(data)
       this.#createTimeout = setTimeout(() => {
         this.submitButtonTarget.disabled = false
       }, 500);
     }
+  }
+
+  updateForm(data) {
+    this.addressValidValue = true
+    this.verifiedTokenInputTarget.value = data.verified_token
+    this.addressOutputTargets.forEach((element) => element.textContent = data.email)
+    this.updateTagsList(data.tags)
+    this.updateAddressList(data.addresses)
   }
 
   updateTagsList(tags) {

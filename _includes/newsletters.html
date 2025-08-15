@@ -8,48 +8,50 @@
     data-newsletters-create-address-url-value="{{ site.urls.create_address | build_url }}"
     data-action="app:authorized@window->newsletters#new"
 >
-    <div class="message hidden group-data-[newsletters-state-value=loading]:flex">
-        {% include shared/spinner.html %}
-        <p>Loading…</p>
-    </div>
+    {% capture content %}
 
-    <div class="message hidden group-data-[newsletters-state-value=error]:flex">
-        {% include shared/message-icon.html type="neutral" icon="search" %}
-        <p data-newsletters-target="error" class="text-center"></p>
-    </div>
+        <h1 class="heading hidden group-data-[newsletters-state-value=initial]:block group-data-[newsletters-state-value=success]:block">New Address</h1>
 
-    <div class="py-8 hidden group-data-[newsletters-state-value=success]:block">
-        <div class="message">
-            {% include shared/message-icon.html type="success" %}
-            <p>Address Created</p>
-
-            <button class="mt-6 inline-flex w-auto items-center justify-center group secondary-button" data-newsletters-target="copyButton" data-action="click->copy#copy" data-controller="copy" data-copy-copied-value="false" data-copy-data-value="">
-                <div class="flex gap-2 items-center">
-                    {% include shared/icon.html icon="copy" class="fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600" %}
-                    <div class="shrink-0" data-copy-target="copyMessage">
-                        <span class="hidden group-data-[copy-copied-value=false]:block">Copy</span>
-                        <span class="hidden group-data-[copy-copied-value=true]:block">Copied</span>
-                    </div>
-                </div>
-            </button>
-
-            <div class="-mt-2 text-500 max-w-[90%] min-w-0 truncate" data-newsletters-target="addressOutput">asdf.asdf@feedb.in</div>
+        <div class="message hidden group-data-[newsletters-state-value=loading]:flex">
+            {% include shared/spinner.html %}
+            <p>Loading…</p>
         </div>
-    </div>
 
-    <div class="container hidden group-data-[newsletters-state-value=initial]:block">
-        {% capture content %}
+        <div class="message hidden group-data-[newsletters-state-value=error]:flex">
+            {% include shared/message-icon.html type="neutral" icon="search" %}
+            <p data-newsletters-target="error" class="text-center"></p>
+        </div>
+
+        <div class="py-16 hidden group-data-[newsletters-state-value=success]:block">
+            <div class="message">
+                {% include shared/message-icon.html type="success" %}
+                <p>Address Created</p>
+
+                <button class="mt-6 inline-flex w-auto items-center justify-center group secondary-button" data-newsletters-target="copyButton" data-action="click->copy#copy" data-controller="copy" data-copy-copied-value="false" data-copy-data-value="">
+                    <div class="flex gap-2 items-center">
+                        {% include shared/icon.html icon="copy" class="fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600" %}
+                        <div class="shrink-0" data-copy-target="copyMessage">
+                            <span class="hidden group-data-[copy-copied-value=false]:block">Copy</span>
+                            <span class="hidden group-data-[copy-copied-value=true]:block">Copied</span>
+                        </div>
+                    </div>
+                </button>
+
+                <div class="-mt-2 text-500 max-w-[90%] min-w-0 truncate" data-newsletters-target="addressOutput">asdf.asdf@feedb.in</div>
+            </div>
+        </div>
+
+        <div class="hidden mb-12 group-data-[newsletters-state-value=initial]:block">
             <form
                 data-newsletters-target="form"
                 data-action="submit->newsletters#submit:prevent submit->newsletters#disable:prevent "
                 action="{{ site.urls.create_address | build_url }}"
                 method="POST"
-                class="flex flex-col gap-4"
+                class="flex flex-col gap-4 mt-4"
                 novalidate
             >
                 <input type="hidden" name="verified_token" data-newsletters-target="verifiedTokenInput">
 
-                <h1 class="heading">New Address</h1>
                 <div>
                     <label class="text-input group/address">
                         <div class="pl-2 flex items-center justify-center shrink-0 pointer-events-none">
@@ -89,7 +91,7 @@
                     </div>
                     <div class="shrink-0">
                         <label class="text-input group/tag">
-                            <select name="tag" data-newsletters-target="addressTag"></select>
+                            <select name="newsletter_tag" data-newsletters-target="addressTag"></select>
                             <div class="pr-2 absolute inset-y-0 right-0 flex items-center justify-center shrink-0 pointer-events-none">
                                 {% include shared/icon.html icon="caret" class="fill-400 transition group-focus-within/tag:fill-blue-600" %}
                             </div>
@@ -97,17 +99,17 @@
                     </div>
                 </div>
 
-                <button type="submit" name="button_action" value="submit" data-newsletters-target="submitButton" class="secondary-button mt-4">Create</button>
+                <button type="submit" name="button_action" value="save" data-newsletters-target="submitButton" class="secondary-button mt-4">Create</button>
             </form>
+        </div>
 
-            <div class="flex flex-col gap-4 mt-12">
-                <h1 class="heading">Addresses</h1>
-                <ul data-newsletters-target="addressList"></ul>
-            </div>
+        <div class="flex flex-col gap-4">
+            <h1 class="heading">Addresses</h1>
+            <ul data-newsletters-target="addressList"></ul>
+        </div>
 
-        {% endcapture %}
-        {% include shared/tab.html content=content %}
-    </div>
+    {% endcapture %}
+    {% include shared/tab.html content=content %}
 
     <template data-newsletters-target="addressTemplate">
         <li class="group flex border-b first:border-t" data-template="container" data-controller="copy" data-copy-copied-value="false" data-copy-data-value="">

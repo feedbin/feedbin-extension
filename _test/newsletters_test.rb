@@ -116,7 +116,8 @@ class NewslettersTest < SystemTest
 
     create_body = {
       created: true,
-      email: body[:email]
+      email: body[:email],
+      addresses: []
     }
     CapybaraMock.stub_request(:post, build_url("create_address"))
       .to_return(body: create_body.to_json)

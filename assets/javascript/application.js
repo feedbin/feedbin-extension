@@ -5,10 +5,12 @@ import AppController from "./controllers/app_controller.js"
 import AuthenticationController from "./controllers/authentication_controller.js"
 import VisualViewportController from "./controllers/visual_viewport_controller.js"
 import FaviconController from "./controllers/favicon_controller.js"
+import CopyController from "./controllers/copy_controller.js"
 import SettingsController from "./controllers/settings_controller.js"
 import TabsController from "./controllers/tabs_controller.js"
 import AddController from "./controllers/add_controller.js"
 import SaveController from "./controllers/save_controller.js"
+import NewslettersController from "./controllers/newsletters_controller.js"
 import PageInfoController from "./controllers/page_info_controller.js"
 
 const application = Application.start()
@@ -18,10 +20,12 @@ application.register("app", AppController)
 application.register("visual-viewport", VisualViewportController)
 application.register("authentication", AuthenticationController)
 application.register("favicon", FaviconController)
+application.register("copy", CopyController)
 application.register("settings", SettingsController)
 application.register("tabs", TabsController)
 application.register("add", AddController)
 application.register("save", SaveController)
+application.register("newsletters", NewslettersController)
 application.register("page-info", PageInfoController)
 
 window.Stimulus = application

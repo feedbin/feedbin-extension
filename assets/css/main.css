@@ -73,6 +73,12 @@
     --color-green-600: var(--color-green-600);
 }
 
+@utility button-base {
+  @apply w-full cursor-pointer rounded-lg py-2.5 px-8 font-medium outline-2 outline-offset-1 outline-transparent transition
+  disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
+  focus-visible:outline-blue-400;
+}
+
 @layer base {
     *,
     ::after,
@@ -108,16 +114,20 @@
         animation: grow-then-fade 1.5s ease-out forwards;
     }
     .text-input {
-        @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden -outline-offset-1 outline-3 outline-transparent transition focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
+        @apply flex items-stretch w-full max-w-full rounded-md border border-input shadow-sm overflow-hidden relative -outline-offset-1 outline-3 outline-transparent transition
+               focus-within:shadow-none focus-within:border-blue-600 focus-within:outline-blue-600;
     }
     .text-input input {
         @apply text-700 grow max-w-0 placeholder:text-400 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5;
     }
+    .text-input select {
+        @apply text-700 grow max-w-0 w-full max-w-full appearance-none focus:outline-none p-2 py-2.5 pr-8;
+    }
     .primary-button {
-        @apply bg-blue-600 text-white w-full cursor-pointer rounded-lg py-2.5 font-medium outline-2 outline-offset-1 outline-transparent transition
-        disabled:cursor-default disabled:border-300 disabled:shadow-none disabled:bg-200 disabled:text-500
-        active:bg-blue-700
-        focus-visible:outline-blue-400;
+        @apply button-base bg-blue-600 text-white active:bg-blue-700;
+    }
+    .secondary-button {
+        @apply button-base text-700 shadow-sm border border-input active:bg-100 active:text-600 active:shadow-none focus:shadow-none;
     }
     .message {
         @apply flex grow min-h-0 flex-col items-center justify-center gap-4 px-4 text-500;

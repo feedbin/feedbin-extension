@@ -78,3 +78,7 @@ end
 def click_tab(tab)
   page.find("[value=tab-#{tab}]").trigger("click")
 end
+
+def tab_selected?(tab)
+  page.find("[name=tab]:checked").value() == "tab-#{tab}"
+end

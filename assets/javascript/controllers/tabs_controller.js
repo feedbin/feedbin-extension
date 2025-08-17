@@ -8,6 +8,10 @@ export default class extends Controller {
     this.selectTab()
   }
 
+  async selectDefault() {
+    this.select("tab-add")
+  }
+
   async selectTab() {
     let selectedTab = "tab-settings"
 
@@ -16,8 +20,12 @@ export default class extends Controller {
       selectedTab = result.tab || "tab-add"
     }
 
+    this.select(selectedTab)
+  }
+
+  select(tab) {
     this.tabTargets.forEach((element, index) => {
-      if (element.value === selectedTab) {
+      if (element.value === tab) {
         element.checked = true
         const event = new Event("change", { bubbles: true })
         element.dispatchEvent(event)

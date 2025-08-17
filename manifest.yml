@@ -1,7 +1,7 @@
 defaults: &defaults
   manifest_version: 3
   name: Feedbin Subscribe & Save
-  version: 1.0.3
+  version: "1.5"
   description: Subscribe to feeds and save pages to Feedbin.
   icons:
     32:  assets/images/icon-32.png
@@ -18,6 +18,12 @@ defaults: &defaults
   action:
     default_popup: index.html
     default_title: Feedbin Subscribe & Save
+  commands:
+    _execute_action:
+      description: Open the extension
+      suggested_key:
+        default: Ctrl+Shift+F
+        mac: MacCtrl+Shift+F
 
 # Safari adds `nativeMessaging` permission to
 # handle authentication with the Feedbin app.

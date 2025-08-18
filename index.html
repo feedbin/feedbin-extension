@@ -30,11 +30,11 @@
         <script src="assets/javascript/application.js" type="module" ></script>
     </head>
 
-    <body class="group flex flex-col bg-0 cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[490px] h-[500px] [text-size-adjust:none] browser-ios:text-base! browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen">
+    <body class="group flex flex-col bg-0 cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[456px] h-[500px] [text-size-adjust:none] browser-ios:text-base! browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen">
         <div
             data-controller="tabs"
             class="container group"
-            data-action="app:authorized@window->tabs#selectDefault app:notAuthorized@window->tabs#selectTab"
+            data-action="app:authorized@window->tabs#selectTab app:notAuthorized@window->tabs#selectTab"
         >
             {% include shared/nav.html %}
 

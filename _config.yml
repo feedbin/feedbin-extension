@@ -10,6 +10,7 @@ urls:
     new_address: /extension/v1/addresses/new.json
     create_address: /extension/v1/addresses/create.json
     password_reset: /password_resets/new
+    newsletter_settings: /settings/newsletters
 exclude:
     - .sass-cache/
     - .jekyll-cache/

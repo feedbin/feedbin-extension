@@ -8,10 +8,6 @@ export default class extends Controller {
     this.selectTab()
   }
 
-  async selectDefault() {
-    this.select("tab-add")
-  }
-
   async selectTab() {
     let selectedTab = "tab-settings"
 
@@ -35,6 +31,9 @@ export default class extends Controller {
 
   async save(event) {
     const tab = event.target.value
+    if (tab === "tab-settings") {
+      return
+    }
     await browser.storage.sync.set({ tab })
   }
 

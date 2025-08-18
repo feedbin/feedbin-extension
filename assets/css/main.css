@@ -144,4 +144,7 @@
     .container {
         @apply flex flex-col grow min-h-0;
     }
+    .link {
+      @apply text-blue-600 pointer-fine:hover:underline pointer-fine:hover:text-blue-700;
+    }
 }

@@ -1,7 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { checkAuth, signOut } from "../helpers.js"
-import { httpClient } from "../http_client.js"
-import { store } from "../store.js"
+import { checkAuth, signOut, httpClient, store } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["results", "email", "password", "submitButton", "error", "signedInAs", "form"]

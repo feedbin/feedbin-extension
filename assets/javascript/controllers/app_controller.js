@@ -1,6 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { store } from "../store.js"
-import { getHostname, detectBrowser, afterTransition, debounce } from "../helpers.js"
+import { store, getHostname, detectBrowser, afterTransition, debounce } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["footerSpacer", "scrollContainer", "contentContainer"]

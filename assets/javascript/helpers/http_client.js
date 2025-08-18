@@ -1,4 +1,4 @@
-import { gzip } from "./helpers.js"
+import { gzip } from "./utilities.js"
 
 export class HttpClient {
   async #makeRequest(url, options) {

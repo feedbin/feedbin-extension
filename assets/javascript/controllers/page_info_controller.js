@@ -1,6 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { sanitize, getHostname, loadFavicon, prettyUrl } from "../helpers.js"
-import { store } from "../store.js"
+import { sanitize, getHostname, loadFavicon, prettyUrl, store } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["error", "favicon", "title", "description", "url", "formUrl"]

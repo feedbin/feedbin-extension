@@ -1,8 +1,5 @@
 import { Controller } from "../lib/stimulus.js"
-import { store } from "../store.js"
-import { loadFavicon, prettyUrl } from "../helpers.js"
-import { httpClient } from "../http_client.js"
-import { Hydrate } from "../hydrate.js"
+import { store, loadFavicon, prettyUrl, httpClient, Hydrate } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["submitButton", "subscribeForm", "error", "checkbox", "feedTemplate", "feedResults", "tagTemplate", "tagResults", "favicon"]

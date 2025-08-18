@@ -30,7 +30,7 @@ export default class extends Controller {
         url: pageInfo.url
       })
 
-      const data = await response.json()
+      const data = response.data
 
       if (data.feeds.length === 0) {
         this.noFeeds()
@@ -55,7 +55,7 @@ export default class extends Controller {
 
     try {
       const user = store.get("user")
-      
+
       const response = await httpClient.sendForm(event, {
         page_token: user.page_token
       })

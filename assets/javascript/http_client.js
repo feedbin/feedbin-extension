@@ -3,6 +3,12 @@ import { gzip } from "./helpers.js"
 export class HttpClient {
   async #makeRequest(url, options) {
     const response = await fetch(url, options)
+    try {
+      const data = await response.json()
+      response.data = data
+    } catch (e) {
+      response.data = null
+    }
 
     if (!response.ok) {
       const error = new Error(`Invalid response`)

@@ -39,7 +39,7 @@ export default class extends Controller {
     try {
       const response = await httpClient.sendForm(event)
 
-      data = await response.json()
+      data = response.data
     } catch (error) {
       if ("response" in error) {
         if (error.response.status === 401) {

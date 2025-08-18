@@ -1,6 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 import { store } from "../store.js"
-import { getHostname, detectBrowser, afterTransition } from "../helpers.js"
+import { getHostname, detectBrowser, afterTransition, debounce } from "../helpers.js"
 
 export default class extends Controller {
   static targets = ["footerSpacer", "scrollContainer", "contentContainer"]
@@ -15,21 +15,6 @@ export default class extends Controller {
     this.authorize()
     this.browserValue = detectBrowser()
     store.update("browser", this.browserValue)
-    this.boundCheckScroll = this.checkScroll.bind(this)
-    window.addEventListener("resize", this.boundCheckScroll)
-
-    this.resizeObserver = new ResizeObserver(elements => {
-      this.checkScroll()
-    })
-
-    this.contentContainerTargets.forEach((element) => this.resizeObserver.observe(element))
-  }
-
-  disconnect() {
-    window.removeEventListener("resize", this.boundCheckScroll)
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect()
-    }
   }
 
   async authorize() {

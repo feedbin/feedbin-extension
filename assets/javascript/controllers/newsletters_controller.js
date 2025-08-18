@@ -9,7 +9,7 @@ export default class extends Controller {
     "addressOutput", "numbers",
     "form", "verifiedTokenInput", "addressInput", "submitButton",
     "addressDescription", "addressTag", "addressList", "error", "copyButton",
-    "addressTemplate", "optionTemplate"
+    "addressTemplate", "optionTemplate", "error"
   ]
 
   static values = {
@@ -43,7 +43,7 @@ export default class extends Controller {
         page_token: user.page_token
       })
 
-      const data = await response.json()
+      const data = response.data
 
       this.addressInputTarget.value = data.token
       this.updateForm(data)
@@ -65,27 +65,37 @@ export default class extends Controller {
   }
 
   async submit(event) {
-    const user = store.get("user")
-    let response = await httpClient.sendForm(event, {
-      page_token: user.page_token
-    })
+    this.errorTarget.textContent = ""
+    try {
+      const user = store.get("user")
+      let response = await httpClient.sendForm(event, {
+        page_token: user.page_token
+      })
+      const data = response.data
 
-    const data = await response.json()
+      if (data.created) {
+        this.stateValue = this.#states.success
+        this.addressOutputTargets.forEach((element) => element.textContent = data.email)
+        this.updateAddressList(data.addresses)
+        const copyController = this.application.getControllerForElementAndIdentifier(this.copyButtonTarget, "copy")
+        copyController.setData(data.email)
+      } else {
+        this.numbersTarget.textContent = data.numbers
+        this.updateForm(data)
+        this.#createTimeout = setTimeout(() => {
+          this.submitButtonTarget.disabled = false
+        }, 500);
+      }
 
-    if (data.created) {
-      this.stateValue = this.#states.success
-      this.addressOutputTargets.forEach((element) => element.textContent = data.email)
-      this.updateAddressList(data.addresses)
-      const copyController = this.application.getControllerForElementAndIdentifier(this.copyButtonTarget, "copy")
-      copyController.setData(data.email)
-    } else if (data.error) {
-      this.addressValidValue = false
-    } else {
-      this.numbersTarget.textContent = data.numbers
-      this.updateForm(data)
-      this.#createTimeout = setTimeout(() => {
-        this.submitButtonTarget.disabled = false
-      }, 500);
+    } catch (error) {
+      if ("response" in error && "data" in error.response && error.response.data && error.response.data.error) {
+        this.addressValidValue = false
+      } else if ("response" in error) {
+        this.errorTarget.textContent = `Invalid response: ${error.response.statusText}`
+      } else {
+        this.errorTarget.textContent = `Unknown error. ${error}`
+      }
+      console.trace("newsletters_submit_error", error.response)
     }
   }
 

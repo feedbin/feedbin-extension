@@ -150,7 +150,7 @@ class NewslettersTest < SystemTest
       error: true
     }
     CapybaraMock.stub_request(:post, build_url("create_address"))
-      .to_return(body: body.to_json)
+      .to_return(body: body.to_json, status: 400)
 
     visit "/index.html"
     sign_in

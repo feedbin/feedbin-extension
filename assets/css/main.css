@@ -4,6 +4,7 @@
 @custom-variant browser-ios     (&:where([data-app-browser-value="ios"] *));
 @custom-variant browser-firefox (&:where([data-app-browser-value="firefox"] *));
 @custom-variant browser-chrome  (&:where([data-app-browser-value="chrome"] *));
+@custom-variant is-native       (&:where([data-app-native-value="true"] *));
 
 :root {
     color-scheme: light dark;

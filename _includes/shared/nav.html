@@ -7,7 +7,7 @@
                 flex basis-full relative
                 before:transition before:block before:h-[16px] before:w-[1px] before:bg-300 before:absolute before:left-0 before:top-[50%] before:translate-[-50%]
                 has-checked:before:opacity-0 first:before:opacity-0
-                {% if tab.id == 'tab-settings' %} browser-ios:hidden basis-auto! {% endif %}
+                {% if tab.id == 'tab-settings' %} is-native:hidden basis-auto! {% endif %}
                 "
         >
             <label

@@ -8,11 +8,16 @@ export default class extends Controller {
     browser: String,
     footerBorder: Boolean,
     headerBorder: Boolean,
+    native: Boolean,
   }
 
   connect() {
     this.authorize()
     this.browserValue = detectBrowser()
+    if ((this.browserValue === "ios" || this.browserValue === "ipad") && "sendNativeMessage" in browser.runtime) {
+      this.nativeValue = true
+      store.update("native", true)
+    }
     store.update("browser", this.browserValue)
   }
 

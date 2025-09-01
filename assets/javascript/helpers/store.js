@@ -4,6 +4,7 @@ class Store {
       user: null,
       browser: null,
       pageInfo: null,
+      native: false,
     }
   }
 

@@ -59,7 +59,10 @@ export function detectBrowser() {
   if (userAgent.includes("firefox")) {
     return "firefox"
   } else if (userAgent.includes("safari") && !userAgent.includes("chrome")) {
-    if (userAgent.includes("mobile") || userAgent.includes("iphone") || userAgent.includes("ipad")) {
+    if (userAgent.includes("ipad")) {
+      return "ipad"
+    }
+    if (userAgent.includes("mobile") || userAgent.includes("iphone")) {
       return "ios"
     }
     return "safari"

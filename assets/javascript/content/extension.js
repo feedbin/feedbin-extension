@@ -24,7 +24,7 @@
     }
   }
 
-  browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request && request.action === "loadPageInfo") {
       sendResponse(loadPageInfo())
     } else {

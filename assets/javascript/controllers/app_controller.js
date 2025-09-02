@@ -79,7 +79,7 @@ export default class extends Controller {
       if (tab) {
         await browser.scripting.executeScript({
           target: { tabId: tab.id },
-          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content.js"],
+          files: ["assets/javascript/lib/extension-polyfill.js", "assets/javascript/content/extension.js"],
         })
 
         let data = (await browser.tabs.sendMessage(tab.id, { action: "loadPageInfo" })) || {}

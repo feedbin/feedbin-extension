@@ -27,12 +27,13 @@ defaults: &defaults
     open_in_background:
       description: Open current article in a background tab
       suggested_key:
-        default: Alt+V
+        default: Ctrl+Shift+V
+        mac: MacCtrl+Shift+V
   background:
-    service_worker: assets/javascript/worker.js
+    service_worker: assets/javascript/content/worker.js
   content_scripts:
-  - matches: [https://feedbin.com/*]
-    js: [assets/javascript/feedbin_content.js]
+  - matches: [<%= ENV["API_HOST"] %>/*]
+    js: [assets/javascript/content/feedbin.js]
 
 # Safari adds `nativeMessaging` permission to
 # handle authentication with the Feedbin app.
@@ -60,7 +61,8 @@ firefox:
     32: assets/images/icon-square-32.png
     64: assets/images/icon-square-64.png
   background:
-    scripts: [assets/javascript/worker.js]
+    scripts:
+      - assets/javascript/content/worker.js
   browser_specific_settings:
     gecko:
       id: support@feedbin.com

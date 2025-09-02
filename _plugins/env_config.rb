@@ -1,7 +1,7 @@
 module Jekyll
   class EnvConfig < Generator
     def generate(site)
-      site.config["api_host"] = case Jekyll.env
+      ENV["API_HOST"] = site.config["api_host"] = case Jekyll.env
       when "test"
         "https://example.com"
       when "production"

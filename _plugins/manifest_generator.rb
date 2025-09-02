@@ -1,14 +1,13 @@
 require "yaml"
 require "json"
+require "erb"
 
 module Jekyll
   class ManifestGenerator < Generator
-    safe true
-    priority :high
-
     def generate(site)
-      manifest_yml = File.join(site.source, "manifest.yml")
-      data = YAML.safe_load_file(manifest_yml, aliases: true)
+      path = File.join(site.source, "manifest.yml")
+      data = ERB.new(File.read(path)).result
+      data = YAML.load(data, aliases: true)
 
       target = ENV["BUILD_TARGET"] || "firefox"
 

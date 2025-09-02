@@ -23,7 +23,7 @@ export default class extends Controller {
         }, 1000)
       },
       () => {
-        console.log("failed")
+        console.trace("failed")
       }
     )
     event.preventDefault()

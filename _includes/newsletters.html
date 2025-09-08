@@ -105,7 +105,7 @@
             <div class="flex-col gap-4 hidden group-data-[newsletters-state-value=initial]:flex group-data-[newsletters-state-value=success]:flex">
                 <div class="flex gap-2 justify-between items-baseline">
                     <h1 class="heading">Addresses</h1>
-                    <a class="link" href="{{ site.urls.newsletter_settings | build_url }}">Manage ↗</a>
+                    <a class="text-700" href="{{ site.urls.newsletter_settings | build_url }}">Manage ↗</a>
                 </div>
                 <ul data-newsletters-target="addressList"></ul>
             </div>
@@ -122,12 +122,12 @@
                         <div class="text-500 empty:hidden" data-template="description"></div>
                     </div>
                 </div>
-                <div class="flex gap-2 items-center">
-                    {% include shared/icon.html icon="copy" class="fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600" %}
+                <div class="flex gap-2 items-center text-blue-600 group-data-[copy-copied-value=true]:text-blue-700">
                     <div class="shrink-0" data-copy-target="copyMessage">
                         <span class="hidden group-data-[copy-copied-value=false]:block">Copy</span>
                         <span class="hidden group-data-[copy-copied-value=true]:block">Copied</span>
                     </div>
+                    {% include shared/icon.html icon="copy" class="fill-blue-600 transition group-data-[copy-copied-value=true]:fill-blue-700" %}
                 </div>
             </button>
         </li>

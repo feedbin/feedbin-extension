@@ -1,7 +1,6 @@
 import { Controller } from "../lib/stimulus.js"
 
 export default class extends Controller {
-  static targets = ["copyMessage"]
   static values = {
     copied: Boolean,
     data: String,

@@ -97,6 +97,16 @@
         root.loadScript(file)
       })
     }
+
+    if (options.func) {
+      try {
+        const result = options.func()
+        return Promise.resolve([{ result: result }])
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    }
+
     return Promise.resolve([{ result: null }])
   }
 

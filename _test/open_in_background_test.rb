@@ -13,7 +13,6 @@ class OpenInBackgroundTest < SystemTest
     EOT
 
     page.execute_script(article_link)
-    page.execute_script("browser.loadScript('assets/javascript/content/feedbin.js');")
     page.execute_script("browser.loadScript('assets/javascript/content/worker.js');")
 
     sleep 0.1

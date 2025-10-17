@@ -1,4 +1,5 @@
 require "phlex"
+require "uri"
 
 module Jekyll
   # Thread-local storage for Jekyll context
@@ -58,7 +59,7 @@ module Jekyll
     def build_url(url_key)
       base = site.config["api_host"] || ""
       path = site.config.dig("urls", url_key) || ""
-      "#{base}#{path}"
+      URI.join(base, path).to_s
     end
   end
 

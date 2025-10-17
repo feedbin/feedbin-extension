@@ -3,6 +3,7 @@ git_source(:github) { |name| "https://github.com/#{name}.git" }
 
 gem "jekyll"
 gem "jekyll-postcss-v2", github: "feedbin/jekyll-postcss-v2", branch: "feedbin"
+gem "phlex"
 
 group :development do
   gem "foreman"

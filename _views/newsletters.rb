@@ -52,10 +52,7 @@ module Views
                     }
                   ) do
                     div class: "flex gap-2 items-center" do
-                      Icon(
-                        icon: "copy",
-                        css_class: "fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600"
-                      )
+                      Icon("copy", css: "fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600")
                       div class: "shrink-0", data: { copy_target: "copyMessage" } do
                         span(class: "hidden group-data-[copy-copied-value=false]:block") { "Copy" }
                         span(class: "hidden group-data-[copy-copied-value=true]:block") { "Copied" }
@@ -84,10 +81,7 @@ module Views
                   div do
                     label class: "text-input group/address" do
                       div class: "pl-2 flex items-center justify-center shrink-0 pointer-events-none" do
-                        Icon(
-                          icon: "newsletters",
-                          css_class: "fill-400 transition group-focus-within/address:fill-blue-600"
-                        )
+                        Icon("newsletters", css: "fill-400 transition group-focus-within/address:fill-blue-600")
                       end
                       input(
                         data: {
@@ -131,10 +125,7 @@ module Views
                       label class: "text-input group/tag max-w-[140px]" do
                         select class: "truncate", name: "newsletter_tag", data: { newsletters_target: "addressTag" }
                         div class: "pr-2 absolute inset-y-0 right-0 flex items-center justify-center shrink-0 pointer-events-none" do
-                          Icon(
-                            icon: "caret",
-                            css_class: "fill-400 transition group-focus-within/tag:fill-blue-600"
-                          )
+                          Icon("caret", css: "fill-400 transition group-focus-within/tag:fill-blue-600")
                         end
                       end
                     end
@@ -194,10 +185,7 @@ module Views
                   span(class: "hidden group-data-[copy-copied-value=false]:block") { "Copy" }
                   span(class: "hidden group-data-[copy-copied-value=true]:block") { "Copied" }
                 end
-                Icon(
-                  icon: "copy",
-                  css_class: "fill-blue-600 transition group-data-[copy-copied-value=true]:fill-blue-700"
-                )
+                Icon("copy", css: "fill-blue-600 transition group-data-[copy-copied-value=true]:fill-blue-700")
               end
             end
           end

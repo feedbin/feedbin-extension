@@ -9,7 +9,7 @@ module Views
         },
         class: "message hidden group-data-[app-authorized-value=true]:flex"
       ) do
-        Icon(icon: "logo", css_class: "shrink-0")
+        Icon("logo", css: "shrink-0")
         p do
           plain "Signed in as "
           strong class: "text-700 font-medium", data: { settings_target: "signedInAs" }
@@ -67,7 +67,7 @@ module Views
             div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
               div class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex" do
                 div class: "flex items-center justify-center py-6 pb-8" do
-                  Icon(icon: "logo-full", css_class: "shrink-0")
+                  Icon("logo-full", css: "shrink-0")
                 end
 
                 Error(content: "", data_authentication_target: "error")

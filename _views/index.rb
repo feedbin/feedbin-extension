@@ -43,9 +43,8 @@ module Views
               render Settings.new
             end
           end
-
           svg class: "hidden" do
-            render IconSymbols.new(site.data["icons"]) if site.data["icons"]
+            render IconSymbols.new(icons)
           end
         end
       end
@@ -54,15 +53,14 @@ module Views
 
   # Phlex::SVG component for rendering icon symbol definitions
   class IconSymbols < Phlex::SVG
-    def initialize(icons_data)
-      @icons_data = icons_data
+    def initialize(icons)
+      @icons = icons
     end
 
     def view_template
-      @icons_data.each do |icon_name, icon_data|
-        whitespace
-        symbol id: icon_name, viewBox: "0 0 #{icon_data['width']} #{icon_data['height']}" do
-          raw Phlex::SGML::SafeValue.new(icon_data['markup'])
+      @icons.each do |_, icon|
+        symbol id: icon.name, viewBox: "0 0 #{icon.width} #{icon.height}" do
+          raw safe(icon.markup)
         end
       end
     end

@@ -131,10 +131,7 @@ module Views
               name: "tags[]"
             )
             div class: "grow truncate", data: { template: "label" }
-            Icon(
-              icon: "tag",
-              css_class: "shrink-0 fill-400 group-has-checked/checkbutton:fill-700"
-            )
+            Icon("tag", css: "shrink-0 fill-400 group-has-checked/checkbutton:fill-700")
           end
         end
       end

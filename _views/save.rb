@@ -21,19 +21,19 @@ module Views
         ) do
           # Success message
           div class: "message flex hidden group-data-[save-state-value=saved]:flex" do
-            render Shared::MessageIcon.new(type: "success")
+            MessageIcon(type: "success")
             p { "Page Saved" }
           end
 
           # Error message
           div class: "message flex hidden group-data-[save-state-value=error]:flex" do
-            render Shared::MessageIcon.new(type: "error")
+            MessageIcon(type: "error")
             p data: { save_target: "error" }
           end
 
           # Load error message
           div class: "message flex hidden group-data-[save-state-value=loadError]:flex" do
-            render Shared::MessageIcon.new(type: "neutral", icon: "save")
+            MessageIcon(type: "neutral", icon: "save")
             p { "Page cannot be saved" }
           end
 

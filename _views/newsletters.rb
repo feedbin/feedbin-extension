@@ -15,7 +15,7 @@ module Views
       ) do
         # Loading state
         div class: "message hidden group-data-[newsletters-state-value=loading]:flex" do
-          render Shared::Spinner.new
+          Spinner()
           p { "Loading…" }
         end
 
@@ -33,12 +33,12 @@ module Views
               h1(class: "heading hidden group-data-[newsletters-state-value=initial]:block group-data-[newsletters-state-value=success]:block") { "New Address" }
 
               # Error message
-              render Shared::Error.new(content: "", data_newsletters_target: "error")
+              Error(content: "", data_newsletters_target: "error")
 
               # Success message
               div class: "py-12 hidden group-data-[newsletters-state-value=success]:block" do
                 div class: "message" do
-                  render Shared::MessageIcon.new(type: "success")
+                  MessageIcon(type: "success")
                   p { "Address Created" }
 
                   button(
@@ -52,7 +52,7 @@ module Views
                     }
                   ) do
                     div class: "flex gap-2 items-center" do
-                      render Shared::Icon.new(
+                      Icon(
                         icon: "copy",
                         css_class: "fill-400 transition group-data-[copy-copied-value=true]:fill-blue-600"
                       )
@@ -84,7 +84,7 @@ module Views
                   div do
                     label class: "text-input group/address" do
                       div class: "pl-2 flex items-center justify-center shrink-0 pointer-events-none" do
-                        render Shared::Icon.new(
+                        Icon(
                           icon: "newsletters",
                           css_class: "fill-400 transition group-focus-within/address:fill-blue-600"
                         )
@@ -131,7 +131,7 @@ module Views
                       label class: "text-input group/tag max-w-[140px]" do
                         select class: "truncate", name: "newsletter_tag", data: { newsletters_target: "addressTag" }
                         div class: "pr-2 absolute inset-y-0 right-0 flex items-center justify-center shrink-0 pointer-events-none" do
-                          render Shared::Icon.new(
+                          Icon(
                             icon: "caret",
                             css_class: "fill-400 transition group-focus-within/tag:fill-blue-600"
                           )
@@ -194,7 +194,7 @@ module Views
                   span(class: "hidden group-data-[copy-copied-value=false]:block") { "Copy" }
                   span(class: "hidden group-data-[copy-copied-value=true]:block") { "Copied" }
                 end
-                render Shared::Icon.new(
+                Icon(
                   icon: "copy",
                   css_class: "fill-blue-600 transition group-data-[copy-copied-value=true]:fill-blue-700"
                 )

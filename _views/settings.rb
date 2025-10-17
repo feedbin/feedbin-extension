@@ -9,7 +9,7 @@ module Views
         },
         class: "message hidden group-data-[app-authorized-value=true]:flex"
       ) do
-        render Shared::Icon.new(icon: "logo", css_class: "shrink-0")
+        Icon(icon: "logo", css_class: "shrink-0")
         p do
           plain "Signed in as "
           strong class: "text-700 font-medium", data: { settings_target: "signedInAs" }
@@ -67,10 +67,10 @@ module Views
             div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
               div class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex" do
                 div class: "flex items-center justify-center py-6 pb-8" do
-                  render Shared::Icon.new(icon: "logo-full", css_class: "shrink-0")
+                  Icon(icon: "logo-full", css_class: "shrink-0")
                 end
 
-                render Shared::Error.new(content: "", data_authentication_target: "error")
+                Error(content: "", data_authentication_target: "error")
 
                 div class: "flex flex-col gap-2" do
                   label(class: "block", for: "email_input") { "Email" }

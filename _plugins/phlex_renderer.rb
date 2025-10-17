@@ -1,6 +1,12 @@
 require "phlex"
 require "uri"
 
+module Views
+  module Shared
+    extend Phlex::Kit
+  end
+end
+
 module Jekyll
   # Thread-local storage for Jekyll context
   class << self
@@ -24,6 +30,12 @@ module Jekyll
   # Base class for all Phlex components
   # Provides access to Jekyll site and page objects via thread-local storage
   class Component < Phlex::HTML
+    def self.inherited(subclass)
+      super
+      # Include Views::Shared kit when a subclass is created
+      subclass.include(Views::Shared) if defined?(Views::Shared)
+    end
+
     def initialize(**kwargs)
       super()
     end

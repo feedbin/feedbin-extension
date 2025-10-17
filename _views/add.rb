@@ -12,19 +12,19 @@ module Views
       ) do
         # Initial loading state
         div class: "message hidden group-data-[add-state-value=initial]:flex", data: { action: "click->add#search" } do
-          render Shared::Spinner.new
+          Spinner()
           p { "Searching for Feeds…" }
         end
 
         # Error state
         div class: "message hidden group-data-[add-state-value=error]:flex" do
-          render Shared::MessageIcon.new(type: "neutral", icon: "search")
+          MessageIcon(type: "neutral", icon: "search")
           p data: { add_target: "error" }, class: "text-center"
         end
 
         # Success state
         div class: "message flex hidden group-data-[add-state-value=success]:flex" do
-          render Shared::MessageIcon.new(type: "success")
+          MessageIcon(type: "success")
           p { "Subscribed" }
         end
 
@@ -99,7 +99,7 @@ module Views
             input type: "hidden", data: { template: "url" }
             label class: "flex h-[40px] items-center pr-2" do
               input type: "hidden", value: "0", data: { template: "checkbox_dummy" }
-              render Shared::Checkbox.new(
+              Checkbox(
                 data_template: "checkbox",
                 data_add_target: "checkbox",
                 data_action: "change->add#countSelected",
@@ -109,7 +109,7 @@ module Views
             div class: "min-w-0 grow" do
               label class: "text-input" do
                 div class: "pl-2 flex items-center justify-center shrink-0 pointer-events-none" do
-                  render Shared::Favicon.new(data_add_target: "favicon")
+                  Favicon(data_add_target: "favicon")
                 end
                 input type: "text", data: { template: "feed_input" }
               end
@@ -126,12 +126,12 @@ module Views
           label(
             class: "group/checkbutton flex min-w-0 cursor-pointer items-center gap-3 rounded border dark:border-200 p-3 transition -outline-offset-1 outline-3 outline-transparent has-checked:border-600 has-checked:outline-600"
           ) do
-            render Shared::Checkbox.new(
+            Checkbox(
               data_template: "checkbox",
               name: "tags[]"
             )
             div class: "grow truncate", data: { template: "label" }
-            render Shared::Icon.new(
+            Icon(
               icon: "tag",
               css_class: "shrink-0 fill-400 group-has-checked/checkbutton:fill-700"
             )

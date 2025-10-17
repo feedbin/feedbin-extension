@@ -25,7 +25,7 @@ module Views
 
         body class: "group flex flex-col bg-0 cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[456px] h-[500px] [text-size-adjust:none] is-native:text-base! browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen" do
           div data: {controller: "tabs", action: "app:authorized@window->tabs#selectTab app:notAuthorized@window->tabs#selectTab"}, class: "container group" do
-            render Shared::Nav.new
+            Nav()
 
             div class: "hidden container group-has-[[value=tab-add]:checked]:flex" do
               render Add.new

@@ -18,7 +18,7 @@ module Views
       ) do
         div class: "hidden gap-2 group-data-[page-info-has-data-value=true]:flex" do
           div class: "relative top-[-1px] browser-ios:top-[1px]" do
-            render Shared::Favicon.new(
+            Favicon(
               data_page_info_target: "favicon"
             )
           end

@@ -8,7 +8,7 @@ module Views
 
       def view_template
         div class: "w-[32px] h-[32px] flex items-center justify-center relative" do
-          render Icon.new(icon: icon_name, css_class: icon_class)
+          Icon(icon: icon_name, css_class: icon_class)
 
           div class: "z-1 shrink-0 w-[32px] h-[32px] rounded-full absolute #{bg_class}"
 

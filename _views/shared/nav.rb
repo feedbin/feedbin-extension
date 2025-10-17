@@ -19,7 +19,7 @@ module Views
         "
         li data: { tabs_target: "tabContainer" }, class: [(css), ("is-native:hidden basis-auto!" if tab["id"] == "tab-settings")] do
           label class: "text-500 fill-500 flex grow cursor-pointer items-center justify-center gap-2 rounded-[4px] px-3 py-2 whitespace-nowrap outline-2 outline-offset-1 outline-transparent transition has-checked:text-700 has-checked:fill-700 has-checked:bg-0 has-checked:shadow-sm has-focus-visible:outline-blue-400 pointer-fine:hover:text-700 pointer-fine:hover:fill-700" do
-            render Icon.new(icon: tab["icon"])
+            Icon(icon: tab["icon"])
             plain " #{tab['title']}"
 
             input name: "tab", type: "radio", class: "sr-only", value: tab["id"], data: { tabs_target: "tab", action: "change->tabs#separator change->tabs#save" }

@@ -17,7 +17,7 @@ module Views
           @attributes
         )
         div **container do
-          render Icon.new(
+          Icon(
             icon: "feed",
             css_class: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block"
           )

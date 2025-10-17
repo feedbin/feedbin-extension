@@ -7,7 +7,7 @@ module Views
       end
 
       def view_template
-        div(class: "w-[32px] h-[32px] flex items-center justify-center relative") do
+        div class: "w-[32px] h-[32px] flex items-center justify-center relative" do
           icon_name = case @type
                      when "success"
                        "check"
@@ -36,11 +36,11 @@ module Views
                       "bg-200"
                     end
 
-          div(class: "z-1 shrink-0 w-[32px] h-[32px] rounded-full absolute #{bg_class}")
+          div class: "z-1 shrink-0 w-[32px] h-[32px] rounded-full absolute #{bg_class}"
 
           if @type == "success" || @type == "error"
             animate_bg_class = @type == "success" ? "bg-green-600/20" : "bg-red-600/20"
-            div(class: "z-0 shrink-0 w-[32px] h-[32px] rounded-full absolute animate-grow-fade #{animate_bg_class}")
+            div class: "z-0 shrink-0 w-[32px] h-[32px] rounded-full absolute animate-grow-fade #{animate_bg_class}"
           end
         end
       end

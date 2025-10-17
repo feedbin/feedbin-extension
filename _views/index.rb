@@ -11,7 +11,7 @@ module Views
         app_footer_border_value: "false",
         action: "helpers:checkAuth@window->app#authorize visual-viewport:change@window->app#delayedCheckScroll"
       }
-      html(class: "group", data: html_data) do
+      html class: "group", data: html_data do
         head do
           meta charset: "UTF-8"
           meta name: "viewport", content: "width=device-width, initial-scale=1.0"
@@ -27,24 +27,24 @@ module Views
           div data: {controller: "tabs", action: "app:authorized@window->tabs#selectTab app:notAuthorized@window->tabs#selectTab"}, class: "container group" do
             render Shared::Nav.new
 
-            div(class: "hidden container group-has-[[value=tab-add]:checked]:flex") do
+            div class: "hidden container group-has-[[value=tab-add]:checked]:flex" do
               render Add.new
             end
 
-            div(class: "hidden container group-has-[[value=tab-save]:checked]:flex") do
+            div class: "hidden container group-has-[[value=tab-save]:checked]:flex" do
               render Save.new
             end
 
-            div(class: "hidden container group-has-[[value=tab-newsletters]:checked]:flex") do
+            div class: "hidden container group-has-[[value=tab-newsletters]:checked]:flex" do
               render Newsletters.new
             end
 
-            div(class: "hidden container group-has-[[value=tab-settings]:checked]:flex") do
+            div class: "hidden container group-has-[[value=tab-settings]:checked]:flex" do
               render Settings.new
             end
           end
 
-          svg(class: "hidden") do
+          svg class: "hidden" do
             render IconSymbols.new(site.data["icons"]) if site.data["icons"]
           end
         end
@@ -61,7 +61,7 @@ module Views
     def view_template
       @icons_data.each do |icon_name, icon_data|
         whitespace
-        symbol(id: icon_name, viewBox: "0 0 #{icon_data['width']} #{icon_data['height']}") do
+        symbol id: icon_name, viewBox: "0 0 #{icon_data['width']} #{icon_data['height']}" do
           raw Phlex::SGML::SafeValue.new(icon_data['markup'])
         end
       end

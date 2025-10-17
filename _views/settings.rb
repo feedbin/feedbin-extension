@@ -12,10 +12,7 @@ module Views
         render Shared::Icon.new(icon: "logo", css_class: "shrink-0")
         p do
           plain "Signed in as "
-          strong(
-            class: "text-700 font-medium",
-            data: { settings_target: "signedInAs" }
-          )
+          strong class: "text-700 font-medium", data: { settings_target: "signedInAs" }
         end
 
         button(
@@ -37,10 +34,10 @@ module Views
         }
       ) do
         # iOS message
-        div(class: "message hidden browser-ios:flex") do
+        div class: "message hidden browser-ios:flex" do
           p(class: "hidden group-data-[authentication-ios-auth-value=true]:block") { "Signing in…" }
-          p(class: "hidden group-data-[authentication-ios-auth-value=false]:block") do
-            a(href: "feedbin://", class: "p-4 block") do
+          p class: "hidden group-data-[authentication-ios-auth-value=false]:block" do
+            a href: "feedbin://", class: "p-4 block" do
               plain "Sign in with "
               span(class: "text-blue-600") { "Feedbin" }
               plain " to continue"
@@ -68,16 +65,16 @@ module Views
             class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
           ) do
             div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
-              div(class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex") do
-                div(class: "flex items-center justify-center py-6 pb-8") do
+              div class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex" do
+                div class: "flex items-center justify-center py-6 pb-8" do
                   render Shared::Icon.new(icon: "logo-full", css_class: "shrink-0")
                 end
 
                 render Shared::Error.new(content: "", data_authentication_target: "error")
 
-                div(class: "flex flex-col gap-2") do
+                div class: "flex flex-col gap-2" do
                   label(class: "block", for: "email_input") { "Email" }
-                  label(class: "text-input mb-4") do
+                  label class: "text-input mb-4" do
                     input(
                       id: "email_input",
                       type: "text",
@@ -91,11 +88,11 @@ module Views
                     )
                   end
 
-                  div(class: "flex items-baseline justify-between") do
+                  div class: "flex items-baseline justify-between" do
                     label(class: "block", for: "password_input") { "Password" }
                     a(class: "text-500 pointer-fine:hover:underline", href: build_url("password_reset")) { "Forgot your password?" }
                   end
-                  label(class: "text-input") do
+                  label class: "text-input" do
                     input(
                       id: "password_input",
                       type: "password",
@@ -110,7 +107,7 @@ module Views
           end
 
           # Button footer
-          div(class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent") do
+          div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
             button(
               data: { authentication_target: "submitButton" },
               type: "submit",

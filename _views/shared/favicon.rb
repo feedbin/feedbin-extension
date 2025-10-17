@@ -18,10 +18,7 @@ module Views
             icon: "feed",
             css_class: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block"
           )
-          img(
-            data: { favicon_target: "favicon" },
-            class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
-          )
+          img data: { favicon_target: "favicon" }, class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
         end
       end
     end

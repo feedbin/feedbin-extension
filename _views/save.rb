@@ -20,25 +20,25 @@ module Views
           novalidate: true
         ) do
           # Success message
-          div(class: "message flex hidden group-data-[save-state-value=saved]:flex") do
+          div class: "message flex hidden group-data-[save-state-value=saved]:flex" do
             render Shared::MessageIcon.new(type: "success")
             p { "Page Saved" }
           end
 
           # Error message
-          div(class: "message flex hidden group-data-[save-state-value=error]:flex") do
+          div class: "message flex hidden group-data-[save-state-value=error]:flex" do
             render Shared::MessageIcon.new(type: "error")
-            p(data: { save_target: "error" })
+            p data: { save_target: "error" }
           end
 
           # Load error message
-          div(class: "message flex hidden group-data-[save-state-value=loadError]:flex") do
+          div class: "message flex hidden group-data-[save-state-value=loadError]:flex" do
             render Shared::MessageIcon.new(type: "neutral", icon: "save")
             p { "Page cannot be saved" }
           end
 
           # Main form container
-          div(class: "hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex") do
+          div class: "hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex" do
             # Scroll container with content
             div(
               data: {
@@ -53,7 +53,7 @@ module Views
             end
 
             # Button footer
-            div(class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent") do
+            div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
               button(
                 data: { save_target: "submitButton" },
                 type: "submit",

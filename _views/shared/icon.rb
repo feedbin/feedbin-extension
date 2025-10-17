@@ -10,10 +10,7 @@ module Views
         icon_data = data["icons"][@icon_name]
         return unless icon_data
 
-        svg(
-          style: "width: #{icon_data['width']}px; height: #{icon_data['height']}px;",
-          class: @css_class
-        ) do
+        svg style: "width: #{icon_data['width']}px; height: #{icon_data['height']}px;", class: @css_class do
           render IconUse.new(@icon_name)
         end
       end
@@ -27,7 +24,7 @@ module Views
 
       def view_template
         whitespace
-        use(href: "##{@icon_name}")
+        use href: "##{@icon_name}"
       end
     end
   end

@@ -15,7 +15,7 @@ module Views
           },
           class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
         ) do
-          div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
+          div class: "px-4 py-4", data: { app_target: "contentContainer" } do
             if @block
               @block.call
             else
@@ -24,7 +24,7 @@ module Views
           end
         end
 
-        div(class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent") do
+        div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
           plain @button if @button
         end
 

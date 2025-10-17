@@ -51,6 +51,15 @@ module Jekyll
     def environment
       ENV["JEKYLL_ENV"] || "development"
     end
+
+    # Build a full URL from a key in site.config["urls"]
+    # @param url_key [String] The key in the urls hash
+    # @return [String] The full URL with api_host as the base
+    def build_url(url_key)
+      base = site.config["api_host"] || ""
+      path = site.config.dig("urls", url_key) || ""
+      "#{base}#{path}"
+    end
   end
 
   module PhlexRenderer

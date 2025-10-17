@@ -6,7 +6,7 @@ module Views
         data: {
           controller: "add",
           add_state_value: "initial",
-          add_search_url_value: site.config["urls"]["find"],
+          add_search_url_value: build_url("find"),
           action: "app:pageInfoLoaded@window->add#search app:pageInfoError@window->add#noFeeds"
         }
       ) do
@@ -31,7 +31,7 @@ module Views
         # Subscribe form
         form(
           novalidate: true,
-          action: site.config["urls"]["subscribe"],
+          action: build_url("subscribe"),
           method: "POST",
           class: "hidden container group-data-[add-state-value=hasResults]:flex",
           data: {

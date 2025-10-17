@@ -8,8 +8,8 @@ module Views
           newsletters_state_value: "initial",
           newsletters_edited_value: "false",
           newsletters_address_valid_value: "true",
-          newsletters_new_address_url_value: site.config["urls"]["new_address"],
-          newsletters_create_address_url_value: site.config["urls"]["create_address"],
+          newsletters_new_address_url_value: build_url("new_address"),
+          newsletters_create_address_url_value: build_url("create_address"),
           action: "app:authorized@window->newsletters#new"
         }
       ) do
@@ -74,7 +74,7 @@ module Views
                     newsletters_target: "form",
                     action: "submit->newsletters#submit:prevent submit->newsletters#disable:prevent "
                   },
-                  action: site.config["urls"]["create_address"],
+                  action: build_url("create_address"),
                   method: "POST",
                   class: "flex flex-col gap-4",
                   novalidate: true
@@ -154,7 +154,7 @@ module Views
               div(class: "flex-col gap-4 hidden group-data-[newsletters-state-value=initial]:flex group-data-[newsletters-state-value=success]:flex") do
                 div(class: "flex gap-2 justify-between items-baseline") do
                   h1(class: "heading") { "Addresses" }
-                  a(class: "text-700", href: site.config["urls"]["newsletter_settings"]) { "Manage ↗" }
+                  a(class: "text-700", href: build_url("newsletter_settings")) { "Manage ↗" }
                 end
                 ul(data: { newsletters_target: "addressList" })
               end

@@ -51,7 +51,7 @@ module Views
         # Sign in form
         form(
           novalidate: true,
-          action: site.config["urls"]["authentication"],
+          action: build_url("authentication"),
           method: "POST",
           class: "container group is-native:hidden",
           data: {
@@ -93,7 +93,7 @@ module Views
 
                   div(class: "flex items-baseline justify-between") do
                     label(class: "block", for: "password_input") { "Password" }
-                    a(class: "text-500 pointer-fine:hover:underline", href: site.config["urls"]["password_reset"]) { "Forgot your password?" }
+                    a(class: "text-500 pointer-fine:hover:underline", href: build_url("password_reset")) { "Forgot your password?" }
                   end
                   label(class: "text-input") do
                     input(

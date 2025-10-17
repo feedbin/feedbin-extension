@@ -15,7 +15,7 @@ module Views
             action: "submit->save#submit:prevent",
             save_target: "form"
           },
-          action: site.config["urls"]["save"],
+          action: build_url("save"),
           method: "POST",
           novalidate: true
         ) do

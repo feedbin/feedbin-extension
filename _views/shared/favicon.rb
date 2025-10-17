@@ -6,14 +6,17 @@ module Views
       end
 
       def view_template
-        div(
-          data: {
-            controller: "favicon",
-            favicon_has_favicon_value: "false"
+        container = mix(
+          {
+            data: {
+              controller: "favicon",
+              favicon_has_favicon_value: "false"
+            },
+            class: "group flex shrink-0 items-center justify-center h-[20px] w-[20px] rounded-xs dark:data-[favicon-has-favicon-value=true]:bg-white",
           },
-          class: "group flex shrink-0 items-center justify-center h-[20px] w-[20px] rounded-xs dark:data-[favicon-has-favicon-value=true]:bg-white",
-          **@attributes
-        ) do
+          @attributes
+        )
+        div **container do
           render Icon.new(
             icon: "feed",
             css_class: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block"

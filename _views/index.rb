@@ -44,7 +44,7 @@ module Views
             end
           end
           svg class: "hidden" do
-            render IconSymbols.new(icons)
+            render IconSymbols.new(site.config["icons"])
           end
         end
       end

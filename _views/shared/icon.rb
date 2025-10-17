@@ -7,7 +7,7 @@ module Views
       end
 
       def view_template
-        icon = icons[@name.to_sym]
+        icon = site.config["icons"][@name.to_sym]
         return unless icon
 
         svg style: "width: #{icon.width}px; height: #{icon.height}px;", class: @css do

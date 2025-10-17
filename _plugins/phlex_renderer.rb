@@ -27,14 +27,6 @@ module Jekyll
     def current_page=(page)
       Thread.current[:jekyll_page] = page
     end
-
-    def current_icons
-      Thread.current[:jekyll_icons]
-    end
-
-    def current_icons=(icons)
-      Thread.current[:jekyll_icons] = icons
-    end
   end
 
   # Base class for all Phlex components
@@ -58,10 +50,6 @@ module Jekyll
     # Access to Jekyll page object
     def page
       Jekyll.current_page
-    end
-
-    def icons
-      Jekyll.current_icons
     end
 
     # Access to Jekyll configuration
@@ -95,11 +83,10 @@ module Jekyll
     # @param site [Jekyll::Site] The Jekyll site object
     # @param page [Jekyll::Page] The Jekyll page object
     # @return [String] The rendered HTML
-    def self.render(view_class, site:, page:, icons:)
+    def self.render(view_class, site:, page:)
       # Set thread-local Jekyll context
       Jekyll.current_site = site
       Jekyll.current_page = page
-      Jekyll.current_icons = icons
 
       # Render the component
       view_class.new.call
@@ -153,34 +140,13 @@ module Jekyll
 
     def render(context)
       site = context.registers[:site]
-      icons = build_icons(site.source)
       page = context.registers[:page]
 
       begin
         view_class = PhlexRenderer.load_view(@view_name)
-        PhlexRenderer.render(view_class, site: site, page: page, icons: icons)
+        PhlexRenderer.render(view_class, site: site, page: page)
       rescue => e
         raise Liquid::SyntaxError, "Error rendering Phlex view '#{@view_name}': #{e.message}"
-      end
-    end
-
-    def build_icons(site_source)
-      svg_dir = File.join(site_source, "_svg")
-
-      Dir.glob(File.join(svg_dir, "*.svg")).each_with_object({}) do |path, hash|
-        name    = File.basename(path, ".svg")
-        doc     = Nokogiri::XML(File.read(path))
-        svg     = doc.at_xpath("//*[local-name()='svg']")
-        viewbox = svg["viewBox"]
-
-        width, height = if viewbox
-          parts = viewbox.split.map(&:to_f)
-          parts.last(2).map {_1.to_f}
-        end
-
-        markup = svg.children.to_xml
-
-        hash[name.to_sym] = OpenStruct.new(name:, width:, height:, markup:)
       end
     end
   end

@@ -1,14 +1,40 @@
 require "phlex"
 
 module Jekyll
-  # Base class for all Phlex components
-  # Provides access to Jekyll site and page objects
-  class Component < Phlex::HTML
-    attr_reader :site, :page
+  # Thread-local storage for Jekyll context
+  class << self
+    def current_site
+      Thread.current[:jekyll_site]
+    end
 
-    def initialize(site:, page:)
-      @site = site
-      @page = page
+    def current_site=(site)
+      Thread.current[:jekyll_site] = site
+    end
+
+    def current_page
+      Thread.current[:jekyll_page]
+    end
+
+    def current_page=(page)
+      Thread.current[:jekyll_page] = page
+    end
+  end
+
+  # Base class for all Phlex components
+  # Provides access to Jekyll site and page objects via thread-local storage
+  class Component < Phlex::HTML
+    def initialize(**kwargs)
+      super()
+    end
+
+    # Access to Jekyll site object
+    def site
+      Jekyll.current_site
+    end
+
+    # Access to Jekyll page object
+    def page
+      Jekyll.current_page
     end
 
     # Access to Jekyll configuration
@@ -34,7 +60,23 @@ module Jekyll
     # @param page [Jekyll::Page] The Jekyll page object
     # @return [String] The rendered HTML
     def self.render(view_class, site:, page:)
-      view_class.new(site: site, page: page).call
+      # Set thread-local Jekyll context
+      Jekyll.current_site = site
+      Jekyll.current_page = page
+
+      # Render the component
+      view_class.new.call
+    end
+
+    # Loads all Phlex views from the _views directory
+    def self.load_all_views
+      views_dir = File.join(Dir.pwd, "_views")
+      return unless Dir.exist?(views_dir)
+
+      # Load all .rb files in _views directory (including subdirectories)
+      Dir.glob(File.join(views_dir, "**", "*.rb")).sort.each do |view_path|
+        load view_path
+      end
     end
 
     # Loads a Phlex view class from the _views directory
@@ -87,3 +129,8 @@ module Jekyll
 end
 
 Liquid::Template.register_tag('phlex', Jekyll::PhlexTag)
+
+# Load all views at startup
+Jekyll::Hooks.register :site, :after_init do |site|
+  Jekyll::PhlexRenderer.load_all_views
+end

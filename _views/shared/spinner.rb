@@ -1,0 +1,11 @@
+module Views
+  module Shared
+    class Spinner < Jekyll::Component
+      def view_template
+        div(
+          class: "h-[32px] w-[32px] relative block shrink-0 before:absolute before:inset-0 before:rounded-full before:block before:content-[''] before:h-[32px] before:w-[32px] before:border-[1.5px] before:border-300 after:absolute  after:inset-0  after:rounded-full  after:block  after:content-['']  before:h-[32px] before:w-[32px] after:border-[1.5px]  after:border-transparent after:border-l-400 after:transform after:translate-z-0 after:animate-spin"
+        )
+      end
+    end
+  end
+end

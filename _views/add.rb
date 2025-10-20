@@ -3,15 +3,25 @@ module Views
     def view_template
       div(
         class: "container group",
-        data: {
-          controller: "add",
-          add_state_value: "initial",
-          add_search_url_value: build_url("find"),
-          action: "app:pageInfoLoaded@window->add#search app:pageInfoError@window->add#noFeeds"
-        }
+        data: stimulus(
+          controller: :add,
+          actions: {
+            "app:pageInfoLoaded@window" => :search,
+            "app:pageInfoError@window" => :no_feeds
+          },
+          values: {
+            state: "initial",
+            search_url: build_url("find")
+          }
+        )
       ) do
         # Initial loading state
-        div class: "message hidden group-data-[add-state-value=initial]:flex", data: { action: "click->add#search" } do
+        div class: "message hidden group-data-[add-state-value=initial]:flex", data: stimulus_item(
+          actions: {
+            "click" => :search
+          },
+          for: :add
+        ) do
           Spinner()
           p { "Searching for Feeds…" }
         end
@@ -19,7 +29,7 @@ module Views
         # Error state
         div class: "message hidden group-data-[add-state-value=error]:flex" do
           MessageIcon(type: "neutral", icon: "search")
-          p data: { add_target: "error" }, class: "text-center"
+          p data: stimulus_item(target: :error, for: :add), class: "text-center"
         end
 
         # Success state
@@ -34,27 +44,33 @@ module Views
           action: build_url("subscribe"),
           method: "POST",
           class: "hidden container group-data-[add-state-value=hasResults]:flex",
-          data: {
-            add_target: "subscribeForm",
-            action: "submit->add#subscribe:prevent"
-          }
+          data: stimulus_item(
+            target: :subscribe_form,
+            actions: {
+              "submit" => :"subscribe:prevent"
+            },
+            for: :add
+          )
         ) do
           # Scroll container with content
           div(
-            data: {
-              app_target: "scrollContainer",
-              action: "scroll->app#checkScroll"
-            },
+            data: stimulus_item(
+              target: :scroll_container,
+              actions: {
+                "scroll" => :check_scroll
+              },
+              for: :app
+            ),
             class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
           ) do
-            div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
+            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app)) do
               div class: "flex flex-col gap-4" do
                 h1 class: "heading" do
                   plain "Feed"
                   span(class: "group-data-[add-results-count-value=1]:hidden") { "s" }
                 end
 
-                div class: "flex flex-col gap-4", data: { add_target: "feedResults" }
+                div class: "flex flex-col gap-4", data: stimulus_item(target: :feed_results, for: :add)
 
                 h1(class: "heading") { "Tags" }
 
@@ -67,7 +83,7 @@ module Views
                   )
                 end
                 div(
-                  data: { add_target: "tagResults" },
+                  data: stimulus_item(target: :tag_results, for: :add),
                   class: "flex flex-col gap-2 empty:hidden"
                 )
               end
@@ -77,7 +93,7 @@ module Views
           # Button footer
           div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
             button(
-              data: { add_target: "submitButton" },
+              data: stimulus_item(target: :submit_button, for: :add),
               type: "submit",
               class: "primary-button"
             ) do
@@ -88,28 +104,37 @@ module Views
 
           # Footer spacer
           div(
-            data: { app_target: "footerSpacer" },
+            data: stimulus_item(target: :footer_spacer, for: :app),
             class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
           )
         end
 
         # Feed template
-        template data: { add_target: "feedTemplate" } do
+        template data: stimulus_item(target: :feed_template, for: :add) do
           div class: "flex" do
             input type: "hidden", data: { template: "url" }
             label class: "flex h-[40px] items-center pr-2" do
               input type: "hidden", value: "0", data: { template: "checkbox_dummy" }
               Checkbox(
-                data_template: "checkbox",
-                data_add_target: "checkbox",
-                data_action: "change->add#countSelected",
+                data: stimulus_item(
+                  target: :checkbox,
+                  actions: {
+                    "change" => :count_selected
+                  },
+                  data: {
+                    template: "checkbox"
+                  },
+                  for: :add
+                ),
                 value: "1"
               )
             end
             div class: "min-w-0 grow" do
               label class: "text-input" do
                 div class: "pl-2 flex items-center justify-center shrink-0 pointer-events-none" do
-                  Favicon(data_add_target: "favicon")
+                  Favicon(
+                    data: stimulus_item(target: :favicon, for: :add)
+                  )
                 end
                 input type: "text", data: { template: "feed_input" }
               end
@@ -122,7 +147,7 @@ module Views
         end
 
         # Tag template
-        template data: { add_target: "tagTemplate" } do
+        template data: stimulus_item(target: :tag_template, for: :add) do
           label(
             class: "group/checkbutton flex min-w-0 cursor-pointer items-center gap-3 rounded border dark:border-200 p-3 transition -outline-offset-1 outline-3 outline-transparent has-checked:border-600 has-checked:outline-600"
           ) do

@@ -3,23 +3,28 @@ module Views
     def view_template
       # Signed in state
       div(
-        data: {
-          controller: "settings",
-          action: "helpers:checkAuth@window->settings#userData"
-        },
+        data: stimulus(
+          controller: :settings,
+          actions: {
+            "helpers:checkAuth@window" => :user_data
+          }
+        ),
         class: "message hidden group-data-[app-authorized-value=true]:flex"
       ) do
         Icon("logo", css: "shrink-0")
         p do
           plain "Signed in as "
-          strong class: "text-700 font-medium", data: { settings_target: "signedInAs" }
+          strong class: "text-700 font-medium", data: stimulus_item(target: :signed_in_as, for: :settings)
         end
 
         button(
-          data: {
-            action: "click->settings#signOut:prevent",
-            settings_target: "signOutButton"
-          },
+          data: stimulus_item(
+            target: :sign_out_button,
+            actions: {
+              "click" => :"sign_out:prevent"
+            },
+            for: :settings
+          ),
           class: "cursor-pointer block text-blue-600"
         ) { "Sign Out" }
       end
@@ -27,11 +32,13 @@ module Views
       # Not signed in state
       div(
         class: "group container hidden group-data-[app-authorized-value=false]:flex",
-        data: {
-          controller: "authentication",
-          authentication_loading_value: "false",
-          authentication_ios_auth_value: "true"
-        }
+        data: stimulus(
+          controller: :authentication,
+          values: {
+            loading: "false",
+            ios_auth: "true"
+          }
+        )
       ) do
         # iOS message
         div class: "message hidden browser-ios:flex" do
@@ -51,26 +58,32 @@ module Views
           action: build_url("authentication"),
           method: "POST",
           class: "container group is-native:hidden",
-          data: {
-            action: "submit->authentication#submit:prevent",
-            authentication_target: "form"
-          }
+          data: stimulus_item(
+            target: :form,
+            actions: {
+              "submit" => :"submit:prevent"
+            },
+            for: :authentication
+          )
         ) do
           # Scroll container with content
           div(
-            data: {
-              app_target: "scrollContainer",
-              action: "scroll->app#checkScroll"
-            },
+            data: stimulus_item(
+              target: :scroll_container,
+              actions: {
+                "scroll" => :check_scroll
+              },
+              for: :app
+            ),
             class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
           ) do
-            div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
+            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app)) do
               div class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex" do
                 div class: "flex items-center justify-center py-6 pb-8" do
                   Icon("logo-full", css: "shrink-0")
                 end
 
-                Error(content: "", data_authentication_target: "error")
+                Error(content: "", data: stimulus_item(target: :error, for: :authentication))
 
                 div class: "flex flex-col gap-2" do
                   label(class: "block", for: "email_input") { "Email" }
@@ -79,7 +92,7 @@ module Views
                       id: "email_input",
                       type: "text",
                       name: "email",
-                      data: { authentication_target: "email" },
+                      data: stimulus_item(target: :email, for: :authentication),
                       autocorrect: "off",
                       autocapitalize: "off",
                       spellcheck: "false",
@@ -97,7 +110,7 @@ module Views
                       id: "password_input",
                       type: "password",
                       name: "password",
-                      data: { authentication_target: "password" },
+                      data: stimulus_item(target: :password, for: :authentication),
                       tabindex: "2"
                     )
                   end
@@ -109,7 +122,7 @@ module Views
           # Button footer
           div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
             button(
-              data: { authentication_target: "submitButton" },
+              data: stimulus_item(target: :submit_button, for: :authentication),
               type: "submit",
               class: "primary-button hidden group-data-[app-authorized-value=false]:block"
             ) do
@@ -120,7 +133,7 @@ module Views
 
           # Footer spacer
           div(
-            data: { app_target: "footerSpacer" },
+            data: stimulus_item(target: :footer_spacer, for: :app),
             class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
           )
         end

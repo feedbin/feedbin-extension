@@ -3,18 +3,26 @@ module Views
     def view_template
       div(
         class: "container group",
-        data: {
-          controller: "save",
-          action: "app:pageInfoError@window->save#loadError keydown@document->save#keydown",
-          save_state_value: "initial"
-        }
+        data: stimulus(
+          controller: :save,
+          actions: {
+            "app:pageInfoError@window" => :load_error,
+            "keydown@document" => :keydown
+          },
+          values: {
+            state: "initial"
+          }
+        )
       ) do
         form(
           class: "container",
-          data: {
-            action: "submit->save#submit:prevent",
-            save_target: "form"
-          },
+          data: stimulus_item(
+            target: :form,
+            actions: {
+              "submit" => :"submit:prevent"
+            },
+            for: :save
+          ),
           action: build_url("save"),
           method: "POST",
           novalidate: true
@@ -28,7 +36,7 @@ module Views
           # Error message
           div class: "message flex hidden group-data-[save-state-value=error]:flex" do
             MessageIcon(type: "error")
-            p data: { save_target: "error" }
+            p data: stimulus_item(target: :error, for: :save)
           end
 
           # Load error message
@@ -41,13 +49,16 @@ module Views
           div class: "hidden container group-data-[save-state-value=initial]:flex group-data-[save-state-value=loading]:flex" do
             # Scroll container with content
             div(
-              data: {
-                app_target: "scrollContainer",
-                action: "scroll->app#checkScroll"
-              },
+              data: stimulus_item(
+                target: :scroll_container,
+                actions: {
+                  "scroll" => :check_scroll
+                },
+                for: :app
+              ),
               class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
             ) do
-              div(class: "px-4 py-4", data: { app_target: "contentContainer" }) do
+              div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app)) do
                 render PageInfo.new(format: "save")
               end
             end
@@ -55,7 +66,7 @@ module Views
             # Button footer
             div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
               button(
-                data: { save_target: "submitButton" },
+                data: stimulus_item(target: :submit_button, for: :save),
                 type: "submit",
                 class: "primary-button"
               ) do
@@ -66,7 +77,7 @@ module Views
 
             # Footer spacer
             div(
-              data: { app_target: "footerSpacer" },
+              data: stimulus_item(target: :footer_spacer, for: :app),
               class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
             )
           end

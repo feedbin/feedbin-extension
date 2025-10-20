@@ -8,17 +8,19 @@ module Views
       def view_template
         container = mix(
           {
-            data: {
-              controller: "favicon",
-              favicon_has_favicon_value: "false"
-            },
+            data: stimulus(
+              controller: :favicon,
+              values: {
+                has_favicon: "false"
+              }
+            ),
             class: "group flex shrink-0 items-center justify-center h-[20px] w-[20px] rounded-xs dark:data-[favicon-has-favicon-value=true]:bg-white",
           },
           @attributes
         )
         div **container do
           Icon("feed", css: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block")
-          img data: { favicon_target: "favicon" }, class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
+          img data: stimulus_item(target: :favicon, for: :favicon), class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
         end
       end
     end

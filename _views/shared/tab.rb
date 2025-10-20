@@ -9,13 +9,16 @@ module Views
 
       def view_template
         div(
-          data: {
-            app_target: "scrollContainer",
-            action: "scroll->app#checkScroll"
-          },
+          data: stimulus_item(
+            target: :scroll_container,
+            actions: {
+              "scroll" => :check_scroll
+            },
+            for: :app
+          ),
           class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
         ) do
-          div class: "px-4 py-4", data: { app_target: "contentContainer" } do
+          div class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app) do
             if @block
               @block.call
             else
@@ -29,7 +32,7 @@ module Views
         end
 
         div(
-          data: { app_target: "footerSpacer" },
+          data: stimulus_item(target: :footer_spacer, for: :app),
           class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
         )
       end

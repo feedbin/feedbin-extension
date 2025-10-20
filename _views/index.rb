@@ -1,9 +1,12 @@
 module Views
   class Index < Jekyll::Component
+    STIMULUS_CONTROLLER = :app
+    TABS_CONTROLLER = :tabs
+
     def view_template
       doctype
       html_data = stimulus(
-        controller: :app,
+        controller: STIMULUS_CONTROLLER,
         actions: {
           "helpers:checkAuth@window" => :authorize,
           "visual-viewport:change@window" => :delayed_check_scroll
@@ -32,7 +35,7 @@ module Views
         end
 
         body class: "group flex flex-col bg-0 cursor-default antialiased select-none text-600 text-sm! leading-[1.4] w-[456px] h-[500px] [text-size-adjust:none] is-native:text-base! browser-ios:h-screen browser-ios:w-screen browser-ios:max-h-dvh browser-ios:max-w-screen" do
-          div data: stimulus(controller: :tabs, actions: {
+          div data: stimulus(controller: TABS_CONTROLLER, actions: {
             "app:authorized@window" => :select_tab,
             "app:notAuthorized@window" => :select_tab
           }), class: "container group" do

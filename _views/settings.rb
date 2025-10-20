@@ -1,10 +1,14 @@
 module Views
   class Settings < Jekyll::Component
+    STIMULUS_CONTROLLER = :settings
+    AUTHENTICATION_CONTROLLER = :authentication
+    APP_CONTROLLER = :app
+
     def view_template
       # Signed in state
       div(
         data: stimulus(
-          controller: :settings,
+          controller: STIMULUS_CONTROLLER,
           actions: {
             "helpers:checkAuth@window" => :user_data
           }
@@ -14,7 +18,7 @@ module Views
         Icon("logo", css: "shrink-0")
         p do
           plain "Signed in as "
-          strong class: "text-700 font-medium", data: stimulus_item(target: :signed_in_as, for: :settings)
+          strong class: "text-700 font-medium", data: stimulus_item(target: :signed_in_as, for: STIMULUS_CONTROLLER)
         end
 
         button(
@@ -23,7 +27,7 @@ module Views
             actions: {
               "click" => :"sign_out:prevent"
             },
-            for: :settings
+            for: STIMULUS_CONTROLLER
           ),
           class: "cursor-pointer block text-blue-600"
         ) { "Sign Out" }
@@ -33,7 +37,7 @@ module Views
       div(
         class: "group container hidden group-data-[app-authorized-value=false]:flex",
         data: stimulus(
-          controller: :authentication,
+          controller: AUTHENTICATION_CONTROLLER,
           values: {
             loading: "false",
             ios_auth: "true"
@@ -63,7 +67,7 @@ module Views
             actions: {
               "submit" => :"submit:prevent"
             },
-            for: :authentication
+            for: AUTHENTICATION_CONTROLLER
           )
         ) do
           # Scroll container with content
@@ -71,19 +75,19 @@ module Views
             data: stimulus_item(
               target: :scroll_container,
               actions: {
-                "scroll" => :check_scroll
-              },
-              for: :app
-            ),
+              "scroll" => :check_scroll
+            },
+            for: APP_CONTROLLER
+          ),
             class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
           ) do
-            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app)) do
+            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: APP_CONTROLLER)) do
               div class: "hidden flex-col items-stretch group-data-[app-authorized-value=false]:flex" do
                 div class: "flex items-center justify-center py-6 pb-8" do
                   Icon("logo-full", css: "shrink-0")
                 end
 
-                Error(content: "", data: stimulus_item(target: :error, for: :authentication))
+                Error(content: "", data: stimulus_item(target: :error, for: AUTHENTICATION_CONTROLLER))
 
                 div class: "flex flex-col gap-2" do
                   label(class: "block", for: "email_input") { "Email" }
@@ -92,7 +96,7 @@ module Views
                       id: "email_input",
                       type: "text",
                       name: "email",
-                      data: stimulus_item(target: :email, for: :authentication),
+                      data: stimulus_item(target: :email, for: AUTHENTICATION_CONTROLLER),
                       autocorrect: "off",
                       autocapitalize: "off",
                       spellcheck: "false",
@@ -110,7 +114,7 @@ module Views
                       id: "password_input",
                       type: "password",
                       name: "password",
-                      data: stimulus_item(target: :password, for: :authentication),
+                      data: stimulus_item(target: :password, for: AUTHENTICATION_CONTROLLER),
                       tabindex: "2"
                     )
                   end
@@ -122,7 +126,7 @@ module Views
           # Button footer
           div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
             button(
-              data: stimulus_item(target: :submit_button, for: :authentication),
+              data: stimulus_item(target: :submit_button, for: AUTHENTICATION_CONTROLLER),
               type: "submit",
               class: "primary-button hidden group-data-[app-authorized-value=false]:block"
             ) do
@@ -133,7 +137,7 @@ module Views
 
           # Footer spacer
           div(
-            data: stimulus_item(target: :footer_spacer, for: :app),
+            data: stimulus_item(target: :footer_spacer, for: APP_CONTROLLER),
             class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
           )
         end

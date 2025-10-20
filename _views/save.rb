@@ -1,10 +1,13 @@
 module Views
   class Save < Jekyll::Component
+    STIMULUS_CONTROLLER = :save
+    APP_CONTROLLER = :app
+
     def view_template
       div(
         class: "container group",
         data: stimulus(
-          controller: :save,
+          controller: STIMULUS_CONTROLLER,
           actions: {
             "app:pageInfoError@window" => :load_error,
             "keydown@document" => :keydown
@@ -21,7 +24,7 @@ module Views
             actions: {
               "submit" => :"submit:prevent"
             },
-            for: :save
+            for: STIMULUS_CONTROLLER
           ),
           action: build_url("save"),
           method: "POST",
@@ -36,7 +39,7 @@ module Views
           # Error message
           div class: "message flex hidden group-data-[save-state-value=error]:flex" do
             MessageIcon(type: "error")
-            p data: stimulus_item(target: :error, for: :save)
+            p data: stimulus_item(target: :error, for: STIMULUS_CONTROLLER)
           end
 
           # Load error message
@@ -54,11 +57,11 @@ module Views
                 actions: {
                   "scroll" => :check_scroll
                 },
-                for: :app
+                for: APP_CONTROLLER
               ),
               class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
             ) do
-              div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app)) do
+              div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: APP_CONTROLLER)) do
                 render PageInfo.new(format: "save")
               end
             end
@@ -66,7 +69,7 @@ module Views
             # Button footer
             div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
               button(
-                data: stimulus_item(target: :submit_button, for: :save),
+                data: stimulus_item(target: :submit_button, for: STIMULUS_CONTROLLER),
                 type: "submit",
                 class: "primary-button"
               ) do
@@ -77,7 +80,7 @@ module Views
 
             # Footer spacer
             div(
-              data: stimulus_item(target: :footer_spacer, for: :app),
+              data: stimulus_item(target: :footer_spacer, for: APP_CONTROLLER),
               class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
             )
           end

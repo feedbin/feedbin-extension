@@ -1,6 +1,8 @@
 module Views
   module Shared
     class Tab < Jekyll::Component
+      APP_CONTROLLER = :app
+
       def initialize(content: nil, button: nil, &block)
         @content = content
         @button = button
@@ -14,11 +16,11 @@ module Views
             actions: {
               "scroll" => :check_scroll
             },
-            for: :app
+            for: APP_CONTROLLER
           ),
           class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
         ) do
-          div class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app) do
+          div class: "px-4 py-4", data: stimulus_item(target: :content_container, for: APP_CONTROLLER) do
             if @block
               @block.call
             else
@@ -32,7 +34,7 @@ module Views
         end
 
         div(
-          data: stimulus_item(target: :footer_spacer, for: :app),
+          data: stimulus_item(target: :footer_spacer, for: APP_CONTROLLER),
           class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
         )
       end

@@ -128,58 +128,36 @@ module Jekyll
       end
     end
 
-    # Loads a Phlex view class from the _views directory
-    # @param view_name [String] The name of the view file (without .rb extension)
-    # @return [Class] The Phlex view class
-    def self.load_view(view_name)
-      view_path = File.join(Dir.pwd, "_views", "#{view_name}.rb")
+    def self.root_view_class
+      return ::Views::Index if defined?(::Views::Index)
 
-      unless File.exist?(view_path)
-        raise ArgumentError, "Phlex view not found: #{view_path}"
-      end
-
-      # Load the view file
-      load view_path
-
-      # Convert snake_case to CamelCase for class name
-      class_name = view_name.split('_').map(&:capitalize).join
-
-      # Try to find the class in the Views module first, then in Object
-      if defined?(Views) && Views.const_defined?(class_name)
-        Views.const_get(class_name)
-      elsif Object.const_defined?(class_name)
-        Object.const_get(class_name)
-      else
-        raise NameError, "Could not find Phlex view class: #{class_name} (from #{view_name})"
-      end
+      raise NameError, "Could not find root Phlex view class Views::Index. Ensure _views/index.rb defines it."
     end
   end
 
-  # Liquid tag for rendering Phlex views
-  # Usage: {% phlex view_name %}
-  class PhlexTag < Liquid::Tag
-    def initialize(tag_name, markup, tokens)
-      super
-      @view_name = markup.strip
+  class RenderPhlexDrop < Liquid::Drop
+    def initialize(site:, page:)
+      @site = site
+      @page = page
     end
 
-    def render(context)
-      site = context.registers[:site]
-      page = context.registers[:page]
+    def to_liquid
+      to_s
+    end
 
-      begin
-        view_class = PhlexRenderer.load_view(@view_name)
-        PhlexRenderer.render(view_class, site: site, page: page)
-      rescue => e
-        raise Liquid::SyntaxError, "Error rendering Phlex view '#{@view_name}': #{e.message}"
-      end
+    def to_s
+      PhlexRenderer.render(PhlexRenderer.root_view_class, site: @site, page: @page)
+    rescue => e
+      raise Liquid::SyntaxError, "Error rendering Phlex view: #{e.message}"
     end
   end
 end
 
-Liquid::Template.register_tag('phlex', Jekyll::PhlexTag)
-
 # Load all views at startup
 Jekyll::Hooks.register :site, :after_init do |site|
   Jekyll::PhlexRenderer.load_all_views
+end
+
+Jekyll::Hooks.register :pages, :pre_render do |page, payload|
+  payload["render_phlex"] = Jekyll::RenderPhlexDrop.new(site: page.site, page: page)
 end

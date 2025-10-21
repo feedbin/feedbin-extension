@@ -1,13 +1,11 @@
 module Views
   class Add < Jekyll::Component
-    STIMULUS_CONTROLLER = :add
-    APP_CONTROLLER = :app
 
     def view_template
       div(
         class: "container group",
         data: stimulus(
-          controller: STIMULUS_CONTROLLER,
+          controller: Controllers::ADD,
           actions: {
             "app:pageInfoLoaded@window" => :search,
             "app:pageInfoError@window" => :no_feeds
@@ -23,7 +21,7 @@ module Views
           actions: {
             "click" => :search
           },
-          for: STIMULUS_CONTROLLER
+          for: Controllers::ADD
         ) do
           Spinner()
           p { "Searching for Feeds…" }
@@ -32,7 +30,7 @@ module Views
         # Error state
         div class: "message hidden group-data-[add-state-value=error]:flex" do
           MessageIcon(type: "neutral", icon: "search")
-          p data: stimulus_item(target: :error, for: STIMULUS_CONTROLLER), class: "text-center"
+          p data: stimulus_item(target: :error, for: Controllers::ADD), class: "text-center"
         end
 
         # Success state
@@ -52,7 +50,7 @@ module Views
             actions: {
               "submit" => :"subscribe:prevent"
             },
-            for: STIMULUS_CONTROLLER
+            for: Controllers::ADD
           )
         ) do
           # Scroll container with content
@@ -62,18 +60,18 @@ module Views
               actions: {
                 "scroll" => :check_scroll
               },
-              for: APP_CONTROLLER
+              for: Controllers::APP
             ),
             class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
           ) do
-            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: APP_CONTROLLER)) do
+            div(class: "px-4 py-4", data: stimulus_item(target: :content_container, for: Controllers::APP)) do
               div class: "flex flex-col gap-4" do
                 h1 class: "heading" do
                   plain "Feed"
                   span(class: "group-data-[add-results-count-value=1]:hidden") { "s" }
                 end
 
-                div class: "flex flex-col gap-4", data: stimulus_item(target: :feed_results, for: STIMULUS_CONTROLLER)
+                div class: "flex flex-col gap-4", data: stimulus_item(target: :feed_results, for: Controllers::ADD)
 
                 h1(class: "heading") { "Tags" }
 
@@ -86,7 +84,7 @@ module Views
                   )
                 end
                 div(
-                  data: stimulus_item(target: :tag_results, for: STIMULUS_CONTROLLER),
+                  data: stimulus_item(target: :tag_results, for: Controllers::ADD),
                   class: "flex flex-col gap-2 empty:hidden"
                 )
               end
@@ -96,7 +94,7 @@ module Views
           # Button footer
           div class: "w-full shrink-0 border-t px-4 py-4 empty:hidden transition group-data-[app-footer-border-value=false]:border-transparent" do
             button(
-              data: stimulus_item(target: :submit_button, for: STIMULUS_CONTROLLER),
+              data: stimulus_item(target: :submit_button, for: Controllers::ADD),
               type: "submit",
               class: "primary-button"
             ) do
@@ -107,13 +105,13 @@ module Views
 
           # Footer spacer
           div(
-            data: stimulus_item(target: :footer_spacer, for: APP_CONTROLLER),
+            data: stimulus_item(target: :footer_spacer, for: Controllers::APP),
             class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
           )
         end
 
         # Feed template
-        template data: stimulus_item(target: :feed_template, for: STIMULUS_CONTROLLER) do
+        template data: stimulus_item(target: :feed_template, for: Controllers::ADD) do
           div class: "flex" do
             input type: "hidden", data: { template: "url" }
             label class: "flex h-[40px] items-center pr-2" do
@@ -127,7 +125,7 @@ module Views
                   data: {
                     template: "checkbox"
                   },
-                  for: STIMULUS_CONTROLLER
+                  for: Controllers::ADD
                 ),
                 value: "1"
               )
@@ -136,7 +134,7 @@ module Views
               label class: "text-input" do
                 div class: "pl-2 flex items-center justify-center shrink-0 pointer-events-none" do
                   Favicon(
-                    data: stimulus_item(target: :favicon, for: STIMULUS_CONTROLLER)
+                    data: stimulus_item(target: :favicon, for: Controllers::ADD)
                   )
                 end
                 input type: "text", data: { template: "feed_input" }
@@ -150,7 +148,7 @@ module Views
         end
 
         # Tag template
-        template data: stimulus_item(target: :tag_template, for: STIMULUS_CONTROLLER) do
+        template data: stimulus_item(target: :tag_template, for: Controllers::ADD) do
           label(
             class: "group/checkbutton flex min-w-0 cursor-pointer items-center gap-3 rounded border dark:border-200 p-3 transition -outline-offset-1 outline-3 outline-transparent has-checked:border-600 has-checked:outline-600"
           ) do

@@ -1,7 +1,6 @@
 module Views
   module Shared
     class Favicon < Jekyll::Component
-      STIMULUS_CONTROLLER = :favicon
 
       def initialize(**attributes)
         @attributes = attributes
@@ -11,7 +10,7 @@ module Views
         container = mix(
           {
             data: stimulus(
-              controller: STIMULUS_CONTROLLER,
+              controller: Controllers::FAVICON,
               values: {
                 has_favicon: "false"
               }
@@ -22,7 +21,7 @@ module Views
         )
         div **container do
           Icon("feed", css: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block")
-          img data: stimulus_item(target: :favicon, for: STIMULUS_CONTROLLER), class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
+          img data: stimulus_item(target: :favicon, for: Controllers::FAVICON), class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
         end
       end
     end

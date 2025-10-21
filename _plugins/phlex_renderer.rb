@@ -12,7 +12,6 @@ module Views
 end
 
 module Jekyll
-  # Thread-local storage for Jekyll context
   class << self
     def current_site
       Thread.current[:jekyll_site]
@@ -31,37 +30,15 @@ module Jekyll
     end
   end
 
-  # Base class for all Phlex components
-  # Provides access to Jekyll site and page objects via thread-local storage
   class Component < Phlex::HTML
-    def self.inherited(subclass)
-      super
-      # Include Views::Shared kit when a subclass is created
-      subclass.include(Views::Shared) if defined?(Views::Shared)
-    end
+    include ::Views::Shared
 
-    def initialize(**kwargs)
-      super()
-    end
-
-    # Access to Jekyll site object
     def site
       Jekyll.current_site
     end
 
-    # Access to Jekyll page object
     def page
       Jekyll.current_page
-    end
-
-    # Access to Jekyll configuration
-    def config
-      site.config
-    end
-
-    # Access to site data
-    def data
-      site.data
     end
 
     # Access to Jekyll environment (development, production, etc.)
@@ -73,12 +50,10 @@ module Jekyll
     # @param url_key [String] The key in the urls hash
     # @return [String] The full URL with api_host as the base
     def build_url(url_key)
-      base = site.config["api_host"] || ""
-      path = site.config.dig("urls", url_key) || ""
+      base = site.config["api_host"]
+      path = site.config.dig("urls", url_key)
       URI.join(base, path).to_s
     end
-
-
 
     def stimulus(controller:, actions: {}, values: {}, outlets: {}, classes: {}, data: {})
       stimulus_controller = controller.to_s.dasherize

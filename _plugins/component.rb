@@ -26,7 +26,8 @@ module Jekyll
     end
 
     def stimulus(controller:, actions: {}, values: {}, outlets: {}, classes: {}, data: {})
-      stimulus_controller = controller.to_s.dasherize
+      name = controller.to_s.dasherize
+      stimulus_controller = get_controller(name)
 
       action = actions.map do |event, function|
         "#{event}->#{stimulus_controller}##{function.to_s.camelize(:lower)}"
@@ -48,7 +49,8 @@ module Jekyll
     end
 
     def stimulus_item(target: nil, actions: {}, params: {}, data: {}, for:)
-      stimulus_controller = binding.local_variable_get(:for).to_s.dasherize
+      name = binding.local_variable_get(:for).to_s.dasherize
+      stimulus_controller = get_controller(name)
 
       action = actions.map do |event, function|
         "#{event}->#{stimulus_controller}##{function.to_s.camelize(:lower)}"
@@ -69,6 +71,13 @@ module Jekyll
       end
 
       defaults
+    end
+
+    def get_controller(controller)
+      controllers = site.data['controllers'].to_h { [it["name"], it] }
+      controllers.fetch(controller)["name"]
+    rescue KeyError => exception
+      raise "Unkown stimulus controller #{controller}. Did you mean #{exception.corrections.join(', ')}"
     end
   end
 end

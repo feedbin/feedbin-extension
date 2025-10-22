@@ -10,7 +10,7 @@ module Views
         container = mix(
           {
             data: stimulus(
-              controller: Controllers::FAVICON,
+              controller: :favicon,
               values: {
                 has_favicon: "false"
               }
@@ -21,7 +21,7 @@ module Views
         )
         div **container do
           Icon("feed", css: "fill-600 hidden group-data-[favicon-has-favicon-value=false]:block")
-          img data: stimulus_item(target: :favicon, for: Controllers::FAVICON), class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
+          img data: stimulus_item(target: :favicon, for: :favicon), class: "hidden max-h-[16px] max-w-[16px] group-data-[favicon-has-favicon-value=true]:block"
         end
       end
     end

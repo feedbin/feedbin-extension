@@ -9,7 +9,7 @@ module Views
       div(
         class: "container group",
         data: stimulus(
-          controller: Controllers::PAGE_INFO,
+          controller: :page_info,
           actions: {
             "app:pageInfoLoaded@window" => :page_info_loaded,
             "app:pageInfoError@window" => :page_info_error
@@ -25,13 +25,13 @@ module Views
         div class: "hidden gap-2 group-data-[page-info-has-data-value=true]:flex" do
           div class: "relative top-[-1px] browser-ios:top-[1px]" do
             Favicon(
-              data: stimulus_item(target: :favicon, for: Controllers::PAGE_INFO)
+              data: stimulus_item(target: :favicon, for: :page_info)
             )
           end
           div class: "min-w-0 grow" do
-            h1 data: stimulus_item(target: :title, for: Controllers::PAGE_INFO), class: "text-700 mb-1 line-clamp-3 font-bold empty:hidden"
-            p data: stimulus_item(target: :description, for: Controllers::PAGE_INFO), class: "mb-1 line-clamp-3 empty:hidden"
-            p data: stimulus_item(target: :url, for: Controllers::PAGE_INFO), class: "text-500 mb-1 truncate empty:hidden"
+            h1 data: stimulus_item(target: :title, for: :page_info), class: "text-700 mb-1 line-clamp-3 font-bold empty:hidden"
+            p data: stimulus_item(target: :description, for: :page_info), class: "mb-1 line-clamp-3 empty:hidden"
+            p data: stimulus_item(target: :url, for: :page_info), class: "text-500 mb-1 truncate empty:hidden"
           end
         end
       end

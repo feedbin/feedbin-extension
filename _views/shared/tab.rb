@@ -15,11 +15,11 @@ module Views
             actions: {
               "scroll" => :check_scroll
             },
-            for: Controllers::APP
+            for: :app
           ),
           class: "grow min-h-0 overflow-scroll overscroll-y-contain browser-ios:min-h-auto browser-ios:max-h-none"
         ) do
-          div class: "px-4 py-4", data: stimulus_item(target: :content_container, for: Controllers::APP) do
+          div class: "px-4 py-4", data: stimulus_item(target: :content_container, for: :app) do
             if @block
               @block.call
             else
@@ -33,7 +33,7 @@ module Views
         end
 
         div(
-          data: stimulus_item(target: :footer_spacer, for: Controllers::APP),
+          data: stimulus_item(target: :footer_spacer, for: :app),
           class: "shrink-0 ease-out transition-[min-height] min-h-[var(--visual-viewport-offset)]"
         )
       end

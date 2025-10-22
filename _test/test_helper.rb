@@ -62,7 +62,7 @@ class SystemTest < Minitest::Test
 end
 
 def build_url(path)
-  URI.join(SITE.config["api_host"], SITE.config["urls"][path]).to_s
+  URI.join(SITE.config["api_host"]["test"], SITE.config["urls"][path]).to_s
 end
 
 def sign_in

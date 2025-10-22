@@ -12,47 +12,17 @@ module Views
 end
 
 module Jekyll
-  class << self
-    def current_site
-      Thread.current[:jekyll_site]
-    end
-
-    def current_site=(site)
-      Thread.current[:jekyll_site] = site
-    end
-
-    def current_page
-      Thread.current[:jekyll_page]
-    end
-
-    def current_page=(page)
-      Thread.current[:jekyll_page] = page
-    end
-  end
-
   class Component < Phlex::HTML
     include ::Views::Shared
 
     def site
-      Jekyll.current_site
+      Jekyll.sites.first
     end
 
-    def page
-      Jekyll.current_page
-    end
-
-    # Access to Jekyll environment (development, production, etc.)
-    def environment
-      ENV["JEKYLL_ENV"] || "development"
-    end
-
-    # Build a full URL from a key in site.config["urls"]
-    # @param url_key [String] The key in the urls hash
-    # @return [String] The full URL with api_host as the base
     def build_url(url_key)
-      base = site.config["api_host"]
+      host = site.config.dig("api_host", Jekyll.env)
       path = site.config.dig("urls", url_key)
-      URI.join(base, path).to_s
+      URI.join(host, path).to_s
     end
 
     def stimulus(controller:, actions: {}, values: {}, outlets: {}, classes: {}, data: {})

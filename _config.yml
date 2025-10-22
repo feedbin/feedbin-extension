@@ -31,3 +31,5 @@ exclude:
     - bin/
     - Procfile
     - manifest.yml
+    - LICENSE
+    - README.md

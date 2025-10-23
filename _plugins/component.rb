@@ -49,7 +49,8 @@ module Jekyll
     end
 
     def stimulus_item(target: nil, actions: {}, params: {}, data: {}, for:)
-      name = binding.local_variable_get(:for).to_s.dasherize
+      controller = binding.local_variable_get(:for)
+      name = controller.to_s.dasherize
       stimulus_controller = get_controller(name)
 
       action = actions.map do |event, function|
@@ -57,7 +58,7 @@ module Jekyll
       end.join(" ").presence
 
       params.transform_keys! do |key|
-        :"#{binding.local_variable_get(:for)}_#{key}_param"
+        :"#{controller}_#{key}_param"
       end
 
       defaults = { **params, **data }
@@ -67,7 +68,7 @@ module Jekyll
       end
 
       if target
-        defaults[:"#{binding.local_variable_get(:for)}_target"] = target.to_s.camelize(:lower)
+        defaults[:"#{controller}_target"] = target.to_s.camelize(:lower)
       end
 
       defaults

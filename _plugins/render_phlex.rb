@@ -15,8 +15,8 @@ end
 
 Liquid::Template.register_tag("render_phlex", Jekyll::RenderPhlex)
 
-# load all views
-Jekyll::Hooks.register :site, :after_init do |site|
+# load all views on every build
+Jekyll::Hooks.register :site, :pre_render do |site|
   views_dir = File.join(Dir.pwd, "_views")
   Dir.glob(File.join(views_dir, "**", "*.rb")).sort.each do |view_path|
     load view_path

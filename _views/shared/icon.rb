@@ -8,9 +8,9 @@ module Views
 
       def view_template
         icon = site.config["icons"][@name.to_sym]
-        return unless icon
+        raise Exception.new("Unknown icon #{@name}") unless icon
 
-        svg style: "width: #{icon.width}px; height: #{icon.height}px;", class: @css do
+        svg class: @css, style: { width: "#{icon.width}px", height: "#{icon.height}px" } do
           render Use.new(@name)
         end
       end
@@ -22,7 +22,7 @@ module Views
       end
 
       def view_template
-        use href: "##{@name}"
+        use href: "#" + @name
       end
     end
   end

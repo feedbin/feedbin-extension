@@ -2,6 +2,10 @@ plugins:
     - jekyll-postcss-v2
 postcss:
     cache: false
+api_host:
+  production: https://feedbin.com
+  development: https://feedbin.mac.resolv.app
+  test: https://example.com
 urls:
     authentication: /extension/v1/authentication.json
     save: /extension/v1/pages.json
@@ -31,3 +35,5 @@ exclude:
     - bin/
     - Procfile
     - manifest.yml
+    - LICENSE
+    - README.md

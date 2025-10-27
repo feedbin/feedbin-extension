@@ -1,2 +1,1 @@
-firefox: npx web-ext run --source-dir ./_site/firefox/
-jekyll: bundle exec jekyll serve --open-url --livereload --destination _site/firefox
+jekyll: BUILD_TARGET=safari bundle exec jekyll serve --open-url --livereload --destination _site/safari

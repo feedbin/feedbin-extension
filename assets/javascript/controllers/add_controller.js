@@ -86,12 +86,15 @@ export default class extends Controller {
       const inputBase = `feeds[${feed.id}]`
       const checkboxName = `${inputBase}[subscribe]`
 
-      if (index === 0) {
+      if (index === 0 && feed.subscribed == false) {
         hydrate.attribute("checkbox", "checked", "true")
       }
 
       hydrate.attribute("checkbox_dummy", "name", checkboxName)
       hydrate.attribute("checkbox", "name", checkboxName)
+      if (feed.subscribed === true) {
+        hydrate.attribute("checkbox", "disabled", "true")
+      }
 
       hydrate.attribute("url", "name", `${inputBase}[url]`)
       hydrate.attribute("url", "value", feed.feed_url)
@@ -99,9 +102,15 @@ export default class extends Controller {
       hydrate.attribute("feed_input", "name", `${inputBase}[title]`)
       hydrate.attribute("feed_input", "value", feed.title)
       hydrate.attribute("feed_input", "placeholder", feed.title)
+      if (feed.subscribed === true) {
+        hydrate.attribute("feed_input", "disabled", "true")
+      }
 
       hydrate.text("display_url", prettyUrl(feed.feed_url))
       hydrate.text("volume", feed.volume)
+      if (feed.subscribed === true) {
+        hydrate.removeClass("subscribed_notice", "hidden")
+      }
 
       return hydrate
     })
@@ -118,6 +127,7 @@ export default class extends Controller {
 
     Hydrate.hydrate(this.feedResultsTarget, feedContent)
     Hydrate.hydrate(this.tagResultsTarget, tagContent)
+    this.countSelected()
   }
 
   countSelected() {

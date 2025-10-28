@@ -9,13 +9,15 @@ class AddTest < SystemTest
           id: 31,
           feed_url: "https://daringfireball.net/feeds",
           title: "Daring Fireball",
-          volume: "16h ago, 98/mo"
+          volume: "16h ago, 98/mo",
+          subscribed: false
         },
         {
           id: 36,
           feed_url: "https://daringfireball.net/feeds.json",
           title: "Daring Fireball",
-          volume: "16h ago, 98/mo"
+          volume: "16h ago, 98/mo",
+          subscribed: true
         }
       ],
       tags: ["Favorites", "Feeds", "Social"]
@@ -66,6 +68,8 @@ class AddTest < SystemTest
     assert_equal "Favorites", tag_labels[0].text
     assert_equal "Feeds", tag_labels[1].text
     assert_equal "Social", tag_labels[2].text
+
+    assert checkboxes[1].disabled?, "Second checkbox should be disabled if `subscribed: true`"
 
     # Verify subscribe button is enabled (since first feed is checked by default)
     submit_button = page.find("[data-add-target='submitButton']")

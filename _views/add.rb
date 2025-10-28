@@ -95,6 +95,9 @@ module Views
                 )
               end
               input type: "text", data: { template: "feed_input" }
+              div data: { template: "subscribed_notice" }, class: "pr-2 flex items-center justify-center shrink-0 pointer-events-none text-green-600 text-xs hidden" do
+                "✓ Already Subscribed"
+              end
             end
             div class: "text-500 mt-1 flex min-w-0 gap-4" do
               div class: "grow truncate", data: { template: "display_url" }

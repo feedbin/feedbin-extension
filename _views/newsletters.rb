@@ -25,7 +25,9 @@ module Views
               div class: "flex-col gap-4 hidden group-data-[newsletters-state-value=initial]:flex group-data-[newsletters-state-value=success]:flex" do
                 div class: "flex gap-2 justify-between items-baseline" do
                   h1(class: "heading") { "Addresses" }
-                  a(class: "text-700", href: build_url("newsletter_settings")) { "Manage ↗" }
+                  a class: "text-700", href: build_url("newsletter_settings"), target: "_blank" do
+                    "Manage ↗"
+                  end
                 end
                 ul data: stimulus_item(target: :address_list, for: :newsletters)
               end

@@ -13,6 +13,7 @@ module Views
           checked:border-blue-600 checked:bg-blue-600 checked:before:bg-white
           focus-visible:shadow-none focus-visible:outline-blue-400
           active:checked:border-blue-700 active:checked:bg-blue-700
+          disabled:bg-200 disabled:border-200 disabled:active:bg-200 disabled:active:border-200 disabled:text-500
         "
         input(**mix({type: "checkbox", class: css}, @attributes))
       end

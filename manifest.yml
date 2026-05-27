@@ -29,6 +29,7 @@ defaults: &defaults
       suggested_key:
         default: Ctrl+Shift+V
         mac: MacCtrl+Shift+V
+        linux: Ctrl+Super+V
   background:
     service_worker: assets/javascript/content/worker.js
 

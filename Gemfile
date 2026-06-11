@@ -5,6 +5,7 @@ gem "jekyll"
 gem "jekyll-postcss-v2", github: "feedbin/jekyll-postcss-v2", branch: "feedbin"
 gem "phlex"
 gem "activesupport"
+gem "ostruct"
 
 group :development do
   gem "foreman"

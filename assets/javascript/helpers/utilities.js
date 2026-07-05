@@ -79,7 +79,16 @@ export function loadFavicon(context, element, store) {
   }
 }
 
-export function prettyUrl(url) {
+export function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+}
+
+export function prettyUrl(url, { link = false } = {}) {
   try {
     const parsed = new URL(url)
     const segments = parsed
@@ -87,7 +96,22 @@ export function prettyUrl(url) {
       .split('/')
       .filter(segment => segment.length > 0)
 
-    return [parsed.hostname, ...segments].join(' › ')
+    const parts = [parsed.hostname, ...segments]
+
+    if (!link) {
+      return parts.join(' › ')
+    }
+
+    const escaped = parts.map(escapeHtml)
+    const last = escaped.pop()
+
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+      return [...escaped, last].join(' › ')
+    }
+
+    const anchor = `<a href="${escapeHtml(parsed.href)}" target="_blank" rel="noopener noreferrer">${last}</a>`
+
+    return [...escaped, anchor].join(' › ')
   } catch (error) {
     return url
   }

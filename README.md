@@ -2,9 +2,7 @@
 
 The official Feedbin browser extension to subscribe to feeds and save pages to read later.
 
-<img width="1280" height="800" alt="Extension screenshot" src="https://assets.feedbin.com/assets-site/images/blog/2025/extension.png" />
-
-
+<img width="1280" height="630" alt="Extension screenshot" src="https://assets.feedbin.com/assets-site/images/blog/2025/extension.png" />
 
 The extension currently targets these browsers:
 

@@ -107,6 +107,7 @@ export default class extends Controller {
       }
 
       hydrate.text("display_url", prettyUrl(feed.feed_url))
+      hydrate.attribute("display_url", "href", feed.feed_url)
       hydrate.text("volume", feed.volume)
       if (feed.subscribed === true) {
         hydrate.removeClass("subscribed_notice", "hidden")

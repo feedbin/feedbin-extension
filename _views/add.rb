@@ -100,7 +100,7 @@ module Views
               end
             end
             div class: "text-500 mt-1 flex min-w-0 gap-4" do
-              div class: "grow truncate", data: { template: "display_url" }
+              a class: "grow truncate pointer-fine:hover:underline", target: "_blank", rel: "noopener noreferrer", data: { template: "display_url" }
               div class: "shrink-0", data: { template: "volume" }
             end
           end

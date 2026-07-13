@@ -10,3 +10,4 @@ log/
 node_modules
 _staging
 tmp/
+.worktrees/

@@ -1,4 +1,4 @@
-# Feedbin Subscribe & Save
+# Feedbin
 
 The official Feedbin browser extension to subscribe to feeds and save pages to read later.
 

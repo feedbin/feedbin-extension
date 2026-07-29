@@ -6,7 +6,7 @@ module Views
         head do
           meta charset: "UTF-8"
           meta name: "viewport", content: "width=device-width, initial-scale=1.0"
-          title { "Feedbin Subscribe & Save" }
+          title { "Feedbin" }
           link rel: "stylesheet", href: "assets/css/wrapper.css"
 
           script src: "assets/javascript/lib/extension-polyfill.js"

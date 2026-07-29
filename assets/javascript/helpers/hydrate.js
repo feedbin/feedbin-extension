@@ -35,11 +35,4 @@ export class Hydrate {
       element.setAttribute(attr, value)
     }
   }
-
-  removeClass(selector, cssClass) {
-    const element = this.#find(selector)
-    if (element) {
-      element.classList.remove(cssClass)
-    }
-  }
 }

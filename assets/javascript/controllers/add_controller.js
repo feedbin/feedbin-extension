@@ -109,8 +109,12 @@ export default class extends Controller {
       hydrate.text("display_url", prettyUrl(feed.feed_url))
       hydrate.attribute("display_url", "href", feed.feed_url)
       hydrate.text("volume", feed.volume)
+
+      hydrate.attribute("feed", "data-feed-subscribed-value", feed.subscribed)
+      hydrate.attribute("feed", "data-feed-status-value", this.feedStatus(feed))
       if (feed.subscribed === true) {
-        hydrate.removeClass("subscribed_notice", "hidden")
+        hydrate.attribute("manage", "href", feed.manage_url)
+        hydrate.text("tag_names", feed.tags.join(", "))
       }
 
       return hydrate
@@ -129,6 +133,21 @@ export default class extends Controller {
     Hydrate.hydrate(this.feedResultsTarget, feedContent)
     Hydrate.hydrate(this.tagResultsTarget, tagContent)
     this.countSelected()
+  }
+
+  // What to show on the left of a subscribed feed's meta row. A crawl error
+  // wins over mute because it's the more actionable problem.
+  feedStatus(feed) {
+    if (feed.subscribed !== true) {
+      return "url"
+    } else if (feed.crawl_error === true) {
+      return "error"
+    } else if (feed.muted === true) {
+      return "muted"
+    } else if (feed.tags.length > 0) {
+      return "tags"
+    }
+    return "url"
   }
 
   countSelected() {

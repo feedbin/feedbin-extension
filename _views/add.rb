@@ -81,7 +81,7 @@ module Views
     def templates
       # feed template
       template data: stimulus_item(target: :feed_template, for: :add) do
-        div class: "flex" do
+        div class: "group flex", data: feed_state do
           input type: "hidden", data: { template: "url" }
           label class: "flex h-[40px] items-center pr-2" do
             input type: "hidden", value: "0", data: { template: "checkbox_dummy" }
@@ -95,13 +95,16 @@ module Views
                 )
               end
               input type: "text", data: { template: "feed_input" }
-              div data: { template: "subscribed_notice" }, class: "pr-2 flex items-center justify-center shrink-0 pointer-events-none text-green-600 text-xs hidden" do
+              div class: "pr-2 hidden items-center justify-center shrink-0 pointer-events-none text-green-600 text-xs group-data-[feed-subscribed-value=true]:flex" do
                 "✓ Already Subscribed"
               end
             end
-            div class: "text-500 mt-1 flex min-w-0 gap-4" do
-              a class: "grow truncate pointer-fine:hover:underline", target: "_blank", rel: "noopener noreferrer", data: { template: "display_url" }
-              div class: "shrink-0", data: { template: "volume" }
+            div class: "text-500 mt-1 flex min-w-0 items-center gap-4" do
+              feed_status
+              div class: "shrink-0 group-data-[feed-subscribed-value=true]:hidden", data: { template: "volume" }
+              a class: "shrink-0 hidden text-blue-600 pointer-fine:hover:underline group-data-[feed-subscribed-value=true]:block", target: "_blank", rel: "noopener noreferrer", data: { template: "manage" } do
+                "Manage"
+              end
             end
           end
         end
@@ -115,6 +118,37 @@ module Views
           Icon("tag", css: "shrink-0 fill-400 group-has-checked/checkbutton:fill-700")
         end
       end
+    end
+
+    # The left side of a feed's meta row. Exactly one of these shows, chosen by
+    # the feed's status value.
+    def feed_status
+      a class: "grow truncate hidden pointer-fine:hover:underline group-data-[feed-status-value=url]:block", target: "_blank", rel: "noopener noreferrer", data: { template: "display_url" }
+
+      div class: "grow min-w-0 hidden items-center gap-1.5 group-data-[feed-status-value=tags]:flex" do
+        Icon("tag", css: "shrink-0 fill-400")
+        span class: "truncate", data: { template: "tag_names" }
+      end
+
+      div class: "grow min-w-0 hidden items-center gap-1.5 group-data-[feed-status-value=muted]:flex" do
+        Icon("mute", css: "shrink-0 fill-400")
+        span(class: "truncate") { "Muted" }
+      end
+
+      div class: "grow min-w-0 hidden items-center gap-1.5 text-red-600 group-data-[feed-status-value=error]:flex" do
+        Icon("exclamation-circle", css: "shrink-0 fill-red-600")
+        span(class: "truncate") { "Error Crawling Feed" }
+      end
+    end
+
+    def feed_state
+      stimulus(
+        controller: :feed,
+        values: {
+          subscribed: "false",
+          status: "url"
+        }
+      ).merge(template: "feed")
     end
   end
 end
